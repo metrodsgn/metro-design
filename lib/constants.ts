@@ -71,3 +71,8 @@ export const SERVICES = {
     },
   ],
 } as const;
+export const REEL = {
+  label: "Reel",
+  videoSrc: "/videos/video.mp4",
+  poster: "/videos/reel-poster.jpg",
+} as const;
