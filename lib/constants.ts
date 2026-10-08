@@ -116,3 +116,35 @@ export const METRUS = {
     },
   ],
 } as const;
+export const CLIENTS = {
+  label: "Clientes",
+  title: "Marcas que confiam na Metro.",
+  items: [
+    // Reais (9)
+    "BM9 Photoshoot",
+    "DEZA Arquitetura",
+    "Flávio Rocha",
+    "Kazui",
+    "Salvo Burguer",
+    "HiFive",
+    "NBA Store",
+    "Crocobeach",
+    "NatEssential",
+    // Placeholders (15) — trocar depois
+    "Cliente 10",
+    "Cliente 11",
+    "Cliente 12",
+    "Cliente 13",
+    "Cliente 14",
+    "Cliente 15",
+    "Cliente 16",
+    "Cliente 17",
+    "Cliente 18",
+    "Cliente 19",
+    "Cliente 20",
+    "Cliente 21",
+    "Cliente 22",
+    "Cliente 23",
+    "Cliente 24",
+  ],
+} as const;
