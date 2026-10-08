@@ -17,7 +17,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-black/60" />
 
       <Container className="relative z-10">
-        <h1 className="font-display text-foreground max-w-5xl text-4xl leading-tight font-bold tracking-tight md:text-6xl lg:text-7xl">
+        <h1 className="font-editorial text-foreground max-w-5xl text-4xl leading-tight font-bold tracking-tight md:text-6xl lg:text-7xl">
           Transformamos negócios com design e comunicação estratégica.
         </h1>
       </Container>

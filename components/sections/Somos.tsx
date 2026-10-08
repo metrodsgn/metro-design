@@ -9,7 +9,7 @@ export function Somos() {
           {ABOUT.label}
         </span>
 
-        <h2 className="font-display text-foreground mt-4 max-w-4xl text-3xl leading-tight font-bold tracking-tight md:text-5xl">
+        <h2 className="font-editorial text-foreground mt-4 max-w-4xl text-3xl leading-tight font-bold tracking-tight md:text-5xl">
           {ABOUT.title}
         </h2>
 

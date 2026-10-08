@@ -2,8 +2,10 @@
 
 @theme {
   /* Fontes */
-  --font-display: var(--font-display), system-ui, sans-serif;
-  --font-sans: var(--font-sans), system-ui, sans-serif;
+  --font-display: var(--font-display), "Geist", system-ui, sans-serif;
+  --font-sans: var(--font-sans), "Geist", system-ui, sans-serif;
+  --font-editorial: var(--font-editorial), "Instrument Serif", Georgia, serif;
+  --font-mono: var(--font-mono), "Geist Mono", "SFMono-Regular", monospace;
 
   /* Fundos */
   --color-background: #0a0a0a;
@@ -18,6 +20,7 @@
   --color-accent: #ff2e2e;
   --color-accent-hover: #cc1f1f;
 }
+
 
 html {
   scroll-behavior: smooth;

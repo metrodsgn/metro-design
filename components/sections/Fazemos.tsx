@@ -23,7 +23,7 @@ export function Fazemos() {
               {SERVICES.label}
             </span>
 
-            <h2 className="font-display text-foreground mt-4 max-w-xl text-3xl leading-tight font-bold tracking-tight md:text-5xl">
+            <h2 className="font-editorial text-foreground mt-4 max-w-xl text-3xl leading-tight font-bold tracking-tight md:text-5xl">
               {SERVICES.title}
             </h2>
 
@@ -54,7 +54,7 @@ export function Fazemos() {
                     aria-expanded={isOpen}
                     aria-controls={panelId}
                     onClick={() => toggle(index)}
-                    className="border-border font-display text-foreground focus-visible:outline-foreground flex min-h-16 w-full cursor-pointer items-center justify-between gap-4 border-b py-6 text-left text-2xl leading-tight font-normal tracking-tight transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 md:text-3xl"
+                    className="border-border font-editorial text-foreground focus-visible:outline-foreground flex min-h-16 w-full cursor-pointer items-center justify-between gap-4 border-b py-6 text-left text-2xl leading-tight font-normal tracking-tight transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 md:text-3xl"
                   >
                     <span>{area.title}</span>
                     <span
@@ -69,9 +69,8 @@ export function Fazemos() {
                     id={panelId}
                     role="region"
                     aria-labelledby={buttonId}
-                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                    }`}
+                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                      }`}
                   >
                     <ul className="overflow-hidden">
                       {area.items.map((item) => (
