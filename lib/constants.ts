@@ -76,3 +76,43 @@ export const REEL = {
   videoSrc: "/videos/video.mp4",
   poster: "/videos/reel-poster.jpg",
 } as const;
+export const PROJECTS = {
+  label: "Jobs",
+  title: "Projetos selecionados.",
+  cta: { label: "Ver mais cases", href: "/projetos" },
+  items: [
+    { slug: "bm9-photoshoot", title: "BM9 Photoshoot", category: "Audiovisual", initial: "B" },
+    { slug: "deza-arquitetura", title: "DEZA Arquitetura", category: "Branding", initial: "D" },
+    { slug: "flavio-rocha", title: "Flávio Rocha", category: "Branding", initial: "F" },
+    { slug: "kazui", title: "Kazui", category: "Branding", initial: "K" },
+    { slug: "salvo-burguer", title: "Salvo Burguer", category: "Branding", initial: "S" },
+    { slug: "hifive", title: "HiFive", category: "Comunicação", initial: "H" },
+    { slug: "nba-store", title: "NBA Store", category: "Campanha", initial: "N" },
+    { slug: "crocobeach", title: "Crocobeach", category: "Branding", initial: "C" },
+    { slug: "natessential", title: "NatEssential", category: "Branding", initial: "N" },
+  ],
+} as const;
+export const METRUS = {
+  label: "Metrus",
+  title: "Aprovação de posts sem WhatsApp, sem e-mail, sem estresse.",
+  description:
+    "A Metrus é nossa ferramenta própria que centraliza a aprovação de conteúdo. O cliente vê os posts, comenta, aprova ou pede alteração — tudo em um lugar só, com histórico e sem ruído de comunicação.",
+  cta: { label: "Fale conosco", href: "#contato" },
+  mockups: [
+    {
+      title: "Campanha de lançamento",
+      status: "approved" as const,
+      statusLabel: "Aprovado",
+    },
+    {
+      title: "Post institucional",
+      status: "pending" as const,
+      statusLabel: "Pendente",
+    },
+    {
+      title: "Reels de produto",
+      status: "changes" as const,
+      statusLabel: "Alteração solicitada",
+    },
+  ],
+} as const;
