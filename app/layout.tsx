@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter, Instrument_Serif } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -44,6 +45,7 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
+          <WhatsAppButton />
         </SmoothScroll>
       </body>
     </html>
