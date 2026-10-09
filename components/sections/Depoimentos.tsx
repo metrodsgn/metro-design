@@ -93,6 +93,7 @@ export function Depoimentos() {
                 tabIndex={0}
                 role="region"
                 aria-label="Lista de depoimentos de clientes"
+                data-lenis-prevent
                 className="depoimentos-list max-h-[clamp(300px,50vh,420px)] space-y-3 overflow-y-auto pt-4 pb-4"
               >
                 {TESTIMONIALS.items.map((item, index) => (
@@ -169,9 +170,8 @@ function NotificationItem({
     <li
       ref={itemRef}
       data-notification
-      className={`border-border bg-surface flex items-start gap-3 rounded-xl border p-3 transition-all duration-500 ease-out ${
-        visible ? "translate-y-0 opacity-100" : "translate-y-3.5 opacity-0"
-      }`}
+      className={`border-border bg-surface flex items-start gap-3 rounded-xl border p-3 transition-all duration-500 ease-out ${visible ? "translate-y-0 opacity-100" : "translate-y-3.5 opacity-0"
+        }`}
     >
       {/* Ícone quadrado com inicial */}
       <div className="bg-accent text-foreground flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px]">
