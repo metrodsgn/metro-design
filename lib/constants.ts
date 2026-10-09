@@ -19,11 +19,11 @@ export const SOCIAL = [
 ] as const;
 
 export const NAV_LINKS = [
-  { label: "Somos", href: "#somos" },
-  { label: "Fazemos", href: "#fazemos" },
-  { label: "Projetos", href: "/projetos" },
-  { label: "Clientes", href: "#clientes" },
-  { label: "Fale Conosco", href: "#contato" },
+  { label: "Somos", href: "/#somos" },
+  { label: "Fazemos", href: "/#fazemos" },
+  { label: "Jobs", href: "/projetos" },
+  { label: "Clientes", href: "/#clientes" },
+  { label: "Fale Conosco", href: "/contato" },
 ] as const;
 
 export const ABOUT = {
@@ -97,7 +97,7 @@ export const METRUS = {
   title: "Aprovação de posts sem WhatsApp, sem e-mail, sem estresse.",
   description:
     "A Metrus é nossa ferramenta própria que centraliza a aprovação de conteúdo. O cliente vê os posts, comenta, aprova ou pede alteração — tudo em um lugar só, com histórico e sem ruído de comunicação.",
-  cta: { label: "Fale conosco", href: "#contato" },
+  cta: { label: "Fale conosco", href: "/contato" },
   mockups: [
     {
       title: "Campanha de lançamento",
@@ -226,4 +226,20 @@ export const TESTIMONIALS = {
       initial: "D",
     },
   ],
+} as const;
+export const CONTACT_FORM = {
+  label: "Fale Conosco",
+  title: "Vamos construir algo juntos.",
+  description:
+    "Conte um pouco sobre o seu projeto. Respondemos em até 1 dia útil.",
+  fields: {
+    name: { label: "Nome", placeholder: "Seu nome" },
+    email: { label: "Email", placeholder: "voce@empresa.com" },
+    company: { label: "Empresa", placeholder: "Nome da empresa (opcional)" },
+    message: {
+      label: "Mensagem",
+      placeholder: "Conte sobre o seu projeto...",
+    },
+  },
+  submit: "Enviar mensagem",
 } as const;

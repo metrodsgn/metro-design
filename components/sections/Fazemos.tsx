@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { SERVICES } from "@/lib/constants";
@@ -31,12 +32,12 @@ export function Fazemos() {
               {SERVICES.description}
             </p>
 
-            <a
-              href="#contato"
+            <Link
+              href="/contato"
               className="bg-foreground text-background hover:bg-accent hover:text-foreground mt-10 inline-flex min-h-12 items-center rounded-md px-6 text-sm font-medium transition-colors"
             >
               Fale Conosco
-            </a>
+            </Link>
           </div>
 
           {/* Coluna direita — acordeão */}

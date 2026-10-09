@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { METRUS } from "@/lib/constants";
+import Link from "next/link";
 
 type Status = "approved" | "pending" | "changes";
 
@@ -28,12 +29,12 @@ export function Metrus() {
               {METRUS.description}
             </p>
 
-            <a
+            <Link
               href={METRUS.cta.href}
               className="bg-foreground text-background hover:bg-accent hover:text-foreground mt-10 inline-flex min-h-12 items-center rounded-md px-6 text-sm font-medium transition-colors"
             >
               {METRUS.cta.label}
-            </a>
+            </Link>
           </div>
 
           {/* Coluna direita — mockup */}
