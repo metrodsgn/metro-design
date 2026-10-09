@@ -9,9 +9,38 @@ export function Depoimentos() {
   const listRef = useRef<HTMLUListElement>(null);
   const [visibleCount, setVisibleCount] = useState(0);
   const [showScrollHint, setShowScrollHint] = useState(true);
+  const [time, setTime] = useState<string>("");
+  const [date, setDate] = useState<string>("");
 
   const total = TESTIMONIALS.items.length;
 
+  // Atualiza o relógio a cada minuto
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      setTime(`${hours}:${minutes}`);
+
+      const weekdays = [
+        "domingo",
+        "segunda-feira",
+        "terça-feira",
+        "quarta-feira",
+        "quinta-feira",
+        "sexta-feira",
+        "sábado",
+      ];
+      setDate(`Hoje, ${weekdays[now.getDay()]}`);
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 60_000); // a cada 60s
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Atualiza o contador e o estado "atEnd" quando o usuário rola a lista
   useEffect(() => {
     const list = listRef.current;
     if (!list) return;
@@ -73,9 +102,9 @@ export function Depoimentos() {
             <div className="border-border bg-background mx-auto w-full max-w-[480px] rounded-[20px] border p-6">
               <div className="text-center">
                 <p className="font-editorial text-foreground text-5xl leading-none md:text-6xl">
-                  09:41
+                  {time || "—:—"}
                 </p>
-                <p className="text-muted mt-2 text-sm">Hoje, quinta-feira</p>
+                <p className="text-muted mt-2 text-sm">{date || "Hoje"}</p>
               </div>
 
               <div className="border-border mt-8 flex items-center justify-between border-b pb-3">
