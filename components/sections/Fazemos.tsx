@@ -34,7 +34,7 @@ export function Fazemos() {
 
               <Link
                 href="/contato"
-                className="bg-foreground text-background hover:bg-accent hover:text-foreground mt-10 inline-flex min-h-12 items-center rounded-md px-6 text-sm font-medium transition-colors"
+                className="bg-foreground text-background hover:bg-accent hover:text-foreground mt-10 inline-flex min-h-12 items-center rounded-md px-6 text-sm font-medium transition-all duration-300 hover:scale-[1.02]"
               >
                 Fale Conosco
               </Link>
@@ -72,9 +72,8 @@ export function Fazemos() {
                       id={panelId}
                       role="region"
                       aria-labelledby={buttonId}
-                      className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-                        isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                      }`}
+                      className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                        }`}
                     >
                       <ul className="overflow-hidden">
                         {area.items.map((item) => (

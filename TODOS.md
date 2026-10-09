@@ -33,3 +33,15 @@ Itens temporariamente removidos ou simplificados que devem ser revisados depois.
 
 - [ ] **Substituir os 8 depoimentos** placeholder por depoimentos reais
   - Arquivo: `lib/constants.ts` (bloco `TESTIMONIALS`)
+
+  ## Animações (Fase 6 — pulado)
+
+- [ ] **6.4 — Transição de página** (Framer Motion `AnimatePresence`)
+  - Complexidade alta, ganho visual pequeno
+  - Fazer só se sobrar tempo no final
+
+- [ ] **6.6 — Microinterações**
+  - Underline animado nos links do Header
+  - Efeito ripple nos botões
+  - Cursor customizado
+  - Fazer só se sobrar tempo no final
