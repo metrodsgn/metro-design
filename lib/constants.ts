@@ -148,3 +148,7 @@ export const CLIENTS = {
     "Cliente 24",
   ],
 } as const;
+export const TAGLINE = {
+  text: "Criatividade com método. Estratégia com emoção.",
+  separator: "◆",
+} as const;

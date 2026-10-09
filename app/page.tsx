@@ -5,6 +5,7 @@ import { Reel } from "@/components/sections/Reel";
 import { Metrus } from "@/components/sections/Metrus";
 import { ProjetosSelecionados } from "@/components/sections/ProjetosSelecionados";
 import { Clientes } from "@/components/sections/Clientes";
+import { FaixaTexto } from "@/components/sections/FaixaTexto";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Metrus />
       <ProjetosSelecionados />
       <Clientes />
+      <FaixaTexto />
     </>
   );
 }
