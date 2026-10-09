@@ -57,3 +57,17 @@ Itens temporariamente removidos ou simplificados que devem ser revisados depois.
 
 - [ ] **Ajustar `CONTACT_EMAIL_TO` para o email real da agência**
   - Atualmente: `oi@metrodesign.com.br` (só funciona em teste)
+
+  ## Google Tag Manager (GTM)
+
+- [ ] **Adicionar GTM ao site**
+  - Quando: antes do lançamento (ou quando a agência tiver o ID)
+  - Instalar: `npm install @next/third-parties`
+  - Adicionar `NEXT_PUBLIC_GTM_ID` no `.env.local`
+  - Adicionar `<GoogleTagManager gtmId={...} />` no `app/layout.tsx` (dentro do `<html>`, antes do `<body>`)
+  - Depois: a agência configura as tags (GA4, Meta Pixel, etc.) no dashboard do GTM
+
+- [ ] **Configurar tags no dashboard do GTM**
+  - Google Analytics (GA4)
+  - Meta Pixel (se usar Facebook Ads)
+  - Outras conforme necessidade
