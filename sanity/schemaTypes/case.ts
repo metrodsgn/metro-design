@@ -53,7 +53,7 @@ export const caseType = defineType({
       title: "Capa",
       type: "image",
       options: { hotspot: true },
-      validation: (rule) => rule.required(),
+    
     }),
     defineField({
       name: "gallery",
