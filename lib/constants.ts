@@ -152,3 +152,78 @@ export const TAGLINE = {
   text: "Criatividade com método. Estratégia com emoção.",
   separator: "◆",
 } as const;
+export const TESTIMONIAL = {
+  quote:
+    "A Metro não só redesenhou nossa marca — reposicionou o negócio. O time entendeu onde queríamos chegar antes de desenhar qualquer coisa, e o resultado aparece em cada ponto de contato com o cliente.",
+  name: "Marina Alcântara",
+  role: "Diretora de Marketing",
+  company: "DEZA Arquitetura",
+  initial: "M",
+} as const;
+export const TESTIMONIALS = {
+  label: "Clientes",
+  title: "Chegou mensagem de cliente.",
+  description:
+    "Role a caixa de mensagens para ler o que nossos clientes têm a dizer.",
+  // TROCAR PELOS DEPOIMENTOS REAIS
+  items: [
+    {
+      name: "Helena Albuquerque",
+      company: "Casa Brisa Hotéis",
+      time: "agora",
+      quote:
+        "A Metro transformou o que a gente era em uma marca que as pessoas reconhecem em segundos.",
+      initial: "H",
+    },
+    {
+      name: "Rafael Moura",
+      company: "Linha Norte Logística",
+      time: "2 min",
+      quote:
+        "Planejamento claro, entregas no prazo e um conteúdo que finalmente soa como a nossa empresa.",
+      initial: "R",
+    },
+    {
+      name: "Camila Torres",
+      company: "Torres & Lima Advogados",
+      time: "5 min",
+      quote: "O vídeo institucional virou a nossa melhor apresentação.",
+      initial: "C",
+    },
+    {
+      name: "Paulo Reis",
+      company: "Cerâmica Reis",
+      time: "12 min",
+      quote: "Entenderam o negócio antes de desenhar qualquer coisa.",
+      initial: "P",
+    },
+    {
+      name: "Ana Beatriz",
+      company: "Studio Ananá",
+      time: "1 h",
+      quote: "Nosso Instagram voltou a ter cara de marca.",
+      initial: "A",
+    },
+    {
+      name: "Lucas Prado",
+      company: "Prado Engenharia",
+      time: "ontem",
+      quote: "A sinalização ficou tão boa que virou assunto na obra.",
+      initial: "L",
+    },
+    {
+      name: "Marina Sá",
+      company: "Clínica Sá",
+      time: "ontem",
+      quote: "Brand book simples de usar. Nossa equipe seguiu na hora.",
+      initial: "M",
+    },
+    {
+      name: "Davi Cunha",
+      company: "Cunha Cafés",
+      time: "2 dias",
+      quote: "Lançamos em seis semanas, com marca, fotos e vídeo.",
+      initial: "D",
+    },
+  ],
+} as const;

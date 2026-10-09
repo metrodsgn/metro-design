@@ -70,3 +70,39 @@ body {
     animation: none;
   }
 }
+.depoimentos-list {
+  scrollbar-width: thin;
+  scrollbar-color: #262626 transparent;
+  overscroll-behavior: contain;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0,
+    black calc(100% - 40px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0,
+    black calc(100% - 40px),
+    transparent 100%
+  );
+}
+
+.depoimentos-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.depoimentos-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.depoimentos-list::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depoimentos-list * {
+    transition: none !important;
+  }
+}
