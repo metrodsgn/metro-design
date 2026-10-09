@@ -1,7 +1,51 @@
+"use client";
+
+import { useState, FormEvent } from "react";
 import { Container } from "@/components/ui/Container";
 import { CONTACT_FORM, CONTACT, SOCIAL } from "@/lib/constants";
 
+type Status = "idle" | "loading" | "success" | "error";
+
 export function Contato() {
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMessage("");
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      company: formData.get("company"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const response = await fetch("/api/contato", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setStatus("error");
+        setErrorMessage(result.error || "Erro ao enviar. Tente novamente.");
+        return;
+      }
+
+      setStatus("success");
+      (e.target as HTMLFormElement).reset();
+    } catch {
+      setStatus("error");
+      setErrorMessage("Erro de conexão. Tente novamente.");
+    }
+  };
+
   return (
     <section className="py-16 md:py-24">
       <Container>
@@ -18,8 +62,7 @@ export function Contato() {
         </p>
 
         <div className="mt-16 grid gap-12 md:grid-cols-[6fr_5fr] md:gap-16 lg:gap-24">
-          {/* Coluna esquerda — formulário */}
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2">
               <Field
                 id="name"
@@ -63,13 +106,22 @@ export function Contato() {
 
             <button
               type="submit"
-              className="bg-foreground text-background hover:bg-accent hover:text-foreground inline-flex min-h-12 items-center rounded-md px-6 text-sm font-medium transition-colors"
+              disabled={status === "loading"}
+              className="bg-foreground text-background hover:bg-accent hover:text-foreground inline-flex min-h-12 items-center rounded-md px-6 text-sm font-medium transition-all duration-300 hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {CONTACT_FORM.submit}
+              {status === "loading" ? "Enviando..." : CONTACT_FORM.submit}
             </button>
+
+            {status === "success" && (
+              <p className="text-sm text-emerald-400">
+                Mensagem enviada! Responderemos em breve.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="text-accent text-sm">{errorMessage}</p>
+            )}
           </form>
 
-          {/* Coluna direita — dados de contato */}
           <div className="space-y-10">
             <div>
               <h2 className="text-foreground text-sm font-semibold tracking-wide uppercase">

@@ -45,3 +45,15 @@ Itens temporariamente removidos ou simplificados que devem ser revisados depois.
   - Efeito ripple nos botões
   - Cursor customizado
   - Fazer só se sobrar tempo no final
+
+  ## Email (Resend)
+
+- [ ] **Verificar domínio `metrodesign.com.br` no Resend**
+  - Quando: antes do lançamento
+  - Onde: dashboard do Resend → Domains → Add Domain
+  - Requer: acesso ao DNS do domínio
+  - Depois de verificar: trocar o `from` no `route.ts` de `onboarding@resend.dev` para `Metro Design <contato@metrodesign.com.br>`
+  - E trocar o `CONTACT_EMAIL_TO` no `.env.local` para o email real da agência
+
+- [ ] **Ajustar `CONTACT_EMAIL_TO` para o email real da agência**
+  - Atualmente: `oi@metrodesign.com.br` (só funciona em teste)
