@@ -46,8 +46,8 @@ export function Clientes() {
 
 function ClientCard({ name }: { name: string }) {
   return (
-    <div className="border-border bg-surface flex h-24 w-48 shrink-0 items-center justify-center rounded-lg border px-6">
-      <span className="font-display text-muted text-center text-sm font-medium tracking-tight">
+    <div className="border-border bg-surface hover:border-accent/50 flex h-24 w-48 shrink-0 items-center justify-center rounded-lg border px-6 transition-colors duration-300">
+      <span className="font-display text-muted hover:text-foreground text-center text-sm font-medium tracking-tight transition-colors duration-300">
         {name}
       </span>
     </div>
