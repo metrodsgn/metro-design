@@ -3,6 +3,7 @@ import {
   allCasesQuery,
   caseBySlugQuery,
   featuredCasesQuery,
+  allTestimonialsQuery,
 } from "./queries";
 
 export type CaseListItem = {
@@ -32,6 +33,16 @@ export type CaseFull = CaseListItem & {
   services?: string[];
 };
 
+export type Testimonial = {
+  _id: string;
+  name: string;
+  company: string;
+  role?: string;
+  quote: string;
+  initial: string;
+  time: string;
+};
+
 export async function getAllCases(): Promise<CaseListItem[]> {
   return client.fetch(allCasesQuery);
 }
@@ -42,4 +53,8 @@ export async function getCaseBySlug(slug: string): Promise<CaseFull | null> {
 
 export async function getFeaturedCases(): Promise<CaseListItem[]> {
   return client.fetch(featuredCasesQuery);
+}
+
+export async function getAllTestimonials(): Promise<Testimonial[]> {
+  return client.fetch(allTestimonialsQuery);
 }

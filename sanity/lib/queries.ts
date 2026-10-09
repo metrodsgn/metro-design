@@ -43,3 +43,15 @@ export const featuredCasesQuery = groq`
     cover
   }
 `;
+// Busca todos os depoimentos ordenados
+export const allTestimonialsQuery = groq`
+  *[_type == "testimonial"] | order(order asc, _createdAt desc) {
+    _id,
+    name,
+    company,
+    role,
+    quote,
+    initial,
+    time
+  }
+`;
