@@ -1,14 +1,7 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { SITE, CONTACT, SOCIAL } from "@/lib/constants";
 
 export function Footer() {
-  const [currentYear, setCurrentYear] = useState<number | null>(null);
-
-  useEffect(() => {
-    setCurrentYear(new Date().getFullYear());
-  }, []);
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="border-border mt-24 border-t">
@@ -75,7 +68,7 @@ export function Footer() {
         {/* Rodapé inferior — copyright */}
         <div className="border-border mt-12 border-t pt-8">
           <p className="text-muted text-xs">
-            © {currentYear ?? "----"} {SITE.name}. Todos os direitos reservados.
+            © {currentYear} {SITE.name}. Todos os direitos reservados.
           </p>
         </div>
       </div>
