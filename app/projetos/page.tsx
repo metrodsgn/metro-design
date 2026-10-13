@@ -13,17 +13,17 @@ export default async function ProjetosPage() {
   const cases = await getAllCases();
 
   return (
-    <section className="pt-32 pb-24 md:pt-40 md:pb-32">
+    <section className="pt-20 pb-16 sm:pt-24 sm:pb-20 md:pt-32 md:pb-28 lg:pt-40 lg:pb-32">
       <Container>
         <span className="text-accent text-sm font-medium tracking-widest uppercase">
           Jobs
         </span>
 
-        <h1 className="font-editorial text-foreground mt-4 max-w-3xl text-4xl leading-tight tracking-tight md:text-6xl">
+        <h1 className="font-editorial text-foreground mt-4 max-w-3xl text-[clamp(2.75rem,10vw,4rem)] leading-[1.02] tracking-tight md:text-6xl">
           Projetos.
         </h1>
 
-        <p className="text-muted mt-6 max-w-xl text-base leading-relaxed md:text-lg">
+        <p className="text-muted mt-4 max-w-xl text-base leading-relaxed sm:mt-6 md:text-lg">
           Uma seleção de marcas que ajudamos a construir, reposicionar e
           comunicar.
         </p>
@@ -33,7 +33,7 @@ export default async function ProjetosPage() {
             Nenhum case cadastrado ainda.
           </p>
         ) : (
-          <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-x-5 gap-y-10 sm:mt-12 sm:grid-cols-2 sm:gap-y-12 lg:mt-16 lg:grid-cols-3 lg:gap-y-14">
             {cases.map((project) => (
               <ProjectCard
                 key={project._id}

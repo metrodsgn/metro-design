@@ -100,14 +100,14 @@ export function Contato() {
                 rows={5}
                 required
                 placeholder={CONTACT_FORM.fields.message.placeholder}
-                className="border-border bg-surface text-foreground placeholder:text-muted focus:border-accent w-full resize-none rounded-md border px-4 py-3 text-sm transition-colors focus:outline-none"
+                className="ui-input resize-none"
               />
             </div>
 
             <button
               type="submit"
               disabled={status === "loading"}
-              className="bg-foreground text-background hover:bg-accent hover:text-foreground inline-flex min-h-12 items-center rounded-md px-6 text-sm font-medium transition-all duration-300 hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+              className="ui-button ui-button-primary"
             >
               {status === "loading" ? "Enviando..." : CONTACT_FORM.submit}
             </button>
@@ -201,7 +201,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="border-border bg-surface text-foreground placeholder:text-muted focus:border-accent w-full rounded-md border px-4 py-3 text-sm transition-colors focus:outline-none"
+        className="ui-input"
       />
     </div>
   );

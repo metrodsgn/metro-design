@@ -1,11 +1,35 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  MotionValue,
+} from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { TAGLINE } from "@/lib/constants";
 
 export function FaixaTexto() {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <section className="border-border border-y py-32 md:py-48">
+      <Container>
+        {reduceMotion !== false ? (
+          <p className="font-editorial text-foreground flex flex-wrap gap-x-3 gap-y-3 text-3xl leading-tight tracking-tight md:text-5xl lg:text-6xl">
+            {TAGLINE.text}
+          </p>
+        ) : (
+          <AnimatedTagline />
+        )}
+      </Container>
+    </section>
+  );
+}
+
+function AnimatedTagline() {
   const containerRef = useRef<HTMLParagraphElement>(null);
   const words = TAGLINE.text.split(" ");
 
@@ -15,29 +39,21 @@ export function FaixaTexto() {
   });
 
   return (
-    <section className="border-border border-y py-32 md:py-48">
-      <Container>
-        <p
-          ref={containerRef}
-          className="font-editorial text-foreground flex flex-wrap gap-x-3 gap-y-3 text-3xl leading-tight tracking-tight md:text-5xl lg:text-6xl"
-        >
-          {words.map((word, index) => {
-            const start = index / words.length;
-            const end = (index + 1) / words.length;
+    <p
+      ref={containerRef}
+      className="font-editorial text-foreground flex flex-wrap gap-x-3 gap-y-3 text-3xl leading-tight tracking-tight md:text-5xl lg:text-6xl"
+    >
+      {words.map((word, index) => {
+        const start = index / words.length;
+        const end = (index + 1) / words.length;
 
-            return (
-              <Word
-                key={index}
-                progress={scrollYProgress}
-                range={[start, end]}
-              >
-                {word}
-              </Word>
-            );
-          })}
-        </p>
-      </Container>
-    </section>
+        return (
+          <Word key={index} progress={scrollYProgress} range={[start, end]}>
+            {word}
+          </Word>
+        );
+      })}
+    </p>
   );
 }
 

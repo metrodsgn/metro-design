@@ -33,7 +33,7 @@ export function Metrus() {
 
               <Link
                 href={METRUS.cta.href}
-                className="bg-foreground text-background hover:bg-accent hover:text-foreground mt-10 inline-flex min-h-12 items-center rounded-md px-6 text-sm font-medium transition-colors"
+                className="ui-button ui-button-primary mt-10"
               >
                 {METRUS.cta.label}
               </Link>
@@ -42,7 +42,7 @@ export function Metrus() {
 
           {/* Coluna direita — mockup */}
           <Reveal delay={0.15}>
-            <div className="border-border bg-surface relative rounded-xl border p-6 shadow-2xl">
+            <div className="border-border bg-surface relative rounded-[var(--radius-card)] border p-6 shadow-2xl">
               <div className="border-border flex items-center justify-between border-b pb-4">
                 <span className="font-display text-foreground text-base font-bold tracking-tight">
                   Metrus
@@ -57,7 +57,7 @@ export function Metrus() {
                 {METRUS.mockups.map((mockup) => (
                   <div
                     key={mockup.title}
-                    className="border-border bg-background/50 flex items-center gap-4 rounded-lg border p-4"
+                    className="border-border bg-background/50 flex items-center gap-4 rounded-[var(--radius-control)] border p-4"
                   >
                     <div className="bg-border h-14 w-14 shrink-0 rounded-md" />
 

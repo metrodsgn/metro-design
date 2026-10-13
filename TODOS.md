@@ -26,13 +26,13 @@ Itens temporariamente removidos ou simplificados que devem ser revisados depois.
 
 ## Clientes
 
-- [ ] **Substituir os 15 placeholders** ("Cliente 10" a "Cliente 24") por nomes reais
-  - Arquivo: `lib/constants.ts` (bloco `CLIENTS`)
+- [ ] **Adicionar outros clientes reais, se houver autorização para exibi-los**
+  - A faixa atualmente mostra os 9 nomes cadastrados em `lib/constants.ts`.
 
 ## Depoimentos
 
-- [ ] **Substituir os 8 depoimentos** placeholder por depoimentos reais
-  - Arquivo: `lib/constants.ts` (bloco `TESTIMONIALS`)
+- [ ] **Conferir se os depoimentos publicados no Sanity são reais e autorizados**
+  - A seção lê os documentos do Sanity; o texto de apresentação fica em `lib/constants.ts`.
 
   ## Animações (Fase 6 — pulado)
 

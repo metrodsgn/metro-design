@@ -2,7 +2,6 @@ import { client } from "./client";
 import {
   allCasesQuery,
   caseBySlugQuery,
-  featuredCasesQuery,
   allTestimonialsQuery,
 } from "./queries";
 
@@ -13,24 +12,30 @@ export type CaseListItem = {
   client: string;
   category: string;
   year: number;
-  cover: {
+  cover?: {
     asset: { _ref: string; _type: string };
     hotspot?: { x: number; y: number };
   };
-  featured?: boolean;
-};
-
-export type CaseFull = CaseListItem & {
   gallery?: Array<{
+    _key?: string;
     asset: { _ref: string; _type: string };
     hotspot?: { x: number; y: number };
+    dimensions?: { width: number; height: number; aspectRatio: number };
   }>;
+  description?: Array<{
+    _type: string;
+    _key: string;
+    children?: Array<{ text?: string }>;
+  }>;
+  services?: string[];
+};
+
+export type CaseFull = Omit<CaseListItem, "description"> & {
   description?: Array<{
     _type: string;
     _key: string;
     children: Array<{ text: string }>;
   }>;
-  services?: string[];
 };
 
 export type Testimonial = {
@@ -49,10 +54,6 @@ export async function getAllCases(): Promise<CaseListItem[]> {
 
 export async function getCaseBySlug(slug: string): Promise<CaseFull | null> {
   return client.fetch(caseBySlugQuery, { slug });
-}
-
-export async function getFeaturedCases(): Promise<CaseListItem[]> {
-  return client.fetch(featuredCasesQuery);
 }
 
 export async function getAllTestimonials(): Promise<Testimonial[]> {

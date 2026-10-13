@@ -1,7 +1,6 @@
 export const SITE = {
   name: "Metro Design",
-  description:
-    "Transformamos negócios com design e comunicação estratégica.",
+  description: "Transformamos negócios com design e comunicação estratégica.",
   url: "https://metrodesign.com.br",
 } as const;
 
@@ -71,27 +70,6 @@ export const SERVICES = {
     },
   ],
 } as const;
-export const REEL = {
-  label: "Reel",
-  videoSrc: "/videos/video.mp4",
-  poster: "/videos/reel-poster.jpg",
-} as const;
-export const PROJECTS = {
-  label: "Jobs",
-  title: "Projetos selecionados.",
-  cta: { label: "Ver mais cases", href: "/projetos" },
-  items: [
-    { slug: "bm9-photoshoot", title: "BM9 Photoshoot", category: "Audiovisual", initial: "B" },
-    { slug: "deza-arquitetura", title: "DEZA Arquitetura", category: "Branding", initial: "D" },
-    { slug: "flavio-rocha", title: "Flávio Rocha", category: "Branding", initial: "F" },
-    { slug: "kazui", title: "Kazui", category: "Branding", initial: "K" },
-    { slug: "salvo-burguer", title: "Salvo Burguer", category: "Branding", initial: "S" },
-    { slug: "hifive", title: "HiFive", category: "Comunicação", initial: "H" },
-    { slug: "nba-store", title: "NBA Store", category: "Campanha", initial: "N" },
-    { slug: "crocobeach", title: "Crocobeach", category: "Branding", initial: "C" },
-    { slug: "natessential", title: "NatEssential", category: "Branding", initial: "N" },
-  ],
-} as const;
 export const METRUS = {
   label: "Metrus",
   title: "Aprovação de posts sem WhatsApp, sem e-mail, sem estresse.",
@@ -130,102 +108,16 @@ export const CLIENTS = {
     "NBA Store",
     "Crocobeach",
     "NatEssential",
-    // Placeholders (15) — trocar depois
-    "Cliente 10",
-    "Cliente 11",
-    "Cliente 12",
-    "Cliente 13",
-    "Cliente 14",
-    "Cliente 15",
-    "Cliente 16",
-    "Cliente 17",
-    "Cliente 18",
-    "Cliente 19",
-    "Cliente 20",
-    "Cliente 21",
-    "Cliente 22",
-    "Cliente 23",
-    "Cliente 24",
   ],
 } as const;
 export const TAGLINE = {
   text: "Criatividade com método. Estratégia com emoção.",
-  separator: "◆",
-} as const;
-export const TESTIMONIAL = {
-  quote:
-    "A Metro não só redesenhou nossa marca — reposicionou o negócio. O time entendeu onde queríamos chegar antes de desenhar qualquer coisa, e o resultado aparece em cada ponto de contato com o cliente.",
-  name: "Marina Alcântara",
-  role: "Diretora de Marketing",
-  company: "DEZA Arquitetura",
-  initial: "M",
 } as const;
 export const TESTIMONIALS = {
   label: "Clientes",
-  title: "Chegou mensagem de cliente.",
+  title: "O que dizem sobre trabalhar com a Metro.",
   description:
-    "Role a caixa de mensagens para ler o que nossos clientes têm a dizer.",
-  // TROCAR PELOS DEPOIMENTOS REAIS
-  items: [
-    {
-      name: "Helena Albuquerque",
-      company: "Casa Brisa Hotéis",
-      time: "agora",
-      quote:
-        "A Metro transformou o que a gente era em uma marca que as pessoas reconhecem em segundos.",
-      initial: "H",
-    },
-    {
-      name: "Rafael Moura",
-      company: "Linha Norte Logística",
-      time: "2 min",
-      quote:
-        "Planejamento claro, entregas no prazo e um conteúdo que finalmente soa como a nossa empresa.",
-      initial: "R",
-    },
-    {
-      name: "Camila Torres",
-      company: "Torres & Lima Advogados",
-      time: "5 min",
-      quote: "O vídeo institucional virou a nossa melhor apresentação.",
-      initial: "C",
-    },
-    {
-      name: "Paulo Reis",
-      company: "Cerâmica Reis",
-      time: "12 min",
-      quote: "Entenderam o negócio antes de desenhar qualquer coisa.",
-      initial: "P",
-    },
-    {
-      name: "Ana Beatriz",
-      company: "Studio Ananá",
-      time: "1 h",
-      quote: "Nosso Instagram voltou a ter cara de marca.",
-      initial: "A",
-    },
-    {
-      name: "Lucas Prado",
-      company: "Prado Engenharia",
-      time: "ontem",
-      quote: "A sinalização ficou tão boa que virou assunto na obra.",
-      initial: "L",
-    },
-    {
-      name: "Marina Sá",
-      company: "Clínica Sá",
-      time: "ontem",
-      quote: "Brand book simples de usar. Nossa equipe seguiu na hora.",
-      initial: "M",
-    },
-    {
-      name: "Davi Cunha",
-      company: "Cunha Cafés",
-      time: "2 dias",
-      quote: "Lançamos em seis semanas, com marca, fotos e vídeo.",
-      initial: "D",
-    },
-  ],
+    "Parcerias construídas com estratégia, confiança e bons resultados.",
 } as const;
 export const CONTACT_FORM = {
   label: "Fale Conosco",

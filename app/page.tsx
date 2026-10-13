@@ -1,7 +1,7 @@
 import { Hero } from "@/components/sections/Hero";
 import { Somos } from "@/components/sections/Somos";
 import { Fazemos } from "@/components/sections/Fazemos";
-import { Reel } from "@/components/sections/Reel";
+import { AntesDepois } from "@/components/sections/AntesDepois";
 import { Metrus } from "@/components/sections/Metrus";
 import { ProjetosSelecionados } from "@/components/sections/ProjetosSelecionados";
 import { Clientes } from "@/components/sections/Clientes";
@@ -14,7 +14,7 @@ export default function Home() {
       <Hero />
       <Somos />
       <Fazemos />
-      <Reel />
+      <AntesDepois />
       <Metrus />
       <ProjetosSelecionados />
       <Clientes />

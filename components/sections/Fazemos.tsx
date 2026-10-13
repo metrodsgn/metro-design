@@ -34,7 +34,7 @@ export function Fazemos() {
 
               <Link
                 href="/contato"
-                className="bg-foreground text-background hover:bg-accent hover:text-foreground mt-10 inline-flex min-h-12 items-center rounded-md px-6 text-sm font-medium transition-all duration-300 hover:scale-[1.02]"
+                className="ui-button ui-button-primary mt-10"
               >
                 Fale Conosco
               </Link>
@@ -57,7 +57,7 @@ export function Fazemos() {
                       aria-expanded={isOpen}
                       aria-controls={panelId}
                       onClick={() => toggle(index)}
-                      className="border-border font-display text-foreground focus-visible:outline-foreground flex min-h-16 w-full cursor-pointer items-center justify-between gap-4 border-b py-6 text-left text-2xl leading-tight font-normal tracking-tight transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 md:text-3xl"
+                      className="border-border font-display text-foreground flex min-h-16 w-full cursor-pointer items-center justify-between gap-4 border-b py-6 text-left text-2xl leading-tight font-normal tracking-tight transition-colors duration-150 md:text-3xl"
                     >
                       <span>{area.title}</span>
                       <span
@@ -72,8 +72,9 @@ export function Fazemos() {
                       id={panelId}
                       role="region"
                       aria-labelledby={buttonId}
-                      className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                        }`}
+                      className={`grid transition-[grid-template-rows] duration-200 ease-out ${
+                        isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                      }`}
                     >
                       <ul className="overflow-hidden">
                         {area.items.map((item) => (

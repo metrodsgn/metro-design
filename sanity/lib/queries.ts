@@ -9,8 +9,7 @@ export const allCasesQuery = groq`
     client,
     category,
     year,
-    cover,
-    featured
+    cover
   }
 `;
 
@@ -24,25 +23,15 @@ export const caseBySlugQuery = groq`
     category,
     year,
     cover,
-    gallery,
+    gallery[]{
+      ...,
+      "dimensions": asset->metadata.dimensions
+    },
     description,
-    services,
-    featured
+    services
   }
 `;
 
-// Busca os cases em destaque (para a home)
-export const featuredCasesQuery = groq`
-  *[_type == "case" && featured == true] | order(year desc) {
-    _id,
-    title,
-    "slug": slug.current,
-    client,
-    category,
-    year,
-    cover
-  }
-`;
 // Busca todos os depoimentos ordenados
 export const allTestimonialsQuery = groq`
   *[_type == "testimonial"] | order(order asc, _createdAt desc) {
