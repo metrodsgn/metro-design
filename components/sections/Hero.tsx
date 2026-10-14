@@ -54,24 +54,23 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      <Container className="py-24 md:py-28">
-        <div className="max-w-4xl">
+      <Container className="max-w-none -translate-y-10 px-6 py-24 md:-translate-y-24 md:px-10 md:py-28 lg:px-12">
+        <div className="max-w-3xl">
           <p className="text-foreground/80 mb-6 flex items-center gap-3 text-xs font-medium tracking-[0.24em] uppercase md:text-sm">
             <span className="bg-accent h-px w-8" aria-hidden="true" />
-            Estratégia · Branding · Conteúdo
+            Estratégia · Identidade · Experiência
           </p>
 
           <h1
             id="hero-title"
-            className="font-display text-foreground max-w-4xl text-[clamp(2.75rem,6.2vw,5.75rem)] leading-[0.98] font-semibold tracking-[-0.055em]"
+            className="font-display text-foreground max-w-[50rem] text-[clamp(2.75rem,5.2vw,5rem)] leading-[0.98] font-semibold tracking-[-0.055em]"
           >
-            Transformamos negócios com design e comunicação{" "}
-            <span className="text-accent">estratégica.</span>
+            Não seguimos tendências.  {" "}
+            <span className="text-accent"><br />Criamos referências.<br /></span>
           </h1>
 
           <p className="mt-7 max-w-xl text-base leading-relaxed text-white/75 md:mt-8 md:text-lg">
-            Criamos marcas e experiências que aproximam negócios de pessoas e
-            ajudam ideias a ganhar espaço.
+            Design estratégico para transformar percepção em valor.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-3 md:mt-10">
@@ -86,10 +85,7 @@ export function Hero() {
         </div>
       </Container>
 
-      <div className="pointer-events-none absolute right-6 bottom-6 hidden items-center gap-3 text-[10px] tracking-[0.2em] text-white/65 uppercase md:flex lg:right-12 lg:bottom-8">
-        <span className="bg-accent h-8 w-px" aria-hidden="true" />
-        Ideias que movem marcas
-      </div>
+
     </section>
   );
 }

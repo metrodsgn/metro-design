@@ -14,27 +14,27 @@ export function Fazemos() {
   };
 
   return (
-    <section id="fazemos" className="py-24 md:py-32">
+    <section id="fazemos" className="py-16 md:py-32">
       <Container>
         <div className="grid items-start gap-12 md:grid-cols-[5fr_6fr] md:gap-16 lg:gap-24">
           {/* Coluna esquerda — título + descrição */}
-          <div className="md:sticky md:top-24">
+          <div>
             <Reveal>
-              <span className="text-accent text-sm font-medium tracking-widest uppercase">
+              <span className="section-eyebrow">
                 {SERVICES.label}
               </span>
 
-              <h2 className="font-editorial text-foreground mt-4 max-w-xl text-3xl leading-tight tracking-tight md:text-5xl">
+              <h2 className="font-editorial text-foreground mt-3 max-w-xl text-3xl leading-tight tracking-tight md:mt-4 md:text-5xl">
                 {SERVICES.title}
               </h2>
 
-              <p className="text-muted mt-6 max-w-xl text-base leading-relaxed md:text-lg">
+              <p className="text-muted mt-5 max-w-xl text-base leading-relaxed md:mt-6 md:text-lg">
                 {SERVICES.description}
               </p>
 
               <Link
                 href="/contato"
-                className="ui-button ui-button-primary mt-10"
+                className="ui-button ui-button-primary mt-7 md:mt-10"
               >
                 Fale Conosco
               </Link>

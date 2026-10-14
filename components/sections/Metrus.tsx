@@ -19,7 +19,7 @@ export function Metrus() {
           {/* Coluna esquerda — texto */}
           <Reveal>
             <div>
-              <span className="text-accent text-sm font-medium tracking-widest uppercase">
+              <span className="section-eyebrow">
                 {METRUS.label}
               </span>
 

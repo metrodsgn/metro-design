@@ -1,13 +1,18 @@
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { CLIENTS } from "@/lib/constants";
+import { getAllClients, type ClientLogo } from "@/sanity/lib/fetchers";
+import { urlFor } from "@/sanity/lib/image";
 
-export function Clientes() {
+export async function Clientes() {
+  const clients = await getAllClients();
+
   return (
     <section id="clientes" className="py-24 md:py-32">
       <Container>
         <Reveal>
-          <span className="text-accent text-sm font-medium tracking-widest uppercase">
+          <span className="section-eyebrow">
             {CLIENTS.label}
           </span>
 
@@ -17,35 +22,64 @@ export function Clientes() {
         </Reveal>
       </Container>
 
-      <Reveal delay={0.15}>
-        <div className="mt-16 overflow-hidden">
-          <div className="animate-marquee flex gap-4">
-            {[...CLIENTS.items, ...CLIENTS.items].map((client, index) => (
-              <ClientCard key={`row1-${index}`} name={client} />
-            ))}
-          </div>
-        </div>
-      </Reveal>
+      {clients.length > 0 && clients.length < 4 && (
+        <Reveal delay={0.15}>
+          <Container>
+            <div className="mt-12 flex flex-wrap justify-center gap-4 md:mt-16">
+              {clients.map((client) => (
+                <ClientCard key={client._id} client={client} />
+              ))}
+            </div>
+          </Container>
+        </Reveal>
+      )}
 
-      <Reveal delay={0.25}>
-        <div className="mt-4 overflow-hidden">
-          <div className="animate-marquee-reverse flex gap-4">
-            {[...CLIENTS.items, ...CLIENTS.items].map((client, index) => (
-              <ClientCard key={`row2-${index}`} name={client} />
-            ))}
-          </div>
-        </div>
-      </Reveal>
+      {clients.length >= 4 && (
+        <>
+          <Reveal delay={0.15}>
+            <div className="mt-16 overflow-hidden">
+              <div className="animate-marquee flex w-max gap-4">
+                {[...clients, ...clients].map((client, index) => (
+                  <ClientCard
+                    key={`row1-${client._id}-${index}`}
+                    client={client}
+                  />
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.25}>
+            <div className="mt-4 overflow-hidden">
+              <div className="animate-marquee-reverse flex w-max gap-4">
+                {[...clients]
+                  .reverse()
+                  .concat([...clients].reverse())
+                  .map((client, index) => (
+                    <ClientCard
+                      key={`row2-${client._id}-${index}`}
+                      client={client}
+                    />
+                  ))}
+              </div>
+            </div>
+          </Reveal>
+        </>
+      )}
     </section>
   );
 }
 
-function ClientCard({ name }: { name: string }) {
+function ClientCard({ client }: { client: ClientLogo }) {
   return (
-    <div className="border-border bg-surface hover:border-accent/50 flex h-24 w-48 shrink-0 items-center justify-center rounded-[var(--radius-card)] border px-6 transition-colors duration-150">
-      <span className="font-display text-muted hover:text-foreground text-center text-sm font-medium tracking-tight transition-colors duration-150">
-        {name}
-      </span>
+    <div className="relative flex h-28 w-56 shrink-0 items-center justify-center sm:h-32 sm:w-64">
+      <Image
+        src={urlFor(client.logo).width(800).fit("max").url()}
+        alt={`Logo de ${client.name}`}
+        fill
+        sizes="256px"
+        className="scale-150 object-contain mix-blend-screen"
+      />
     </div>
   );
 }

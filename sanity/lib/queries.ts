@@ -8,6 +8,20 @@ export const allCasesQuery = groq`
     "slug": slug.current,
     client,
     category,
+    brandColor,
+    year,
+    cover
+  }
+`;
+
+export const featuredCasesQuery = groq`
+  *[_type == "case" && featured == true] | order(year desc, title asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    client,
+    category,
+    brandColor,
     year,
     cover
   }
@@ -21,6 +35,7 @@ export const caseBySlugQuery = groq`
     "slug": slug.current,
     client,
     category,
+    brandColor,
     year,
     cover,
     gallery[]{
@@ -42,5 +57,27 @@ export const allTestimonialsQuery = groq`
     quote,
     initial,
     time
+  }
+`;
+
+export const allClientsQuery = groq`
+  *[_type == "client" && defined(logo)] | order(order asc, name asc) {
+    _id,
+    name,
+    logo
+  }
+`;
+
+export const allBeforeAfterQuery = groq`
+  *[_type == "beforeAfter" && defined(before.asset) && defined(after.asset)] | order(order asc, _createdAt desc) {
+    _id,
+    "cliente": client,
+    "segmento": segment,
+    "resumo": summary,
+    "entrega": deliverable,
+    "antes": before.asset->url,
+    "depois": after.asset->url,
+    "altAntes": before.alt,
+    "altDepois": after.alt
   }
 `;

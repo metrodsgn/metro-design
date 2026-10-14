@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { NAV_LINKS } from "@/lib/constants";
+import { BrandWordmark } from "@/components/ui/BrandWordmark";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,18 +21,18 @@ export function Header() {
 
   return (
     <header className="border-border bg-background/90 sticky top-0 z-50 border-b backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        {/* Logo / nome */}
+      <div className="relative mx-auto flex h-24 max-w-none items-center justify-between px-6 md:px-10 lg:px-12">
+        {/* Logo Metro */}
         <Link
           href="/"
-          className="font-display text-foreground hover:text-accent text-lg font-bold tracking-tight transition-colors"
+          className="inline-flex items-center transition-opacity hover:opacity-80"
         >
-          Metro Design
+          <BrandWordmark />
         </Link>
 
         <nav
           aria-label="Navegação principal"
-          className="hidden items-center gap-8 md:flex"
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex"
         >
           {NAV_LINKS.map((link) => (
             <Link

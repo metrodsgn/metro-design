@@ -8,7 +8,7 @@ export const CONTACT = {
   email: "contato@metrodesign.com.br",
   phone: "+55 85 99999-9999",
   whatsapp: "5585999999999",
-  address: "Fortaleza - CE, Brasil",
+  address: "Av. Santos Dumont, 2088 - Sl 310 - Aldeota, Fortaleza - CE, 60150-161",
 } as const;
 
 export const SOCIAL = [
@@ -97,18 +97,6 @@ export const METRUS = {
 export const CLIENTS = {
   label: "Clientes",
   title: "Marcas que confiam na Metro.",
-  items: [
-    // Reais (9)
-    "BM9 Photoshoot",
-    "DEZA Arquitetura",
-    "Flávio Rocha",
-    "Kazui",
-    "Salvo Burguer",
-    "HiFive",
-    "NBA Store",
-    "Crocobeach",
-    "NatEssential",
-  ],
 } as const;
 export const TAGLINE = {
   text: "Criatividade com método. Estratégia com emoção.",

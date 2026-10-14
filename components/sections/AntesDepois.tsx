@@ -1,14 +1,18 @@
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { ANTES_DEPOIS } from "@/data/antes-depois";
+import { getBeforeAfterItems } from "@/sanity/lib/fetchers";
 import { AntesDepoisCarousel } from "./AntesDepoisCarousel";
 
-export function AntesDepois() {
+export async function AntesDepois() {
+  const editableItems = await getBeforeAfterItems();
+  const items = editableItems.length > 0 ? editableItems : ANTES_DEPOIS;
+
   return (
     <section id="antes-depois" className="py-14 md:py-20">
       <Container>
         <Reveal>
-          <span className="font-display text-accent text-sm font-medium tracking-widest uppercase">
+          <span className="section-eyebrow">
             ANTES E DEPOIS
           </span>
 
@@ -23,7 +27,7 @@ export function AntesDepois() {
         </Reveal>
 
         <Reveal delay={0.15}>
-          <AntesDepoisCarousel items={ANTES_DEPOIS} />
+          <AntesDepoisCarousel items={items} />
         </Reveal>
       </Container>
     </section>

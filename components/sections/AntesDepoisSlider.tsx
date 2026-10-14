@@ -1,12 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useReducedMotion } from "framer-motion";
 import {
   type ChangeEvent,
   type CSSProperties,
   type PointerEvent,
-  type RefObject,
   useEffect,
   useRef,
   useState,
@@ -15,22 +13,19 @@ import type { AntesDepoisItem } from "@/data/antes-depois";
 
 type AntesDepoisSliderProps = {
   item: AntesDepoisItem;
-  trackRef: RefObject<HTMLDivElement | null>;
   eager: boolean;
 };
 
 export function AntesDepoisSlider({
   item,
-  trackRef,
   eager,
 }: AntesDepoisSliderProps) {
   const frameRef = useRef<HTMLDivElement>(null);
   const interactionRef = useRef(false);
-  const hintPlayedRef = useRef(false);
+  const animationPlayedRef = useRef(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const [position, setPosition] = useState(50);
   const [isAnimating, setIsAnimating] = useState(false);
-  const reduceMotion = useReducedMotion();
 
   const clearAnimationTimers = () => {
     timersRef.current.forEach((timer) => clearTimeout(timer));
@@ -45,30 +40,26 @@ export function AntesDepoisSlider({
 
   useEffect(() => {
     const frame = frameRef.current;
-    const track = trackRef.current;
-    if (!item.antes || !frame || !track || reduceMotion !== false) return;
+    if (!item.antes || !frame) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (
-          !entry.isIntersecting ||
-          entry.intersectionRatio < 0.6 ||
-          hintPlayedRef.current ||
-          interactionRef.current
-        ) {
-          return;
-        }
+        if (interactionRef.current) return;
 
-        hintPlayedRef.current = true;
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.25) return;
+
+        if (animationPlayedRef.current || timersRef.current.length > 0) return;
+
+        animationPlayedRef.current = true;
         setIsAnimating(true);
-        setPosition(62);
         timersRef.current.push(
-          setTimeout(() => setPosition(50), 300),
-          setTimeout(() => setIsAnimating(false), 650)
+          setTimeout(() => setPosition(8), 150),
+          setTimeout(() => setPosition(92), 1450),
+          setTimeout(() => setPosition(50), 2750),
+          setTimeout(() => setIsAnimating(false), 4050)
         );
-        observer.unobserve(frame);
       },
-      { root: track, threshold: 0.6 }
+      { threshold: [0, 0.25] }
     );
 
     observer.observe(frame);
@@ -76,7 +67,7 @@ export function AntesDepoisSlider({
       observer.disconnect();
       clearAnimationTimers();
     };
-  }, [item.antes, reduceMotion, trackRef]);
+  }, [item.antes]);
 
   const updatePosition = (clientX: number) => {
     const frame = frameRef.current;
@@ -144,7 +135,7 @@ export function AntesDepoisSlider({
           <div
             className={`absolute inset-0 z-10 ${
               isAnimating
-                ? "transition-[clip-path] duration-300 ease-in-out"
+                ? "transition-[clip-path] duration-1000 ease-in-out"
                 : ""
             }`}
             style={
@@ -177,7 +168,7 @@ export function AntesDepoisSlider({
           <div
             aria-hidden="true"
             className={`bg-accent pointer-events-none absolute top-0 bottom-0 z-20 w-0.5 -translate-x-1/2 ${
-              isAnimating ? "transition-[left] duration-300 ease-in-out" : ""
+              isAnimating ? "transition-[left] duration-1000 ease-in-out" : ""
             }`}
             style={{ left: `${position}%` }}
           />
@@ -189,7 +180,7 @@ export function AntesDepoisSlider({
             onPointerDown={handleHandlePointerDown}
             onPointerMove={handleHandlePointerMove}
             className={`border-background bg-accent text-foreground absolute top-1/2 z-30 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize touch-none items-center justify-center rounded-full border-2 ${
-              isAnimating ? "transition-[left] duration-300 ease-in-out" : ""
+              isAnimating ? "transition-[left] duration-1000 ease-in-out" : ""
             }`}
             style={{ left: `${position}%` }}
           >

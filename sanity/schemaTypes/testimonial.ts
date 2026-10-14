@@ -47,4 +47,7 @@ export const testimonialType = defineType({
       initialValue: 0,
     }),
   ],
+  preview: {
+    select: { title: "name", subtitle: "company" },
+  },
 });

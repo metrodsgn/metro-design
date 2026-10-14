@@ -7,7 +7,7 @@ export function Somos() {
     <section id="somos" className="py-24 md:py-32">
       <Container>
         <Reveal>
-          <span className="text-accent text-sm font-medium tracking-widest uppercase">
+          <span className="section-eyebrow">
             {ABOUT.label}
           </span>
 

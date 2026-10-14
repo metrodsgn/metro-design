@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { verifyToken, escapeHtml } from "@/lib/anti-spam";
+import { generateToken, verifyToken, escapeHtml } from "@/lib/anti-spam";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -12,6 +12,19 @@ type Body = {
   website?: unknown; // honeypot
   formToken?: unknown;
 };
+
+export async function GET() {
+  try {
+    return NextResponse.json(generateToken(), {
+      headers: { "Cache-Control": "no-store" },
+    });
+  } catch {
+    return NextResponse.json(
+      { error: "Não foi possível preparar o formulário." },
+      { status: 500 },
+    );
+  }
+}
 
 export async function POST(request: Request) {
   try {

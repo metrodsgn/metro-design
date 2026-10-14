@@ -1,4 +1,5 @@
 import { SITE, CONTACT, SOCIAL } from "@/lib/constants";
+import { BrandWordmark } from "@/components/ui/BrandWordmark";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -9,8 +10,8 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-3">
           {/* Coluna 1 — Marca */}
           <div>
-            <h2 className="font-display text-foreground text-2xl font-bold tracking-tight">
-              {SITE.name}
+            <h2>
+              <BrandWordmark />
             </h2>
             <p className="text-muted mt-3 max-w-xs text-sm leading-relaxed">
               {SITE.description}

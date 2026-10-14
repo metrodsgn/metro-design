@@ -7,7 +7,9 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 type Body = {
   name?: unknown;
   email?: unknown;
+  phone?: unknown;
   company?: unknown;
+  service?: unknown;
   message?: unknown;
   website?: unknown; // honeypot
   formToken?: unknown;
@@ -32,8 +34,11 @@ export async function POST(request: Request) {
 
     const name = typeof body.name === "string" ? body.name.trim() : "";
     const email = typeof body.email === "string" ? body.email.trim() : "";
+    const phone = typeof body.phone === "string" ? body.phone.trim() : "";
     const company =
       typeof body.company === "string" ? body.company.trim() : "";
+    const service =
+      typeof body.service === "string" ? body.service.trim() : "";
     const message =
       typeof body.message === "string" ? body.message.trim() : "";
 
@@ -49,7 +54,9 @@ export async function POST(request: Request) {
     if (
       name.length > 100 ||
       email.length > 200 ||
+      phone.length > 30 ||
       company.length > 100 ||
+      service.length > 100 ||
       message.length > 5000
     ) {
       return NextResponse.json({ ok: true });
@@ -64,7 +71,9 @@ export async function POST(request: Request) {
     // 6. Escape HTML
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
+    const safePhone = escapeHtml(phone);
     const safeCompany = escapeHtml(company);
+    const safeService = escapeHtml(service);
     const safeMessage = escapeHtml(message).replace(/\n/g, "<br />");
 
     // 7. Envio
@@ -77,7 +86,9 @@ export async function POST(request: Request) {
         <h2>Novo contato pelo site</h2>
         <p><strong>Nome:</strong> ${safeName}</p>
         <p><strong>Email:</strong> ${safeEmail}</p>
+        ${safePhone ? `<p><strong>Telefone:</strong> ${safePhone}</p>` : ""}
         ${safeCompany ? `<p><strong>Empresa:</strong> ${safeCompany}</p>` : ""}
+        ${safeService ? `<p><strong>Tipo de projeto:</strong> ${safeService}</p>` : ""}
         <hr />
         <p><strong>Mensagem:</strong></p>
         <p>${safeMessage}</p>

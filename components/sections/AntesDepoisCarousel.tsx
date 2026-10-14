@@ -158,7 +158,6 @@ export function AntesDepoisCarousel({ items }: { items: AntesDepoisItem[] }) {
 
               <AntesDepoisSlider
                 item={item}
-                trackRef={trackRef}
                 eager={index === 0}
               />
             </article>

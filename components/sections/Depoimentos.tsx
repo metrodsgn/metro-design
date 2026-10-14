@@ -17,7 +17,7 @@ export async function Depoimentos() {
         <div className="border-border mb-10 flex flex-col gap-5 border-b pb-6 sm:flex-row sm:items-end sm:justify-between md:mb-14">
           <Reveal>
             <div>
-              <span className="text-accent text-xs font-medium tracking-[0.2em] uppercase">
+              <span className="section-eyebrow">
                 {TESTIMONIALS.label}
               </span>
               <h2 className="font-editorial text-foreground mt-3 max-w-2xl text-3xl leading-tight tracking-tight md:text-5xl">
