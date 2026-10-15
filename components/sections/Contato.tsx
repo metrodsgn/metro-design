@@ -235,6 +235,17 @@ export function Contato() {
                     <span aria-hidden="true">↗</span>
                   </a>
                 </li>
+                <li className="border-border border-b">
+                  <a
+                    href={`https://wa.me/${CONTACT.whatsapp}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted hover:text-accent flex min-h-12 items-center justify-between gap-3 transition-colors"
+                  >
+                    WhatsApp
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </li>
                 <li className="text-muted pt-4 break-words">{CONTACT.address}</li>
               </ul>
             </div>

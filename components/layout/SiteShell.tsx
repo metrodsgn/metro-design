@@ -18,6 +18,7 @@ export function SiteShell({
 }: SiteShellProps) {
   const pathname = usePathname();
   const isStudio = pathname.startsWith("/studio");
+  const isContactPage = pathname === "/contato";
 
   if (isStudio) return children;
 
@@ -26,7 +27,7 @@ export function SiteShell({
       {header}
       <main>{children}</main>
       {footer}
-      {floatingAction}
+      {!isContactPage && floatingAction}
     </>
   );
 }

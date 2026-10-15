@@ -508,6 +508,49 @@ body {
   .projects-card__cta {
     transform: none;
   }
+
+  .hero-video-parallax {
+    transform: none !important;
+  }
+
+  .projects-card:hover .projects-card__frame {
+    border-color: var(--color-border);
+    box-shadow: none;
+  }
+
+  .projects-card:hover .projects-card__light {
+    opacity: 0;
+  }
+
+  .projects-card:hover .projects-card__media,
+  .project-next-card:hover,
+  .project-next-card:hover .project-next-card__image,
+  .project-next-card:hover .project-next-card__button,
+  .project-next-card:hover .project-next-card__button svg,
+  .project-next-card:hover .project-next-card__label-arrow {
+    transform: none;
+  }
+
+  .project-next-card:hover {
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 6%),
+      0 25px 50px -12px rgb(0 0 0 / 70%);
+  }
+
+  .project-next-card:hover .project-next-card__shine {
+    animation: none;
+  }
+
+  .project-next-card:hover .project-next-card__button {
+    background-size: 0% 100%;
+    border-color: var(--color-foreground);
+    color: var(--color-background);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 28%);
+  }
+
+  .project-next-card:hover .project-next-card__button::before {
+    opacity: 0;
+  }
 }
 
 .projects-card__cta {

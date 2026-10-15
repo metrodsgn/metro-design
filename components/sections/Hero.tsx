@@ -28,7 +28,7 @@ export function Hero() {
       {/* O vídeo continua como elemento principal da composição. */}
       <motion.div
         style={{ y: reduceMotion ? 0 : videoY }}
-        className="absolute inset-0 -z-20 h-[118%] w-full"
+        className="hero-video-parallax absolute inset-0 -z-20 h-[118%] w-full"
         aria-hidden="true"
       >
         <video

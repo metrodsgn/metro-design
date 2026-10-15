@@ -57,9 +57,9 @@ export function Metrus() {
                 {METRUS.mockups.map((mockup) => (
                   <div
                     key={mockup.title}
-                    className="border-border bg-background/50 flex items-center gap-4 rounded-[var(--radius-control)] border p-4"
+                    className="border-border bg-background/50 grid grid-cols-[2.5rem_minmax(0,1fr)] items-start gap-x-3 gap-y-2 rounded-[var(--radius-control)] border p-3 sm:grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:items-center sm:gap-4 sm:p-4"
                   >
-                    <div className="bg-border h-14 w-14 shrink-0 rounded-md" />
+                    <div className="bg-border h-10 w-10 shrink-0 rounded-md sm:h-14 sm:w-14" />
 
                     <div className="min-w-0 flex-1">
                       <p className="text-foreground truncate text-sm font-medium">
@@ -71,7 +71,7 @@ export function Metrus() {
                     </div>
 
                     <span
-                      className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium ${statusStyles[mockup.status]}`}
+                      className={`col-start-2 justify-self-start rounded-full px-3 py-1 text-xs font-medium sm:col-start-auto sm:justify-self-auto ${statusStyles[mockup.status]}`}
                     >
                       {mockup.statusLabel}
                     </span>
