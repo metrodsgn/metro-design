@@ -189,6 +189,18 @@ export function Contato() {
               </p>
             </div>
 
+            <p className="text-muted max-w-2xl text-xs leading-relaxed">
+              Ao enviar, suas informações serão usadas para responder à sua
+              solicitação. Consulte nosso{" "}
+              <a
+                href="/privacidade"
+                className="text-foreground underline decoration-accent underline-offset-4"
+              >
+                Aviso de Privacidade
+              </a>
+              .
+            </p>
+
             {status === "success" && (
               <p className="text-sm text-emerald-400">
                 Mensagem enviada! Responderemos em breve.

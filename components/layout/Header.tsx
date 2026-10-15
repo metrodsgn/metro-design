@@ -23,12 +23,9 @@ export function Header() {
     <header className="border-border bg-background/90 sticky top-0 z-50 border-b backdrop-blur-md">
       <div className="relative mx-auto flex h-24 max-w-none items-center justify-between px-6 md:px-10 lg:px-12">
         {/* Logo Metro */}
-        <Link
-          href="/"
-          className="inline-flex items-center transition-opacity hover:opacity-80"
-        >
+        <div className="inline-flex items-center">
           <BrandWordmark />
-        </Link>
+        </div>
 
         <nav
           aria-label="Navegação principal"
@@ -44,6 +41,16 @@ export function Header() {
             </Link>
           ))}
         </nav>
+
+        <div className="hidden items-center gap-3 md:flex">
+          <Link href="/projetos" className="ui-button ui-button-accent">
+            Ver projetos
+            <span aria-hidden="true">↗</span>
+          </Link>
+          <Link href="/contato" className="ui-button ui-button-secondary">
+            Fale conosco
+          </Link>
+        </div>
 
         <button
           type="button"

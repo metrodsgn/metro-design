@@ -23,6 +23,14 @@ export const testimonialType = defineType({
       type: "string",
     }),
     defineField({
+      name: "avatar",
+      title: "Foto do cliente (opcional)",
+      type: "image",
+      description:
+        "Foto quadrada para o avatar no carrossel. Se não houver foto, será exibida a inicial.",
+      options: { hotspot: true },
+    }),
+    defineField({
       name: "quote",
       title: "Depoimento",
       type: "text",
@@ -48,6 +56,6 @@ export const testimonialType = defineType({
     }),
   ],
   preview: {
-    select: { title: "name", subtitle: "company" },
+    select: { title: "name", subtitle: "company", media: "avatar" },
   },
 });

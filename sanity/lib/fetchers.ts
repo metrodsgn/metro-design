@@ -21,6 +21,7 @@ export type CaseListItem = {
     asset: { _ref: string; _type: string };
     hotspot?: { x: number; y: number };
   };
+  coverDimensions?: { width: number; height: number; aspectRatio: number };
   gallery?: Array<{
     _key?: string;
     asset: { _ref: string; _type: string };
@@ -49,6 +50,7 @@ export type Testimonial = {
   company: string;
   role?: string;
   quote: string;
+  avatarUrl?: string;
   initial: string;
   time: string;
 };

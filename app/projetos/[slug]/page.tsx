@@ -7,6 +7,7 @@ import { ProjectGallery } from "@/components/sections/ProjectGallery";
 import { ProjectTransitionCard } from "@/components/sections/ProjectTransitionCard";
 import { getAllCases, getCaseBySlug } from "@/sanity/lib/fetchers";
 import { urlFor } from "@/sanity/lib/image";
+import { createSiteMetadata } from "@/lib/metadata";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -19,13 +20,18 @@ export async function generateMetadata({
   const project = await getCaseBySlug(slug);
 
   if (!project) {
-    return { title: "Projeto não encontrado — Metro Design" };
+    return createSiteMetadata({
+      title: "Projeto não encontrado — Metro Design",
+      description: "Este projeto não foi encontrado no portfólio da Metro Design.",
+      path: `/projetos/${slug}`,
+    });
   }
 
-  return {
+  return createSiteMetadata({
     title: `${project.title} — Metro Design`,
     description: `${project.client} · ${project.category} · ${project.year}`,
-  };
+    path: `/projetos/${project.slug}`,
+  });
 }
 
 export default async function ProjetoPage({ params }: PageProps) {
@@ -46,15 +52,15 @@ export default async function ProjetoPage({ params }: PageProps) {
     ...(project.cover
       ? [
           {
-            src: urlFor(project.cover).width(1920).height(1080).url(),
+            src: urlFor(project.cover).width(1920).fit("max").url(),
             alt: `${project.client} — ${project.title}`,
-            width: 1920,
-            height: 1080,
+            width: project.coverDimensions?.width ?? 1200,
+            height: project.coverDimensions?.height ?? 900,
           },
         ]
       : []),
     ...(project.gallery ?? []).map((image, index) => ({
-      src: urlFor(image).width(1800).quality(85).url(),
+      src: urlFor(image).width(1800).quality(85).fit("max").url(),
       alt: `${project.client} — ${project.title}, imagem ${index + 1}`,
       width: image.dimensions?.width ?? 1200,
       height: image.dimensions?.height ?? 900,

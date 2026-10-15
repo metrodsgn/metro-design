@@ -1,5 +1,6 @@
 import { SITE, CONTACT, SOCIAL } from "@/lib/constants";
 import { BrandWordmark } from "@/components/ui/BrandWordmark";
+import Link from "next/link";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -68,9 +69,17 @@ export function Footer() {
 
         {/* Rodapé inferior — copyright */}
         <div className="border-border mt-12 border-t pt-8">
-          <p className="text-muted text-xs">
-            © {currentYear} {SITE.name}. Todos os direitos reservados.
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <p className="text-muted text-xs">
+              © {currentYear} {SITE.name}. Todos os direitos reservados.
+            </p>
+            <Link
+              href="/privacidade"
+              className="text-muted hover:text-foreground text-xs transition-colors"
+            >
+              Aviso de Privacidade
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

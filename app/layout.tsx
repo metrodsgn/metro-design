@@ -8,6 +8,8 @@ import {
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { SiteShell } from "@/components/layout/SiteShell";
+import { createSiteMetadata } from "@/lib/metadata";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -35,11 +37,12 @@ const jetBrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createSiteMetadata({
   title: "Metro Design — Branding e Comunicação Estratégica",
   description:
     "Transformamos negócios com design e comunicação estratégica. Agência de branding e design em Fortaleza-CE.",
-};
+  path: "/",
+});
 
 export default function RootLayout({
   children,
@@ -51,10 +54,13 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} ${instrumentSerif.variable} ${jetBrainsMono.variable} antialiased`}
       >
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <SiteShell
+          header={<Header />}
+          footer={<Footer />}
+          floatingAction={<WhatsAppButton />}
+        >
+          {children}
+        </SiteShell>
       </body>
     </html>
   );

@@ -10,7 +10,8 @@ export const allCasesQuery = groq`
     category,
     brandColor,
     year,
-    cover
+    cover,
+    "coverDimensions": cover.asset->metadata.dimensions
   }
 `;
 
@@ -23,7 +24,8 @@ export const featuredCasesQuery = groq`
     category,
     brandColor,
     year,
-    cover
+    cover,
+    "coverDimensions": cover.asset->metadata.dimensions
   }
 `;
 
@@ -38,6 +40,7 @@ export const caseBySlugQuery = groq`
     brandColor,
     year,
     cover,
+    "coverDimensions": cover.asset->metadata.dimensions,
     gallery[]{
       ...,
       "dimensions": asset->metadata.dimensions
@@ -55,6 +58,7 @@ export const allTestimonialsQuery = groq`
     company,
     role,
     quote,
+    "avatarUrl": avatar.asset->url + "?w=160&h=160&fit=crop&auto=format",
     initial,
     time
   }

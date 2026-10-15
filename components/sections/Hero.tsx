@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import Link from "next/link";
 import {
   motion,
   useReducedMotion,
@@ -73,15 +72,6 @@ export function Hero() {
             Design estratégico para transformar percepção em valor.
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3 md:mt-10">
-            <Link href="/projetos" className="ui-button ui-button-accent">
-              Ver projetos
-              <span aria-hidden="true">↗</span>
-            </Link>
-            <Link href="/contato" className="ui-button ui-button-secondary">
-              Fale conosco
-            </Link>
-          </div>
         </div>
       </Container>
 

@@ -18,11 +18,20 @@ export const SOCIAL = [
 ] as const;
 
 export const NAV_LINKS = [
+  { label: "Início", href: "/" },
   { label: "Somos", href: "/#somos" },
   { label: "Fazemos", href: "/#fazemos" },
   { label: "Projetos", href: "/projetos" },
   { label: "Clientes", href: "/#clientes" },
   { label: "Fale Conosco", href: "/contato" },
+] as const;
+
+export const CASE_CATEGORIES = [
+  "Branding",
+  "Audiovisual",
+  "Comunicação",
+  "Campanha",
+  "Digital",
 ] as const;
 
 export const ABOUT = {

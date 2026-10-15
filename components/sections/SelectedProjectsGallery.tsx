@@ -3,19 +3,32 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { CASE_CATEGORIES } from "@/lib/constants";
 import type { CaseListItem } from "@/sanity/lib/fetchers";
 
 export function SelectedProjectsGallery({
   projects,
+  featuredProjects,
 }: {
   projects: CaseListItem[];
+  featuredProjects: CaseListItem[];
 }) {
   const [activeCategory, setActiveCategory] = useState("Todos");
-  const categories = Array.from(new Set(projects.map((project) => project.category)));
+  const categories = Array.from(
+    new Set([...CASE_CATEGORIES, ...projects.map((project) => project.category)]),
+  );
+  const featuredIds = new Set(featuredProjects.map((project) => project._id));
+  const filteredProjects =
+    activeCategory === "Todos"
+      ? [
+          ...featuredProjects,
+          ...projects.filter((project) => !featuredIds.has(project._id)),
+        ]
+      : projects.filter((project) => project.category === activeCategory);
   const visibleProjects =
     activeCategory === "Todos"
-      ? projects
-      : projects.filter((project) => project.category === activeCategory);
+      ? filteredProjects.slice(0, 6)
+      : filteredProjects;
 
   return (
     <>
@@ -65,7 +78,7 @@ export function SelectedProjectsGallery({
           className="grid gap-x-5 gap-y-10 sm:grid-cols-2 sm:gap-y-12 lg:grid-cols-3 lg:gap-y-14"
           aria-live="polite"
         >
-          {visibleProjects.map((project) => (
+          {visibleProjects.map((project, index) => (
             <ProjectCard
               key={`${activeCategory}-${project._id}`}
               title={project.title}
@@ -74,7 +87,7 @@ export function SelectedProjectsGallery({
               brandColor={project.brandColor}
               cover={project.cover}
               year={project.year}
-              number={projects.indexOf(project) + 1}
+              number={index + 1}
             />
           ))}
         </div>

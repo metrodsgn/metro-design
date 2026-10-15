@@ -3,11 +3,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { CASE_CATEGORIES } from "@/lib/constants";
 import type { CaseListItem } from "@/sanity/lib/fetchers";
 
 export function ProjectsGallery({ projects }: { projects: CaseListItem[] }) {
   const [activeCategory, setActiveCategory] = useState("Todos");
-  const categories = Array.from(new Set(projects.map((project) => project.category)));
+  const categories = Array.from(
+    new Set([...CASE_CATEGORIES, ...projects.map((project) => project.category)]),
+  );
   const visibleProjects =
     activeCategory === "Todos"
       ? projects

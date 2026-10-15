@@ -63,14 +63,15 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
             type="button"
             onClick={() => setActiveIndex(index)}
             aria-label={`Ampliar imagem ${index + 1} de ${title}`}
-            className="group focus-visible:outline-accent relative block aspect-square w-full cursor-zoom-in overflow-hidden bg-[#141414] focus-visible:outline-2 focus-visible:outline-offset-4"
+            style={{ aspectRatio: `${image.width} / ${image.height}` }}
+            className="group focus-visible:outline-accent relative block w-full cursor-zoom-in overflow-hidden bg-[#141414] focus-visible:outline-2 focus-visible:outline-offset-4"
           >
             <Image
               src={image.src}
               alt={image.alt}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 45vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.015] motion-reduce:transform-none motion-reduce:transition-none"
+              className="object-contain transition-transform duration-500 group-hover:scale-[1.015] motion-reduce:transform-none motion-reduce:transition-none"
             />
           </button>
         ))}
@@ -100,7 +101,7 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
                   type="button"
                   onClick={() => dialogRef.current?.close()}
                   aria-label="Fechar visualização"
-                  className="ui-icon-button size-10 shrink-0 text-2xl"
+                  className="inline-flex size-10 shrink-0 items-center justify-center text-2xl font-bold text-[#e32626] transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e32626]"
                 >
                   ×
                 </button>
@@ -127,9 +128,11 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
                       )
                     }
                     aria-label="Ver foto anterior"
-                    className="ui-icon-button absolute left-2 z-10 size-11 border-white/20 text-2xl md:left-8"
+                    className="absolute left-2 z-10 inline-flex size-11 items-center justify-center text-[#e32626] transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e32626] md:left-8"
                   >
-                    <span aria-hidden="true">←</span>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M19 12H5m0 0 7-7m-7 7 7 7" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                   </button>
                   <button
                     type="button"
@@ -139,9 +142,11 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
                       )
                     }
                     aria-label="Ver próxima foto"
-                    className="ui-icon-button absolute right-2 z-10 size-11 border-white/20 text-2xl md:right-8"
+                    className="absolute right-2 z-10 inline-flex size-11 items-center justify-center text-[#e32626] transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e32626] md:right-8"
                   >
-                    <span aria-hidden="true">→</span>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M5 12h14m0 0-7-7m7 7-7 7" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                   </button>
                 </>
               )}

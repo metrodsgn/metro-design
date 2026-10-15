@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { BrandColorInput } from "./BrandColorInput";
 import { brandColors } from "./brandColors";
+import { CASE_CATEGORIES } from "@/lib/constants";
 
 export const caseType = defineType({
   name: "case",
@@ -46,13 +47,10 @@ export const caseType = defineType({
       type: "string",
       group: "info",
       options: {
-        list: [
-          { title: "Branding", value: "Branding" },
-          { title: "Audiovisual", value: "Audiovisual" },
-          { title: "Comunicação", value: "Comunicação" },
-          { title: "Campanha", value: "Campanha" },
-          { title: "Digital", value: "Digital" },
-        ],
+        list: CASE_CATEGORIES.map((category) => ({
+          title: category,
+          value: category,
+        })),
       },
       validation: (rule) => rule.required(),
     }),
@@ -117,7 +115,7 @@ export const caseType = defineType({
       group: "info",
       initialValue: false,
       description:
-        "Marca o projeto para destaque editorial. Ainda não altera quais cases aparecem na home.",
+        "Quando ativado, o projeto pode aparecer entre os até três projetos selecionados na home. Se nenhum case estiver marcado, a home exibe os três mais recentes.",
     }),
   ],
   preview: {

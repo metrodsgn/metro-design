@@ -38,12 +38,20 @@ export async function Clientes() {
         <>
           <Reveal delay={0.15}>
             <div className="mt-16 overflow-hidden">
-              <div className="animate-marquee flex w-max gap-4">
-                {[...clients, ...clients].map((client, index) => (
-                  <ClientCard
-                    key={`row1-${client._id}-${index}`}
-                    client={client}
-                  />
+              <div className="animate-marquee flex w-max">
+                {[0, 1, 2, 3].map((copy) => (
+                  <div
+                    key={`row1-copy-${copy}`}
+                    aria-hidden={copy > 0}
+                    className="flex shrink-0 gap-4 pr-4"
+                  >
+                    {clients.map((client) => (
+                      <ClientCard
+                        key={`row1-${copy}-${client._id}`}
+                        client={client}
+                      />
+                    ))}
+                  </div>
                 ))}
               </div>
             </div>
@@ -51,16 +59,21 @@ export async function Clientes() {
 
           <Reveal delay={0.25}>
             <div className="mt-4 overflow-hidden">
-              <div className="animate-marquee-reverse flex w-max gap-4">
-                {[...clients]
-                  .reverse()
-                  .concat([...clients].reverse())
-                  .map((client, index) => (
-                    <ClientCard
-                      key={`row2-${client._id}-${index}`}
-                      client={client}
-                    />
-                  ))}
+              <div className="animate-marquee-reverse flex w-max">
+                {[0, 1, 2, 3].map((copy) => (
+                  <div
+                    key={`row2-copy-${copy}`}
+                    aria-hidden={copy > 0}
+                    className="flex shrink-0 gap-4 pr-4"
+                  >
+                    {[...clients].reverse().map((client) => (
+                      <ClientCard
+                        key={`row2-${copy}-${client._id}`}
+                        client={client}
+                      />
+                    ))}
+                  </div>
+                ))}
               </div>
             </div>
           </Reveal>

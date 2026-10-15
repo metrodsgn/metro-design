@@ -1,7 +1,36 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import {
+  AnimatePresence,
+  LayoutGroup,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
 import type { Testimonial } from "@/sanity/lib/fetchers";
+
+const slideVariants = {
+  enter: (direction: number) => ({
+    opacity: 0,
+    x: direction > 0 ? -80 : 80,
+  }),
+  center: {
+    opacity: 1,
+    x: 0,
+  },
+  exit: (direction: number) => ({
+    opacity: 0,
+    x: direction > 0 ? 80 : -80,
+  }),
+};
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const flipTransition = {
+  duration: 0.65,
+  ease: EASE,
+};
 
 export function DepoimentosCard({
   testimonials,
@@ -9,94 +38,142 @@ export function DepoimentosCard({
   testimonials: Testimonial[];
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const reduceMotion = useReducedMotion();
   const total = testimonials.length;
 
   if (total === 0) return null;
 
-  const active = testimonials[activeIndex];
-  const goTo = (index: number) => {
+  const goTo = (index: number, visualDirection: number) => {
+    setDirection(visualDirection);
     setActiveIndex((index + total) % total);
   };
 
+  const visibleTestimonials =
+    total >= 3
+      ? [
+          (activeIndex - 1 + total) % total,
+          activeIndex,
+          (activeIndex + 1) % total,
+        ]
+      : total === 2
+        ? [(activeIndex + 1) % total, activeIndex, (activeIndex + 1) % total]
+        : [activeIndex];
+
   return (
-    <div className="border-border bg-surface w-full overflow-hidden rounded-[var(--radius-card)] border">
-      <figure
-        key={active._id}
-        aria-live="polite"
-        aria-atomic="true"
-        className="grid md:min-h-64 md:grid-cols-[1fr_280px]"
+    <div className="relative mx-auto max-w-6xl px-10 md:px-14">
+      <div className="overflow-hidden py-7" aria-live="polite" aria-atomic="true">
+        <div
+          className={`flex items-stretch ${
+            total > 1
+              ? "-ml-[25%] w-[150%] -translate-x-1/3 md:ml-0 md:w-full md:translate-x-0"
+              : "w-full"
+          }`}
+        >
+          <LayoutGroup id="testimonial-cards">
+            <AnimatePresence initial={false} custom={direction} mode="popLayout">
+              {visibleTestimonials.map((testimonialIndex, position) => {
+                const testimonial = testimonials[testimonialIndex];
+
+                return (
+                  <motion.div
+                    key={
+                      total >= 3
+                        ? testimonial._id
+                        : `${testimonial._id}-${position}`
+                    }
+                    layout={total >= 3 ? "position" : false}
+                    layoutId={
+                      total >= 3 ? `testimonial-${testimonial._id}` : undefined
+                    }
+                    custom={direction}
+                    variants={slideVariants}
+                    initial={reduceMotion ? false : "enter"}
+                    animate="center"
+                    exit={reduceMotion ? undefined : "exit"}
+                    transition={
+                      reduceMotion
+                        ? { duration: 0 }
+                        : {
+                            ...flipTransition,
+                            layout: { duration: 0.65, ease: EASE },
+                          }
+                    }
+                    className="h-full shrink-0 px-2 sm:px-3"
+                    style={{ width: `${100 / visibleTestimonials.length}%` }}
+                  >
+                    <article className="flex h-full min-h-72 flex-col items-center rounded-xl border border-border bg-surface px-5 pt-0 pb-7 text-center sm:px-8">
+                      <TestimonialContent testimonial={testimonial} />
+                    </article>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </LayoutGroup>
+        </div>
+      </div>
+
+      {total > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={() => goTo(activeIndex + 1, -1)}
+            className="absolute top-1/2 left-0 z-10 flex size-10 -translate-y-1/2 items-center justify-center bg-transparent text-accent transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-none"
+            aria-label="Depoimento anterior"
+          >
+            <Arrow direction="left" />
+          </button>
+          <button
+            type="button"
+            onClick={() => goTo(activeIndex - 1, 1)}
+            className="absolute top-1/2 right-0 z-10 flex size-10 -translate-y-1/2 items-center justify-center bg-transparent text-accent transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-none"
+            aria-label="Próximo depoimento"
+          >
+            <Arrow direction="right" />
+          </button>
+        </>
+      )}
+
+      {total > 1 && (
+        <p className="text-muted mt-7 text-center font-mono text-xs" aria-live="polite">
+          {String(activeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function TestimonialContent({ testimonial }: { testimonial: Testimonial }) {
+  return (
+    <>
+      <div
+        className={`-mt-7 mb-5 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-background font-display text-xl font-semibold ${
+          testimonial.avatarUrl ? "bg-surface" : "bg-accent text-white"
+        }`}
+        aria-hidden="true"
       >
-        <blockquote className="relative flex items-center p-6 pt-14 text-xl leading-relaxed font-medium sm:p-9 sm:pt-16 md:p-12 md:pt-16 md:text-3xl">
-          <span
-            className="text-accent font-editorial absolute top-5 left-6 text-6xl leading-none sm:top-6 sm:left-9 md:top-8 md:left-12"
-            aria-hidden="true"
-          >
-            “
-          </span>
-          <span className="text-foreground">{active.quote}</span>
-        </blockquote>
-
-        <figcaption className="bg-background border-border flex items-center gap-4 border-t p-6 md:border-t-0 md:border-l md:px-8">
-          <div className="border-border-strong bg-surface text-foreground flex size-12 shrink-0 items-center justify-center rounded-full border text-lg font-semibold">
-            {active.initial}
-          </div>
-          <div className="min-w-0">
-            <p className="text-foreground truncate text-sm font-semibold">
-              {active.name}
-            </p>
-            <p className="text-muted mt-1 text-xs leading-relaxed">
-              {[active.role, active.company].filter(Boolean).join(" · ")}
-            </p>
-          </div>
-        </figcaption>
-      </figure>
-
-      <div className="border-border flex items-center justify-between gap-4 border-t px-5 py-4 sm:px-8">
-        <span className="text-muted font-mono text-xs">
-          {String(activeIndex + 1).padStart(2, "0")} /{" "}
-          {String(total).padStart(2, "0")}
-        </span>
-
-        {total > 1 && (
-          <div
-            className="flex flex-1 justify-center gap-2 px-4"
-            aria-label="Escolher depoimento"
-          >
-            {testimonials.map((testimonial, index) => (
-              <button
-                key={testimonial._id}
-                type="button"
-                onClick={() => goTo(index)}
-                aria-label={`Mostrar depoimento ${index + 1}`}
-                aria-current={index === activeIndex ? "true" : undefined}
-                className={`size-2 rounded-full transition-colors duration-150 ${index === activeIndex ? "bg-accent" : "bg-border-strong hover:bg-muted"}`}
-              />
-            ))}
-          </div>
-        )}
-
-        {total > 1 && (
-          <div className="flex gap-2" aria-label="Navegação dos depoimentos">
-            <button
-              type="button"
-              onClick={() => goTo(activeIndex - 1)}
-              className="ui-icon-button size-10"
-              aria-label="Depoimento anterior"
-            >
-              <Arrow direction="left" />
-            </button>
-            <button
-              type="button"
-              onClick={() => goTo(activeIndex + 1)}
-              className="ui-icon-button size-10"
-              aria-label="Próximo depoimento"
-            >
-              <Arrow direction="right" />
-            </button>
-          </div>
+        {testimonial.avatarUrl ? (
+          <Image
+            src={testimonial.avatarUrl}
+            alt=""
+            width={128}
+            height={128}
+            className="size-full object-cover"
+          />
+        ) : (
+          testimonial.initial || testimonial.name.slice(0, 1)
         )}
       </div>
-    </div>
+      <blockquote className="font-editorial text-foreground text-xl leading-snug sm:text-2xl">
+        “{testimonial.quote}”
+      </blockquote>
+      <div className="mt-auto pt-6">
+        <p className="text-foreground text-sm font-semibold">{testimonial.name}</p>
+        <p className="text-muted mt-1 text-sm">
+          {[testimonial.role, testimonial.company].filter(Boolean).join(" · ")}
+        </p>
+      </div>
+    </>
   );
 }
 
@@ -111,9 +188,9 @@ function Arrow({ direction }: { direction: "left" | "right" }) {
       className={direction === "left" ? "rotate-180" : undefined}
     >
       <path
-        d="M5 12h14m-6-6 6 6-6 6"
+        d="m9 18 6-6-6-6"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

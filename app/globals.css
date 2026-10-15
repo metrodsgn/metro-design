@@ -61,6 +61,14 @@ body {
   content: "";
 }
 
+.section-eyebrow-centered::after {
+  width: 2rem;
+  height: 1px;
+  flex: none;
+  background: var(--color-accent);
+  content: "";
+}
+
 .button-sweep {
   background-color: var(--color-foreground);
   background-image: linear-gradient(100deg, #e32626, #ff2e2e);
@@ -231,18 +239,19 @@ body {
   background-color: var(--color-accent);
   color: var(--color-foreground);
 }
+
 @keyframes marquee {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
 }
 
 @keyframes marquee-reverse {
   from {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
   to {
     transform: translateX(0);
@@ -250,18 +259,13 @@ body {
 }
 
 .animate-marquee {
-  animation: marquee 40s linear infinite;
+  animation: marquee 48s linear infinite;
+  will-change: transform;
 }
 
 .animate-marquee-reverse {
-  animation: marquee-reverse 40s linear infinite;
-}
-
-.animate-marquee:hover,
-.animate-marquee:focus-within,
-.animate-marquee-reverse:hover,
-.animate-marquee-reverse:focus-within {
-  animation-play-state: paused;
+  animation: marquee-reverse 48s linear infinite;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -450,10 +454,9 @@ body {
 }
 
 .project-filter-chip[aria-pressed="true"] {
-  border-color: var(--color-foreground);
-  background-color: var(--color-foreground);
-  background-image: none;
-  color: var(--color-background);
+  border-color: rgb(255 46 46 / 80%);
+  background-size: 100% 100%;
+  color: #fff;
 }
 
 .project-filter-chip[aria-pressed="true"]:hover {
