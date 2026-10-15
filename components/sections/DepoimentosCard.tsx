@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import {
   AnimatePresence,
@@ -39,6 +39,7 @@ export function DepoimentosCard({
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const touchStartX = useRef<number | null>(null);
   const reduceMotion = useReducedMotion();
   const total = testimonials.length;
 
@@ -61,12 +62,30 @@ export function DepoimentosCard({
         : [activeIndex];
 
   return (
-    <div className="relative mx-auto max-w-6xl px-10 md:px-14">
-      <div className="overflow-hidden py-7" aria-live="polite" aria-atomic="true">
+    <div className="relative mx-auto max-w-6xl px-2 sm:px-4 lg:px-14">
+      <div
+        className="overflow-hidden py-7"
+        aria-live="polite"
+        aria-atomic="true"
+        onTouchStart={(event) => {
+          touchStartX.current = event.touches[0]?.clientX ?? null;
+        }}
+        onTouchEnd={(event) => {
+          const startX = touchStartX.current;
+          const endX = event.changedTouches[0]?.clientX;
+          touchStartX.current = null;
+
+          if (startX === null || endX === undefined) return;
+          const deltaX = endX - startX;
+
+          if (Math.abs(deltaX) < 48) return;
+          goTo(activeIndex + (deltaX < 0 ? 1 : -1), deltaX < 0 ? -1 : 1);
+        }}
+      >
         <div
           className={`flex items-stretch ${
             total > 1
-              ? "-ml-[25%] w-[150%] -translate-x-1/3 md:ml-0 md:w-full md:translate-x-0"
+              ? "ml-[10%] w-[240%] -translate-x-1/3 lg:ml-0 lg:w-full lg:translate-x-0"
               : "w-full"
           }`}
         >
@@ -118,7 +137,7 @@ export function DepoimentosCard({
           <button
             type="button"
             onClick={() => goTo(activeIndex + 1, -1)}
-            className="absolute top-1/2 left-0 z-10 flex size-10 -translate-y-1/2 items-center justify-center bg-transparent text-accent transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-none"
+            className="absolute top-1/2 -left-5 z-10 flex size-11 -translate-y-1/2 items-center justify-center bg-transparent text-accent transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-none"
             aria-label="Depoimento anterior"
           >
             <Arrow direction="left" />
@@ -126,7 +145,7 @@ export function DepoimentosCard({
           <button
             type="button"
             onClick={() => goTo(activeIndex - 1, 1)}
-            className="absolute top-1/2 right-0 z-10 flex size-10 -translate-y-1/2 items-center justify-center bg-transparent text-accent transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-none"
+            className="absolute top-1/2 -right-5 z-10 flex size-11 -translate-y-1/2 items-center justify-center bg-transparent text-accent transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-none"
             aria-label="Próximo depoimento"
           >
             <Arrow direction="right" />

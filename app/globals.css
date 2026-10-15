@@ -500,6 +500,16 @@ body {
   transition: opacity 350ms ease;
 }
 
+@media (hover: none) {
+  .projects-card__overlay {
+    opacity: 1;
+  }
+
+  .projects-card__cta {
+    transform: none;
+  }
+}
+
 .projects-card__cta {
   transform: translateY(10px);
   transition: transform 350ms ease;

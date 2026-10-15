@@ -59,7 +59,7 @@ export function SelectedProjectsGallery({
                   type="button"
                   aria-pressed={isActive}
                   onClick={() => setActiveCategory(category)}
-                  className="project-filter-chip rounded-full border px-4 py-2 text-xs font-medium transition-colors sm:text-sm"
+                  className="project-filter-chip min-h-11 rounded-full border px-4 py-2 text-xs font-medium transition-colors sm:text-sm"
                 >
                   {category}
                 </button>

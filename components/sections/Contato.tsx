@@ -95,7 +95,7 @@ export function Contato() {
           {CONTACT_FORM.description}
         </p>
 
-        <div className="mt-16 grid gap-12 md:grid-cols-[7fr_4fr] md:gap-16 lg:gap-24">
+        <div className="mt-10 grid gap-10 md:mt-16 md:grid-cols-[7fr_4fr] md:gap-16 lg:gap-24">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2">
               <Field

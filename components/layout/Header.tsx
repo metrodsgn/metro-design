@@ -21,7 +21,7 @@ export function Header() {
 
   return (
     <header className="border-border bg-background/90 sticky top-0 z-50 border-b backdrop-blur-md">
-      <div className="relative mx-auto flex h-24 max-w-none items-center justify-between px-6 md:px-10 lg:px-12">
+      <div className="relative mx-auto flex h-20 max-w-none items-center justify-between px-5 sm:px-6 md:h-24 md:px-10 lg:px-12">
         {/* Logo Metro */}
         <div className="inline-flex items-center">
           <BrandWordmark />
@@ -29,7 +29,7 @@ export function Header() {
 
         <nav
           aria-label="Navegação principal"
-          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex"
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 xl:flex"
         >
           {NAV_LINKS.map((link) => (
             <Link
@@ -42,7 +42,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <Link href="/projetos" className="ui-button ui-button-accent">
             Ver projetos
             <span aria-hidden="true">↗</span>
@@ -58,7 +58,7 @@ export function Header() {
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
           onClick={() => setMenuOpen((open) => !open)}
-          className="ui-icon-button -mr-2 md:hidden"
+          className="ui-icon-button -mr-2 xl:hidden"
         >
           <svg
             width="24"
@@ -90,7 +90,7 @@ export function Header() {
         id="mobile-navigation"
         aria-label="Navegação para celular"
         hidden={!menuOpen}
-        className="border-border bg-background absolute inset-x-0 top-full border-b px-6 py-3 shadow-2xl md:hidden"
+        className="border-border bg-background absolute inset-x-0 top-full max-h-[calc(100svh-5rem)] overflow-y-auto border-b px-5 py-3 shadow-2xl sm:px-6 md:max-h-[calc(100svh-6rem)] xl:hidden"
       >
         {NAV_LINKS.map((link, index) => (
           <Link

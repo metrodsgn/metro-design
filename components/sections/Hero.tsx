@@ -22,7 +22,7 @@ export function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="bg-background relative isolate flex min-h-[calc(100svh-4rem)] items-center overflow-hidden"
+      className="bg-background relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden md:min-h-[calc(100svh-6rem)]"
       aria-labelledby="hero-title"
     >
       {/* O vídeo continua como elemento principal da composição. */}
@@ -53,16 +53,16 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      <Container className="max-w-none -translate-y-10 px-6 py-24 md:-translate-y-24 md:px-10 md:py-28 lg:px-12">
+      <Container className="max-w-none -translate-y-4 px-5 py-20 sm:px-6 md:-translate-y-24 md:px-10 md:py-28 lg:px-12">
         <div className="max-w-3xl">
-          <p className="text-foreground/80 mb-6 flex items-center gap-3 text-xs font-medium tracking-[0.24em] uppercase md:text-sm">
+          <p className="text-foreground/80 mb-6 flex items-center gap-3 text-[10px] font-medium tracking-[0.18em] uppercase sm:text-xs sm:tracking-[0.24em] md:text-sm">
             <span className="bg-accent h-px w-8" aria-hidden="true" />
             Estratégia · Identidade · Experiência
           </p>
 
           <h1
             id="hero-title"
-            className="font-display text-foreground max-w-[50rem] text-[clamp(2.75rem,5.2vw,5rem)] leading-[0.98] font-semibold tracking-[-0.055em]"
+            className="font-display text-foreground max-w-[50rem] text-[clamp(2.5rem,10vw,3.75rem)] leading-[0.98] font-semibold tracking-[-0.055em] md:text-[clamp(3.5rem,5.2vw,5rem)]"
           >
             Não seguimos tendências.  {" "}
             <span className="text-accent"><br />Criamos referências.<br /></span>
