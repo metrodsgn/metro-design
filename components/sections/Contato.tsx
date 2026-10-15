@@ -87,7 +87,7 @@ export function Contato() {
           {CONTACT_FORM.label}
         </span>
 
-        <h1 className="font-editorial text-foreground mt-4 max-w-2xl text-4xl leading-tight tracking-tight md:text-6xl">
+        <h1 className="font-editorial text-foreground mt-4 max-w-2xl text-[clamp(2rem,9vw,3rem)] leading-tight tracking-tight break-words md:text-6xl">
           {CONTACT_FORM.title}
         </h1>
 
@@ -220,7 +220,7 @@ export function Contato() {
                 <li className="border-border border-b">
                   <a
                     href={`mailto:${CONTACT.email}`}
-                    className="text-muted hover:text-accent flex min-h-12 items-center justify-between gap-4 transition-colors"
+                    className="text-muted hover:text-accent flex min-h-12 min-w-0 items-center justify-between gap-3 break-all transition-colors"
                   >
                     {CONTACT.email}
                     <span aria-hidden="true">↗</span>
@@ -229,13 +229,13 @@ export function Contato() {
                 <li className="border-border border-b">
                   <a
                     href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}
-                    className="text-muted hover:text-accent flex min-h-12 items-center justify-between gap-4 transition-colors"
+                    className="text-muted hover:text-accent flex min-h-12 min-w-0 items-center justify-between gap-3 break-words transition-colors"
                   >
                     {CONTACT.phone}
                     <span aria-hidden="true">↗</span>
                   </a>
                 </li>
-                <li className="text-muted pt-4">{CONTACT.address}</li>
+                <li className="text-muted pt-4 break-words">{CONTACT.address}</li>
               </ul>
             </div>
 

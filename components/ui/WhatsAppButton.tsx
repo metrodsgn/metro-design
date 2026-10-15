@@ -12,7 +12,7 @@ export function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar no WhatsApp"
-      className="group fixed right-6 bottom-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-[transform,box-shadow] duration-150 hover:scale-105 hover:shadow-xl motion-reduce:transform-none"
+      className="group fixed right-4 bottom-[calc(env(safe-area-inset-bottom)+1rem)] z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-[transform,box-shadow] duration-150 hover:scale-105 hover:shadow-xl motion-reduce:transform-none sm:right-6 sm:bottom-6"
     >
       {/* Ícone do WhatsApp (SVG oficial) */}
       <svg

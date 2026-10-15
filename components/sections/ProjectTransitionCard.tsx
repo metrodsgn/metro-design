@@ -54,10 +54,10 @@ export function ProjectTransitionCard({
               />
             </svg>
           </p>
-          <h2 className="font-display max-w-3xl text-[26px] leading-none font-extrabold tracking-[-0.04em] text-white [text-shadow:0_2px_20px_rgb(0_0_0_/_40%)] sm:text-[30px] md:text-4xl">
+          <h2 className="font-display max-w-3xl text-[26px] leading-none font-extrabold tracking-[-0.04em] break-words text-white [text-shadow:0_2px_20px_rgb(0_0_0_/_40%)] sm:text-[30px] md:text-4xl">
             {project.client}
           </h2>
-          <p className="mt-1.5 text-[10px] font-medium tracking-[0.01em] text-white/65 sm:text-[11px]">
+          <p className="mt-1.5 text-[10px] font-medium tracking-[0.01em] break-words text-white/65 sm:text-[11px]">
             {project.title} <span className="mx-1.5 text-white/35">•</span>{" "}
             {project.category} / {project.year}
           </p>

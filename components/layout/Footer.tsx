@@ -28,7 +28,7 @@ export function Footer() {
               <li>
                 <a
                   href={`mailto:${CONTACT.email}`}
-                  className="text-muted hover:text-accent transition-colors"
+                  className="text-muted hover:text-accent break-all transition-colors"
                 >
                   {CONTACT.email}
                 </a>
@@ -36,12 +36,12 @@ export function Footer() {
               <li>
                 <a
                   href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}
-                  className="text-muted hover:text-accent transition-colors"
+                  className="text-muted hover:text-accent break-words transition-colors"
                 >
                   {CONTACT.phone}
                 </a>
               </li>
-              <li className="text-muted">{CONTACT.address}</li>
+              <li className="text-muted break-words">{CONTACT.address}</li>
             </ul>
           </div>
 

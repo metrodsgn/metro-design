@@ -31,7 +31,7 @@ export default function PrivacidadePage() {
               pelo formulário deste site. Para dúvidas ou solicitações sobre
               seus dados, escreva para{" "}
               <a
-                className="text-foreground underline decoration-accent underline-offset-4"
+                className="text-foreground break-all underline decoration-accent underline-offset-4"
                 href={`mailto:${CONTACT.email}`}
               >
                 {CONTACT.email}

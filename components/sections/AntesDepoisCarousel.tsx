@@ -142,7 +142,7 @@ export function AntesDepoisCarousel({ items }: { items: AntesDepoisItem[] }) {
                   {item.segmento} <span className="text-border px-1">/</span>{" "}
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h3 className="font-editorial text-foreground mt-5 text-4xl leading-[0.98] tracking-tight md:text-5xl lg:text-6xl">
+                <h3 className="font-editorial text-foreground mt-5 max-w-full text-4xl leading-[0.98] tracking-tight break-words md:text-5xl lg:text-6xl">
                   {item.cliente}
                 </h3>
                 <p className="text-muted mt-5 max-w-sm text-sm leading-relaxed md:text-base">
@@ -150,7 +150,7 @@ export function AntesDepoisCarousel({ items }: { items: AntesDepoisItem[] }) {
                 </p>
                 <div className="border-border mt-7 flex w-full items-center gap-3 border-t pt-5">
                   <span className="bg-accent h-1.5 w-1.5 shrink-0 rounded-full" />
-                  <p className="text-foreground font-mono text-[11px] tracking-[0.12em] uppercase">
+                  <p className="text-foreground min-w-0 font-mono text-[11px] tracking-[0.12em] break-words uppercase">
                     {item.entrega}
                   </p>
                 </div>

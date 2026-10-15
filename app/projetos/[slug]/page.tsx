@@ -71,11 +71,11 @@ export default async function ProjetoPage({ params }: PageProps) {
     <article className="bg-[#0a0a0a] pb-16 text-[#f5f5f5] md:pb-24">
       <Container>
         <header className="mx-auto max-w-5xl pt-12 text-center sm:pt-16 md:pt-20">
-          <h1 className="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-tight font-normal tracking-[0.04em]">
+          <h1 className="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-tight font-normal tracking-[0.04em] break-words">
             {project.title}
           </h1>
           {project.description && project.description.length > 0 && (
-            <div className="mx-auto mt-6 max-w-4xl space-y-5 text-sm leading-relaxed font-light text-white/55 sm:text-base md:mt-8 md:text-lg">
+            <div className="mx-auto mt-6 max-w-4xl space-y-5 text-sm leading-relaxed font-light break-words text-white/55 sm:text-base md:mt-8 md:text-lg">
               <PortableText value={project.description} />
             </div>
           )}

@@ -85,7 +85,7 @@ export function DepoimentosCard({
         <div
           className={`flex items-stretch ${
             total > 1
-              ? "ml-[10%] w-[240%] -translate-x-1/3 lg:ml-0 lg:w-full lg:translate-x-0"
+              ? "w-[300%] -translate-x-1/3 lg:w-full lg:translate-x-0"
               : "w-full"
           }`}
         >
@@ -121,7 +121,7 @@ export function DepoimentosCard({
                     className="h-full shrink-0 px-2 sm:px-3"
                     style={{ width: `${100 / visibleTestimonials.length}%` }}
                   >
-                    <article className="flex h-full min-h-72 flex-col items-center rounded-xl border border-border bg-surface px-5 pt-0 pb-7 text-center sm:px-8">
+                    <article className="flex h-full min-h-72 min-w-0 flex-col items-center rounded-xl border border-border bg-surface px-5 pt-0 pb-7 text-center sm:px-8">
                       <TestimonialContent testimonial={testimonial} />
                     </article>
                   </motion.div>
@@ -183,12 +183,12 @@ function TestimonialContent({ testimonial }: { testimonial: Testimonial }) {
           testimonial.initial || testimonial.name.slice(0, 1)
         )}
       </div>
-      <blockquote className="font-editorial text-foreground text-xl leading-snug sm:text-2xl">
+      <blockquote className="font-editorial text-foreground max-w-full text-xl leading-snug break-words sm:text-2xl">
         “{testimonial.quote}”
       </blockquote>
       <div className="mt-auto pt-6">
-        <p className="text-foreground text-sm font-semibold">{testimonial.name}</p>
-        <p className="text-muted mt-1 text-sm">
+        <p className="text-foreground max-w-full text-sm font-semibold break-words">{testimonial.name}</p>
+        <p className="text-muted mt-1 max-w-full text-sm break-words">
           {[testimonial.role, testimonial.company].filter(Boolean).join(" · ")}
         </p>
       </div>

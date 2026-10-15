@@ -87,12 +87,12 @@ export function ProjectCard({
         </span>
       </div>
 
-      <div className="mt-4 flex items-start justify-between gap-4">
-        <div>
-          <h3 className="projects-card__title font-display text-foreground text-base font-semibold tracking-tight transition-colors sm:text-lg">
+      <div className="mt-4 flex min-w-0 items-start justify-between gap-3 sm:gap-4">
+        <div className="min-w-0">
+          <h3 className="projects-card__title font-display text-foreground text-base font-semibold tracking-tight break-words transition-colors sm:text-lg">
             {title}
           </h3>
-          <p className="text-muted mt-1 text-sm">{category}</p>
+          <p className="text-muted mt-1 text-sm break-words">{category}</p>
         </div>
         <span className="text-muted mt-1 shrink-0 font-mono text-xs">
           {String(number).padStart(2, "0")}
