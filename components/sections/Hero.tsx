@@ -1,36 +1,18 @@
 "use client";
 
-import { useRef } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 
 export function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
   const reduceMotion = useReducedMotion();
-  const videoY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
 
   return (
     <section
-      ref={sectionRef}
-      className="bg-background relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden md:min-h-[calc(100svh-6rem)]"
+      className="hero-section bg-background relative isolate flex min-h-svh items-center overflow-hidden"
       aria-labelledby="hero-title"
     >
       {/* O vídeo continua como elemento principal da composição. */}
-      <motion.div
-        style={{ y: reduceMotion ? 0 : videoY }}
-        className="hero-video-parallax absolute inset-0 -z-20 h-[118%] w-full"
-        aria-hidden="true"
-      >
+      <div className="absolute inset-0 -z-20" aria-hidden="true">
         <video
           autoPlay
           muted
@@ -41,7 +23,7 @@ export function Hero() {
         >
           <source src="/videos/video.mp4" type="video/mp4" />
         </video>
-      </motion.div>
+      </div>
 
       {/* Gradientes deixam o texto legível sem apagar o vídeo. */}
       <div
@@ -54,28 +36,58 @@ export function Hero() {
       />
 
       <Container className="max-w-none -translate-y-4 px-5 py-20 sm:px-6 md:-translate-y-24 md:px-10 md:py-28 lg:px-12">
-        <div className="max-w-3xl">
-          <p className="text-foreground/80 mb-6 flex items-center gap-3 text-[10px] font-medium tracking-[0.18em] uppercase sm:text-xs sm:tracking-[0.24em] md:text-sm">
+        <motion.div
+          className="max-w-3xl"
+          initial={reduceMotion ? false : "hidden"}
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: {
+              transition: { staggerChildren: 0.06, delayChildren: 0.04 },
+            },
+          }}
+        >
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 6 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.35, ease: [0.2, 0, 0, 1] }}
+            className="text-foreground/80 mb-6 flex items-center gap-3 text-[10px] font-medium tracking-[0.18em] uppercase sm:text-xs sm:tracking-[0.24em] md:text-sm"
+          >
             <span className="bg-accent h-px w-8" aria-hidden="true" />
             Estratégia · Identidade · Experiência
-          </p>
+          </motion.p>
 
-          <h1
+          <motion.h1
             id="hero-title"
-            className="font-display text-foreground max-w-[50rem] text-[clamp(2.5rem,10vw,3.75rem)] leading-[0.98] font-semibold tracking-[-0.055em] md:text-[clamp(3.5rem,5.2vw,5rem)]"
+            variants={{
+              hidden: { opacity: 0, y: 8 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.4, ease: [0.2, 0, 0, 1] }}
+            className="font-editorial text-foreground max-w-[54rem] text-[clamp(3.35rem,11vw,5.2rem)] leading-[0.9] font-normal tracking-[-0.035em] md:text-[clamp(5rem,8vw,7.5rem)]"
           >
-            Não seguimos tendências.  {" "}
-            <span className="text-accent"><br />Criamos referências.<br /></span>
-          </h1>
+            Não seguimos tendências.{" "}
+            <span className="text-accent">
+              <br />
+              Criamos referências.
+              <br />
+            </span>
+          </motion.h1>
 
-          <p className="mt-7 max-w-xl text-base leading-relaxed text-white/75 md:mt-8 md:text-lg">
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 6 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.35, ease: [0.2, 0, 0, 1] }}
+            className="mt-7 max-w-xl text-base leading-relaxed text-white/75 md:mt-8 md:text-lg"
+          >
             Design estratégico para transformar percepção em valor.
-          </p>
-
-        </div>
+          </motion.p>
+        </motion.div>
       </Container>
-
-
     </section>
   );
 }

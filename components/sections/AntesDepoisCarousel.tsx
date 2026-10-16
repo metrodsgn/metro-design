@@ -9,7 +9,6 @@ export function AntesDepoisCarousel({ items }: { items: AntesDepoisItem[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
   const reduceMotion = useReducedMotion();
   const total = items.length;
 
@@ -38,26 +37,6 @@ export function AntesDepoisCarousel({ items }: { items: AntesDepoisItem[] }) {
 
     return () => observer.disconnect();
   }, [total]);
-
-  useEffect(() => {
-    if (reduceMotion !== false || isHovered || total < 2) return;
-
-    const interval = window.setInterval(() => {
-      const nextIndex = (activeIndex + 1) % total;
-      const track = trackRef.current;
-      const slide = slideRefs.current[nextIndex];
-      if (!track || !slide) return;
-
-      const trackLeft = track.getBoundingClientRect().left;
-      const slideLeft = slide.getBoundingClientRect().left;
-      track.scrollTo({
-        left: track.scrollLeft + slideLeft - trackLeft,
-        behavior: "smooth",
-      });
-    }, 5000);
-
-    return () => window.clearInterval(interval);
-  }, [activeIndex, isHovered, reduceMotion, total]);
 
   const scrollToIndex = (index: number) => {
     const track = trackRef.current;
@@ -103,17 +82,7 @@ export function AntesDepoisCarousel({ items }: { items: AntesDepoisItem[] }) {
   const formattedTotal = String(total).padStart(2, "0");
 
   return (
-    <div
-      className="mt-8 md:mt-10"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onFocusCapture={() => setIsHovered(true)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-          setIsHovered(false);
-        }
-      }}
-    >
+    <div className="mt-8 md:mt-10">
       <div
         ref={trackRef}
         tabIndex={0}
@@ -132,12 +101,10 @@ export function AntesDepoisCarousel({ items }: { items: AntesDepoisItem[] }) {
             role="group"
             aria-roledescription="slide"
             aria-label={`${index + 1} de ${total}`}
-            className={`w-full shrink-0 snap-center transition-opacity duration-300 ${
-              index === activeIndex ? "opacity-100" : "opacity-[.82]"
-            }`}
+            className="w-full shrink-0 snap-center"
           >
-            <article className="border-border bg-surface grid items-start gap-5 rounded-[var(--radius-card)] border p-4 md:grid-cols-[minmax(14rem,0.8fr)_minmax(0,1.7fr)] md:gap-10 md:p-7 lg:gap-14 lg:p-9">
-              <div className="flex flex-col items-start px-1 md:px-0 md:pt-2">
+            <article className="before-after-composition">
+              <div className="before-after-story flex flex-col items-start px-1 md:px-0 md:pt-2">
                 <p className="text-accent font-mono text-[11px] tracking-[0.18em] uppercase">
                   {item.segmento} <span className="text-border px-1">/</span>{" "}
                   {String(index + 1).padStart(2, "0")}
@@ -156,10 +123,9 @@ export function AntesDepoisCarousel({ items }: { items: AntesDepoisItem[] }) {
                 </div>
               </div>
 
-              <AntesDepoisSlider
-                item={item}
-                eager={index === 0}
-              />
+              <div className="before-after-visual">
+                <AntesDepoisSlider item={item} eager={index === 0} />
+              </div>
             </article>
           </div>
         ))}

@@ -12,11 +12,7 @@ export async function AntesDepois() {
     <section id="antes-depois" className="py-14 md:py-20">
       <Container>
         <Reveal>
-          <span className="section-eyebrow">
-            ANTES E DEPOIS
-          </span>
-
-          <h2 className="font-editorial text-foreground mt-4 max-w-2xl text-3xl leading-tight tracking-tight md:text-5xl">
+          <h2 className="font-editorial text-foreground max-w-2xl text-3xl leading-tight tracking-tight md:text-5xl">
             Veja a marca mudar.
           </h2>
 

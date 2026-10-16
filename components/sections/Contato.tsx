@@ -81,13 +81,9 @@ export function Contato() {
   };
 
   return (
-    <section className="py-12 md:py-16">
+    <section className="pt-28 pb-12 md:pt-36 md:pb-16">
       <Container className="max-w-[100rem]">
-        <span className="section-eyebrow">
-          {CONTACT_FORM.label}
-        </span>
-
-        <h1 className="font-editorial text-foreground mt-4 max-w-2xl text-[clamp(2rem,9vw,3rem)] leading-tight tracking-tight break-words md:text-6xl">
+        <h1 className="font-editorial text-foreground max-w-2xl text-[clamp(2rem,9vw,3rem)] leading-tight tracking-tight break-words md:text-6xl">
           {CONTACT_FORM.title}
         </h1>
 
@@ -279,9 +275,6 @@ export function Contato() {
         >
           <div className="mx-auto flex max-w-[100rem] flex-col gap-3 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8 md:px-12">
             <div>
-              <p className="section-eyebrow">
-                Nossa localização
-              </p>
               <p className="mt-2 text-sm leading-relaxed text-foreground sm:text-base">
                 {CONTACT.address}
               </p>

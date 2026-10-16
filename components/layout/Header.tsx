@@ -7,6 +7,89 @@ import { BrandWordmark } from "@/components/ui/BrandWordmark";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    let previousY = window.scrollY;
+    let frame = 0;
+
+    const detectTextOverlap = () => {
+      const inkItems = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-header-ink]"),
+      );
+      const header = document.querySelector("header");
+      if (!header || inkItems.length === 0) return;
+
+      const inkRects = inkItems.map((item) => ({
+        item,
+        rects: Array.from(item.getClientRects()),
+      }));
+      const overlaps = new Set<HTMLElement>();
+      const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+      );
+      const range = document.createRange();
+      let node = walker.nextNode();
+
+      while (node) {
+        const text = node.textContent?.trim();
+        const parent = node.parentElement;
+        if (text && parent && !header.contains(parent)) {
+          range.selectNodeContents(node);
+          const textRects = Array.from(range.getClientRects());
+
+          for (const { item, rects } of inkRects) {
+            if (
+              !overlaps.has(item) &&
+              rects.some((inkRect) =>
+                textRects.some(
+                  (textRect) =>
+                    inkRect.left < textRect.right &&
+                    inkRect.right > textRect.left &&
+                    inkRect.top < textRect.bottom &&
+                    inkRect.bottom > textRect.top,
+                ),
+              )
+            ) {
+              overlaps.add(item);
+            }
+          }
+        }
+        node = walker.nextNode();
+      }
+
+      inkItems.forEach((item) => {
+        item.dataset.overText = String(overlaps.has(item));
+      });
+    };
+
+    const updateVisibility = () => {
+      const currentY = window.scrollY;
+      const delta = currentY - previousY;
+
+      if (currentY < 80) {
+        setVisible(true);
+      } else if (delta < -4) {
+        setVisible(true);
+      } else if (delta > 4) {
+        setVisible(false);
+      }
+
+      previousY = currentY;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(detectTextOverlap);
+    };
+
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    window.addEventListener("resize", updateVisibility);
+    updateVisibility();
+    return () => {
+      window.removeEventListener("scroll", updateVisibility);
+      window.removeEventListener("resize", updateVisibility);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -20,11 +103,20 @@ export function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="border-border bg-background/90 sticky top-0 z-50 border-b backdrop-blur-md">
-      <div className="relative mx-auto flex h-20 max-w-none items-center justify-between px-5 sm:px-6 md:h-24 md:px-10 lg:px-12">
+    <header
+      onFocusCapture={() => setVisible(true)}
+      className={`sticky top-0 z-50 -mb-20 border-b border-transparent bg-transparent transition-transform duration-300 ease-out motion-reduce:transition-none md:-mb-24 ${
+        visible || menuOpen ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-36 bg-linear-to-b from-black/85 via-black/45 to-transparent"
+      />
+      <div className="relative z-10 mx-auto flex h-20 max-w-none items-center justify-between px-5 sm:px-6 md:h-24 md:px-10 lg:px-12">
         {/* Logo Metro */}
         <div className="inline-flex items-center">
-          <BrandWordmark />
+          <BrandWordmark className="header-logo-ink" data-header-ink />
         </div>
 
         <nav
@@ -35,7 +127,8 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-muted hover:text-foreground text-sm font-medium transition-colors"
+              data-header-ink
+              className="header-adaptive-ink text-sm font-medium transition-colors"
             >
               {link.label}
             </Link>
@@ -90,7 +183,7 @@ export function Header() {
         id="mobile-navigation"
         aria-label="Navegação para celular"
         hidden={!menuOpen}
-        className="border-border bg-background absolute inset-x-0 top-full max-h-[calc(100svh-5rem)] overflow-y-auto border-b px-5 py-3 shadow-2xl sm:px-6 md:max-h-[calc(100svh-6rem)] xl:hidden"
+        className="border-border bg-background absolute inset-x-0 top-full z-20 max-h-[calc(100svh-5rem)] overflow-y-auto border-b px-5 py-3 shadow-2xl sm:px-6 md:max-h-[calc(100svh-6rem)] xl:hidden"
       >
         {NAV_LINKS.map((link, index) => (
           <Link

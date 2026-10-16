@@ -14,9 +14,9 @@ export default function Home() {
       <Hero />
       <Somos />
       <Fazemos />
-      <AntesDepois />
-      <Metrus />
       <ProjetosSelecionados />
+      <Metrus />
+      <AntesDepois />
       <Clientes />
       <FaixaTexto />
       <Depoimentos />

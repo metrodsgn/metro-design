@@ -12,11 +12,7 @@ export async function Clientes() {
     <section id="clientes" className="py-24 md:py-32">
       <Container>
         <Reveal>
-          <span className="section-eyebrow">
-            {CLIENTS.label}
-          </span>
-
-          <h2 className="font-editorial text-foreground mt-4 max-w-2xl text-3xl leading-tight tracking-tight md:text-5xl">
+          <h2 className="font-editorial text-foreground max-w-2xl text-3xl leading-tight tracking-tight md:text-5xl">
             {CLIENTS.title}
           </h2>
         </Reveal>

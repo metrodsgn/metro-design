@@ -90,10 +90,10 @@ export default async function ProjetoPage({ params }: PageProps) {
           <section
             id="proximo-projeto"
             aria-label="Navegação entre projetos"
-            className="scroll-mt-36 grid gap-4 pt-8 md:pt-10"
+            className="project-navigation scroll-mt-36 pt-8 md:pt-10"
           >
             {(previousProject || nextProject) && (
-              <div className="grid grid-cols-1 gap-4">
+              <div className="project-navigation__links">
                 {previousProject && (
                   <ProjectTransitionCard
                     project={previousProject}

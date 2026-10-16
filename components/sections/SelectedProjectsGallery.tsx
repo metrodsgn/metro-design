@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { ProjectCard } from "@/components/ui/ProjectCard";
-import { CASE_CATEGORIES } from "@/lib/constants";
 import type { CaseListItem } from "@/sanity/lib/fetchers";
 
 export function SelectedProjectsGallery({
@@ -13,29 +11,17 @@ export function SelectedProjectsGallery({
   projects: CaseListItem[];
   featuredProjects: CaseListItem[];
 }) {
-  const [activeCategory, setActiveCategory] = useState("Todos");
-  const categories = Array.from(
-    new Set([...CASE_CATEGORIES, ...projects.map((project) => project.category)]),
-  );
   const featuredIds = new Set(featuredProjects.map((project) => project._id));
-  const filteredProjects =
-    activeCategory === "Todos"
-      ? [
-          ...featuredProjects,
-          ...projects.filter((project) => !featuredIds.has(project._id)),
-        ]
-      : projects.filter((project) => project.category === activeCategory);
-  const visibleProjects =
-    activeCategory === "Todos"
-      ? filteredProjects.slice(0, 6)
-      : filteredProjects;
+  const visibleProjects = [
+    ...featuredProjects,
+    ...projects.filter((project) => !featuredIds.has(project._id)),
+  ].slice(0, 6);
 
   return (
-    <>
-      <header className="mb-8 flex flex-col gap-6 border-b border-white/15 pb-6 md:mb-10 md:flex-row md:items-end md:justify-between md:gap-8">
+    <div className="selected-projects">
+      <header className="selected-projects__header mb-8 flex flex-col gap-6 pb-6 md:mb-10 md:flex-row md:items-end md:justify-between md:gap-8">
         <div>
-          <span className="section-eyebrow">Jobs</span>
-          <h2 className="font-editorial text-foreground mt-3 text-3xl leading-tight tracking-tight md:text-4xl">
+          <h2 className="font-editorial text-foreground text-3xl leading-tight tracking-tight md:text-4xl">
             Projetos selecionados.
           </h2>
           <p className="text-muted mt-3 max-w-xl text-sm leading-relaxed sm:text-base">
@@ -43,30 +29,6 @@ export function SelectedProjectsGallery({
             comunicar.
           </p>
         </div>
-
-        {projects.length > 0 && (
-          <div
-            className="flex flex-wrap gap-2 md:max-w-[34rem] md:justify-end"
-            role="group"
-            aria-label="Filtrar projetos por categoria"
-          >
-            {["Todos", ...categories].map((category) => {
-              const isActive = activeCategory === category;
-
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  aria-pressed={isActive}
-                  onClick={() => setActiveCategory(category)}
-                  className="project-filter-chip min-h-11 max-w-full rounded-full border px-4 py-2 text-left text-xs font-medium break-words transition-colors sm:text-sm"
-                >
-                  {category}
-                </button>
-              );
-            })}
-          </div>
-        )}
       </header>
 
       {projects.length === 0 ? (
@@ -75,12 +37,12 @@ export function SelectedProjectsGallery({
         </p>
       ) : (
         <div
-          className="grid gap-x-5 gap-y-10 sm:grid-cols-2 sm:gap-y-12 lg:grid-cols-3 lg:gap-y-14"
+          className="selected-projects__grid grid gap-x-5 gap-y-10 sm:grid-cols-2 sm:gap-y-12 lg:grid-cols-3 lg:gap-y-14"
           aria-live="polite"
         >
           {visibleProjects.map((project, index) => (
             <ProjectCard
-              key={`${activeCategory}-${project._id}`}
+              key={project._id}
               title={project.title}
               slug={project.slug}
               category={project.category}
@@ -93,7 +55,7 @@ export function SelectedProjectsGallery({
         </div>
       )}
 
-      <div className="border-border mt-10 flex flex-col items-start justify-between gap-4 border-t pt-6 sm:mt-12 sm:flex-row sm:items-center sm:pt-7">
+      <div className="selected-projects__footer border-border mt-10 flex flex-col items-start justify-between gap-4 border-t pt-6 sm:mt-12 sm:flex-row sm:items-center sm:pt-7">
         <p className="text-muted text-sm sm:text-base">
           Explore todos os nossos projetos.
         </p>
@@ -101,6 +63,6 @@ export function SelectedProjectsGallery({
           Todos os projetos <span aria-hidden="true">↗</span>
         </Link>
       </div>
-    </>
+    </div>
   );
 }

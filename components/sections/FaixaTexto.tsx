@@ -6,7 +6,7 @@ import {
   useReducedMotion,
   useScroll,
   useTransform,
-  MotionValue,
+  type MotionValue,
 } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { TAGLINE } from "@/lib/constants";
@@ -24,18 +24,23 @@ export function FaixaTexto() {
   );
 
   return (
-    <section className="border-border border-y py-32 md:py-48">
+    <section className="py-24 md:py-32">
       <Container>
-        <AnimatedTagline animate={hasMounted && reduceMotion === false} />
+        <AnimatedTagline animate={hasMounted} move={reduceMotion === false} />
       </Container>
     </section>
   );
 }
 
-function AnimatedTagline({ animate }: { animate: boolean }) {
+function AnimatedTagline({
+  animate,
+  move,
+}: {
+  animate: boolean;
+  move: boolean;
+}) {
   const containerRef = useRef<HTMLParagraphElement>(null);
   const words = TAGLINE.text.split(" ");
-
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 1", "end 0.5"],
@@ -44,7 +49,7 @@ function AnimatedTagline({ animate }: { animate: boolean }) {
   return (
     <p
       ref={containerRef}
-      className="font-editorial text-foreground flex flex-wrap gap-x-3 gap-y-3 text-3xl leading-tight tracking-tight md:text-5xl lg:text-6xl"
+      className="font-editorial text-foreground flex max-w-5xl flex-wrap gap-x-3 gap-y-2 text-4xl leading-[1.08] tracking-tight md:text-6xl lg:text-7xl"
     >
       {words.map((word, index) => {
         const start = index / words.length;
@@ -52,10 +57,11 @@ function AnimatedTagline({ animate }: { animate: boolean }) {
 
         return (
           <Word
-            key={index}
+            key={`${word}-${index}`}
             progress={scrollYProgress}
             range={[start, end]}
             animate={animate}
+            move={move}
           >
             {word}
           </Word>
@@ -70,14 +76,16 @@ function Word({
   progress,
   range,
   animate,
+  move,
 }: {
   children: string;
   progress: MotionValue<number>;
   range: [number, number];
   animate: boolean;
+  move: boolean;
 }) {
   const opacity = useTransform(progress, range, [0, 1]);
-  const y = useTransform(progress, range, ["60%", "0%"]);
+  const y = useTransform(progress, range, move ? ["20%", "0%"] : ["0%", "0%"]);
 
   return (
     <span className="inline-block overflow-hidden pb-1">

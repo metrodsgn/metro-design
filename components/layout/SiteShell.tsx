@@ -2,6 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { SiteIntro } from "@/components/layout/SiteIntro";
 
 type SiteShellProps = {
   children: ReactNode;
@@ -24,6 +26,8 @@ export function SiteShell({
 
   return (
     <>
+      <SmoothScroll />
+      <SiteIntro pathname={pathname} />
       {header}
       <main>{children}</main>
       {footer}

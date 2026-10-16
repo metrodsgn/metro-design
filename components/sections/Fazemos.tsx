@@ -20,11 +20,7 @@ export function Fazemos() {
           {/* Coluna esquerda — título + descrição */}
           <div>
             <Reveal>
-              <span className="section-eyebrow">
-                {SERVICES.label}
-              </span>
-
-              <h2 className="font-editorial text-foreground mt-3 max-w-xl text-3xl leading-tight tracking-tight md:mt-4 md:text-5xl">
+              <h2 className="font-editorial text-foreground max-w-xl text-3xl leading-tight tracking-tight md:text-5xl">
                 {SERVICES.title}
               </h2>
 
@@ -62,9 +58,14 @@ export function Fazemos() {
                       <span>{area.title}</span>
                       <span
                         aria-hidden="true"
-                        className="text-muted shrink-0 font-mono text-xl"
+                        className="relative h-5 w-5 shrink-0"
                       >
-                        {isOpen ? "−" : "+"}
+                        <span className="bg-muted absolute top-1/2 left-0 h-px w-5 -translate-y-1/2" />
+                        <span
+                          className={`bg-muted absolute top-0 left-1/2 h-5 w-px -translate-x-1/2 transition-transform duration-200 ease-out ${
+                            isOpen ? "scale-y-0" : "scale-y-100"
+                          }`}
+                        />
                       </span>
                     </button>
 

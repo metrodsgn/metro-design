@@ -10,6 +10,7 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { createSiteMetadata } from "@/lib/metadata";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({

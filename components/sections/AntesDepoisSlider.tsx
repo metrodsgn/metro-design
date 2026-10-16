@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useReducedMotion } from "framer-motion";
 import type { AntesDepoisItem } from "@/data/antes-depois";
 
 type AntesDepoisSliderProps = {
@@ -16,16 +17,12 @@ type AntesDepoisSliderProps = {
   eager: boolean;
 };
 
-export function AntesDepoisSlider({
-  item,
-  eager,
-}: AntesDepoisSliderProps) {
+export function AntesDepoisSlider({ item, eager }: AntesDepoisSliderProps) {
   const frameRef = useRef<HTMLDivElement>(null);
-  const interactionRef = useRef(false);
-  const animationPlayedRef = useRef(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const [position, setPosition] = useState(50);
   const [isAnimating, setIsAnimating] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   const clearAnimationTimers = () => {
     timersRef.current.forEach((timer) => clearTimeout(timer));
@@ -33,41 +30,11 @@ export function AntesDepoisSlider({
   };
 
   const markInteraction = () => {
-    interactionRef.current = true;
     clearAnimationTimers();
     setIsAnimating(false);
   };
 
-  useEffect(() => {
-    const frame = frameRef.current;
-    if (!item.antes || !frame) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (interactionRef.current) return;
-
-        if (!entry.isIntersecting || entry.intersectionRatio < 0.25) return;
-
-        if (animationPlayedRef.current || timersRef.current.length > 0) return;
-
-        animationPlayedRef.current = true;
-        setIsAnimating(true);
-        timersRef.current.push(
-          setTimeout(() => setPosition(8), 150),
-          setTimeout(() => setPosition(92), 1450),
-          setTimeout(() => setPosition(50), 2750),
-          setTimeout(() => setIsAnimating(false), 4050)
-        );
-      },
-      { threshold: [0, 0.25] }
-    );
-
-    observer.observe(frame);
-    return () => {
-      observer.disconnect();
-      clearAnimationTimers();
-    };
-  }, [item.antes]);
+  useEffect(() => clearAnimationTimers, []);
 
   const updatePosition = (clientX: number) => {
     const frame = frameRef.current;
@@ -106,6 +73,10 @@ export function AntesDepoisSlider({
 
   const toggleComparison = () => {
     markInteraction();
+    if (reduceMotion) {
+      setPosition((current) => (current === 0 ? 100 : 0));
+      return;
+    }
     setIsAnimating(true);
     setPosition((current) => (current === 0 ? 100 : 0));
     timersRef.current.push(setTimeout(() => setIsAnimating(false), 350));
@@ -134,9 +105,7 @@ export function AntesDepoisSlider({
         <>
           <div
             className={`absolute inset-0 z-10 ${
-              isAnimating
-                ? "transition-[clip-path] duration-1000 ease-in-out"
-                : ""
+              isAnimating ? "transition-[clip-path] duration-300 ease-out" : ""
             }`}
             style={
               {
@@ -168,7 +137,7 @@ export function AntesDepoisSlider({
           <div
             aria-hidden="true"
             className={`bg-accent pointer-events-none absolute top-0 bottom-0 z-20 w-0.5 -translate-x-1/2 ${
-              isAnimating ? "transition-[left] duration-1000 ease-in-out" : ""
+              isAnimating ? "transition-[left] duration-300 ease-out" : ""
             }`}
             style={{ left: `${position}%` }}
           />
@@ -180,7 +149,7 @@ export function AntesDepoisSlider({
             onPointerDown={handleHandlePointerDown}
             onPointerMove={handleHandlePointerMove}
             className={`border-background bg-accent text-foreground absolute top-1/2 z-30 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize touch-none items-center justify-center rounded-full border-2 ${
-              isAnimating ? "transition-[left] duration-1000 ease-in-out" : ""
+              isAnimating ? "transition-[left] duration-300 ease-out" : ""
             }`}
             style={{ left: `${position}%` }}
           >

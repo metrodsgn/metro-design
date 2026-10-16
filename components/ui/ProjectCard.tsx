@@ -7,6 +7,8 @@ type ProjectCardProps = {
   title: string;
   slug: string;
   category: string;
+  services?: string[];
+  showServices?: boolean;
   brandColor?: string;
   year: number;
   number: number;
@@ -20,6 +22,8 @@ export function ProjectCard({
   title,
   slug,
   category,
+  services,
+  showServices = false,
   brandColor,
   year,
   number,
@@ -33,66 +37,57 @@ export function ProjectCard({
     <Link
       href={`/projetos/${slug}`}
       style={accentStyle}
-      className="projects-card group focus-visible:outline-accent block rounded-[var(--radius-card)] focus-visible:outline-2 focus-visible:outline-offset-4"
+      className="projects-card group focus-visible:outline-accent block focus-visible:outline-2 focus-visible:outline-offset-4"
     >
-      <div
-        className="projects-card__frame border-border bg-surface relative isolate aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] border"
-        onPointerMove={(event) => {
-          if (
-            event.pointerType !== "mouse" ||
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ) {
-            return;
-          }
+      <div className="projects-card__frame border-border bg-surface relative isolate aspect-[4/3] overflow-hidden border">
+        <div className="projects-card__media">
+          {cover ? (
+            <Image
+              src={urlFor(cover).width(800).height(500).url()}
+              alt={title}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 50vw"
+              className="projects-card__image object-cover"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center">
+              <span className="font-editorial text-muted/60 group-hover:text-accent text-8xl transition-colors duration-200">
+                {title.charAt(0)}
+              </span>
+            </div>
+          )}
+        </div>
 
-          const bounds = event.currentTarget.getBoundingClientRect();
-          event.currentTarget.style.setProperty(
-            "--pointer-x",
-            `${event.clientX - bounds.left}px`,
-          );
-          event.currentTarget.style.setProperty(
-            "--pointer-y",
-            `${event.clientY - bounds.top}px`,
-          );
-        }}
-        onPointerLeave={(event) => {
-          event.currentTarget.style.removeProperty("--pointer-x");
-          event.currentTarget.style.removeProperty("--pointer-y");
-        }}
-      >
-        {cover ? (
-          <Image
-            src={urlFor(cover).width(600).height(450).url()}
-            alt={title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="projects-card__media object-cover"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            <span className="font-editorial text-muted/60 group-hover:text-accent text-8xl transition-colors duration-200">
-              {title.charAt(0)}
-            </span>
-          </div>
-        )}
-
-        <span className="projects-card__light absolute inset-0" aria-hidden="true" />
         <div className="projects-card__overlay absolute inset-0 flex items-end justify-between p-4 sm:p-5">
           <span className="projects-card__cta inline-flex items-center gap-2 text-sm font-medium text-white">
-            Ver projeto <span className="projects-card__arrow" aria-hidden="true">↗</span>
+            Ver projeto{" "}
+            <span className="projects-card__arrow" aria-hidden="true">
+              ↗
+            </span>
           </span>
         </div>
-        <span className="projects-card__year absolute top-3 left-3 z-10 rounded-full bg-black/60 px-2.5 py-1 text-[10px] tracking-wide text-white/90 backdrop-blur sm:text-[11px]">
+        <span className="projects-card__year absolute top-3 left-3 z-10 rounded-sm bg-black/65 px-2.5 py-1 text-[10px] tracking-wide text-white/90 sm:text-[11px]">
           {year}
         </span>
       </div>
 
-      <div className="mt-4 flex min-w-0 items-start justify-between gap-3 sm:gap-4">
+      <div className="projects-card__details mt-4 flex min-w-0 items-start justify-between gap-3 sm:gap-4">
         <div className="min-w-0">
           <h3 className="projects-card__title font-display text-foreground text-base font-semibold tracking-tight break-words transition-colors sm:text-lg">
-            {title}
+            <span className="projects-card__title-arrow" aria-hidden="true">→</span>
+            <span>{title}</span>
           </h3>
-          <p className="text-muted mt-1 text-sm break-words">{category}</p>
+          <p className="projects-card__tags text-muted mt-1 text-sm break-words">
+            {(showServices && services?.filter(Boolean).length
+              ? services.filter(Boolean)
+              : [category]
+            ).map((service, index) => (
+              <span key={`${service}-${index}`}>
+                {index > 0 && <span aria-hidden="true"> • </span>}
+                {service}
+              </span>
+            ))}
+          </p>
         </div>
         <span className="text-muted mt-1 shrink-0 font-mono text-xs">
           {String(number).padStart(2, "0")}
