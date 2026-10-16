@@ -10,7 +10,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-12 md:grid-cols-3">
           {/* Coluna 1 — Marca */}
-          <div>
+          <div className="footer-reveal">
             <h2>
               <BrandWordmark />
             </h2>
@@ -20,7 +20,7 @@ export function Footer() {
           </div>
 
           {/* Coluna 2 — Contato */}
-          <div>
+          <div className="footer-reveal">
             <h3 className="text-foreground text-sm font-semibold tracking-wide uppercase">
               Contato
             </h3>
@@ -28,7 +28,7 @@ export function Footer() {
               <li>
                 <a
                   href={`mailto:${CONTACT.email}`}
-                  className="text-muted hover:text-accent break-all transition-colors"
+                  className="footer-link text-muted hover:text-accent break-all"
                 >
                   {CONTACT.email}
                 </a>
@@ -36,7 +36,7 @@ export function Footer() {
               <li>
                 <a
                   href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}
-                  className="text-muted hover:text-accent break-words transition-colors"
+                  className="footer-link text-muted hover:text-accent break-words"
                 >
                   {CONTACT.phone}
                 </a>
@@ -46,7 +46,7 @@ export function Footer() {
           </div>
 
           {/* Coluna 3 — Redes Sociais */}
-          <div>
+          <div className="footer-reveal">
             <h3 className="text-foreground text-sm font-semibold tracking-wide uppercase">
               Redes
             </h3>
@@ -57,7 +57,7 @@ export function Footer() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-muted hover:text-accent transition-colors"
+                    className="footer-link text-muted hover:text-accent"
                   >
                     {social.name}
                   </a>
@@ -75,7 +75,7 @@ export function Footer() {
             </p>
             <Link
               href="/privacidade"
-              className="text-muted hover:text-foreground text-xs transition-colors"
+              className="footer-link text-muted hover:text-foreground text-xs"
             >
               Aviso de Privacidade
             </Link>

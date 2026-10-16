@@ -49,7 +49,7 @@ function AnimatedTagline({
   return (
     <p
       ref={containerRef}
-      className="font-editorial text-foreground flex max-w-5xl flex-wrap gap-x-3 gap-y-2 text-4xl leading-[1.08] tracking-tight md:text-6xl lg:text-7xl"
+      className="font-editorial text-foreground flex w-full max-w-none flex-wrap gap-x-[0.22em] gap-y-[0.08em] text-[clamp(2.25rem,5.2vw,6rem)] leading-[1.08] tracking-tight"
     >
       {words.map((word, index) => {
         const start = index / words.length;

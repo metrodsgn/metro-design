@@ -1,6 +1,6 @@
 # Contexto do site Metro Design para IA
 
-Documento de referência para análise e manutenção deste repositório. Atualizado em 15/10/2026 por inspeção do código local e checagem responsiva em Chromium. Ele descreve o código encontrado, não confirma que a versão publicada esteja igual.
+Documento de referência para análise e manutenção deste repositório. Atualizado em 16/10/2026 por inspeção do código local. As alterações de responsividade anotadas nesta revisão ainda não foram verificadas em Chromium. Ele descreve o código encontrado, não confirma que a versão publicada esteja igual.
 
 ## Orientações para a IA
 
@@ -69,13 +69,15 @@ A ordem em `app/page.tsx` é: Hero, Somos, Fazemos, AntesDepois, Metrus, Projeto
 - Os CTAs de projetos e contato ficam no cabeçalho; o Hero não os duplica.
 - `Fazemos` apresenta os serviços em acordeão.
 - `Metrus` inclui apresentação e chamada para contato.
-- `FaixaTexto` é a faixa animada de marcas/logos; sua implementação está em `components/sections/FaixaTexto.tsx`.
+- `FaixaTexto` apresenta “Criatividade com método. Estratégia com emoção.” com animação de revelação por palavra ligada ao scroll; sua implementação está em `components/sections/FaixaTexto.tsx`.
+- O rodapé revela suas três colunas conforme entram na viewport e sublinha links no hover/foco; os efeitos são CSS progressivo e respeitam movimento reduzido.
 - Há controles compartilhados de botão, ícone e formulário definidos nos estilos globais. Verifique o CSS atual antes de alterar tokens ou comportamento responsivo.
 
 ### Responsividade
 
 - O layout usa os breakpoints Tailwind `sm`, `md`, `lg` e `xl`. O cabeçalho mantém o menu compacto abaixo de `xl`; o menu abre por botão e fecha ao escolher uma rota ou pressionar Escape.
-- Os contêineres limitam a largura máxima e reduzem os recuos em telas estreitas. Grades de projetos começam em uma coluna e passam a duas em `sm` e três em `lg`; filtros permitem quebra em várias linhas.
+- O componente `Container` limita a largura máxima a `96rem` e usa recuos laterais responsivos (`1rem` por padrão, `1.25rem` em `sm`, `2rem` em `md` e `3rem` em `lg`). A composição da seção “Somos” ocupa uma coluna até `lg` e dez de doze colunas a partir de `lg`; o texto corrido tem largura máxima para preservar a leitura.
+- A chamada da `FaixaTexto` usa largura integral disponível e tamanho fluido (`clamp(2.25rem, 5.2vw, 6rem)`), permitindo que as palavras se reorganizem conforme a tela. Grades de projetos começam em uma coluna e passam a duas em `sm` e três em `lg`; filtros permitem quebra em várias linhas.
 - No mockup do Metrus, o status fica abaixo do texto em telas estreitas e volta à mesma linha em `sm` ou acima.
 - O botão flutuante de WhatsApp respeita a área segura inferior e não é exibido em `/contato` para não cobrir os campos. O link equivalente fica no cartão de contato direto.
 - A home, `/projetos`, `/contato` e `/privacidade` foram verificadas em Chromium nas larguras 320, 375, 390, 768, 1024 e 1440 px. Em cada medida, `document.documentElement.scrollWidth` foi igual à largura da viewport.
@@ -128,12 +130,12 @@ Os textos de apresentação das seções e dados de contato/redes ficam em `lib/
 - O detalhe do case constrói a galeria a partir da capa (se houver) e das imagens adicionais. As dimensões originais vêm dos metadados Sanity e são passadas aos componentes para preservar proporções. URLs de imagem usam `fit("max")` para não forçar recorte/ampliação dos originais.
 - A apresentação da galeria/lightbox fica em `ProjectGallery.tsx`; confira o componente e os estilos antes de mudar ajuste (`object-fit`), dimensões ou controles.
 - `AntesDepois` prioriza os documentos do Sanity; se a busca falha ou não retorna conteúdo, usa os dados locais de `data/antes-depois.ts`. O comparador permite arrastar o divisor e tem controles de navegação.
-- `Clientes` busca logos no Sanity. Com menos de quatro itens, exibe cartões estáticos centralizados; a partir de quatro, monta duas faixas contínuas com cópias dos logos. A animação considera `prefers-reduced-motion`.
+- `Clientes` busca logos no Sanity. Com menos de quatro itens, exibe cartões estáticos centralizados; a partir de quatro, monta duas faixas contínuas com cópias dos logos. As faixas param quando `prefers-reduced-motion` está ativo.
 - `Depoimentos` mostra três cards em telas `lg` ou maiores e um card central nas telas menores. Chevrons vermelhos sem fundo ficam nas laterais. Framer Motion anima a fileira na direção da navegação: os cards se movem juntos e um novo depoimento entra pela lateral oposta. Respeita movimento reduzido. Os cards não têm estado visual selecionado. Avatares usam foto opcional do Sanity ou a inicial cadastrada.
 - O parallax do vídeo do Hero é desativado para dispositivos sem hover. Os efeitos de hover dos cards de projeto são neutralizados em telas touch; a chamada “Ver projeto” permanece visível. O comparador antes/depois continua aceitando gesto de toque.
 - Movimento reduzido e scroll nativo devem ser preservados ao modificar animações. Verifique `app/globals.css` e o componente específico.
 
-### Verificações da revisão responsiva
+### Verificações registradas na revisão anterior (15/10/2026)
 
 - `npm run lint` — passou.
 - `npx tsc --noEmit` — passou.
@@ -141,6 +143,8 @@ Os textos de apresentação das seções e dados de contato/redes ficam em `lib/
 - Chromium em 320 px: página de case, lightbox, menu mobile e estados de toque verificados sem overflow horizontal.
 - `git diff --check` — passou.
 - Build de produção não confirmado nesta revisão: Turbopack falhou ao iniciar um processo auxiliar no ambiente. A tentativa alternativa via Webpack não retornou saída e foi interrompida; não registrar o build como aprovado.
+
+As mudanças de margens do `Container`, largura da seção “Somos”, dimensionamento da `FaixaTexto` e animações do rodapé feitas em 16/10/2026 foram conferidas por inspeção de código, mas não passaram por nova checagem em navegador.
 
 ## Formulário de contato e proteção contra spam
 

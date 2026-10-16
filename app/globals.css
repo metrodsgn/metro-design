@@ -4,6 +4,11 @@ html {
   scroll-behavior: auto;
 }
 
+:root {
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --dur: 350ms;
+}
+
 @theme {
   /* Fontes */
   --font-display: var(--font-display), "Geist", system-ui, sans-serif;
@@ -268,24 +273,80 @@ body {
   will-change: transform;
 }
 
+.footer-link {
+  position: relative;
+  display: inline-block;
+}
+
+.footer-link::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.1em;
+  left: 0;
+  height: 1px;
+  background: var(--color-accent);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur) var(--ease);
+}
+
+.footer-link:hover::after,
+.footer-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.footer-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+@supports (animation-timeline: view()) {
+  .footer-reveal {
+    animation: footer-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+
+  @keyframes footer-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
 .about-section {
   padding-top: 5rem;
 }
 
 .about-composition {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
   gap: 2rem;
 }
 
-.about-heading {
-  max-width: 48rem;
+.about-story {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+  max-width: 64rem;
 }
 
 .about-copy {
   display: grid;
+  width: 100%;
+  min-width: 0;
+  margin-top: 1rem;
   gap: 1rem;
-  max-width: 38rem;
+  max-width: 42rem;
 }
 
 .selected-projects__header {
@@ -338,22 +399,6 @@ body {
 }
 
 @media (min-width: 768px) {
-  .about-composition {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: 1.5rem;
-  }
-
-  .about-heading {
-    grid-column: 1 / span 8;
-    grid-row: 1;
-  }
-
-  .about-copy {
-    grid-column: 7 / span 6;
-    grid-row: 2;
-    margin-top: 0.5rem;
-  }
-
   .before-after-composition {
     grid-template-columns: minmax(15rem, 0.8fr) minmax(0, 1.5fr);
     gap: clamp(2rem, 5vw, 5rem);
@@ -361,6 +406,17 @@ body {
 
   .before-after-story {
     padding: 1rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-composition {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+
+  .about-story {
+    grid-column: 1 / span 10;
   }
 }
 
@@ -1170,15 +1226,23 @@ body {
   }
 }
 
-/* The client logo marquee is an intentional brand element and remains active
-   even when the browser reduces other motion on the page. */
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee {
-    animation: marquee 48s linear infinite !important;
+    animation: none !important;
   }
 
   .animate-marquee-reverse {
-    animation: marquee-reverse 48s linear infinite !important;
+    animation: none !important;
+  }
+
+  .footer-link::after {
+    transition: none;
+  }
+
+  .footer-reveal {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
   }
 }
 
