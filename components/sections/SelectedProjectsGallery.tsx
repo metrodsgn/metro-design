@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { RevealLines } from "@/components/ui/RevealLines";
 import type { CaseListItem } from "@/sanity/lib/fetchers";
 
 export function SelectedProjectsGallery({
@@ -21,9 +22,11 @@ export function SelectedProjectsGallery({
     <div className="selected-projects">
       <header className="selected-projects__header mb-8 flex flex-col gap-6 pb-6 md:mb-10 md:flex-row md:items-end md:justify-between md:gap-8">
         <div>
-          <h2 className="font-editorial text-foreground text-3xl leading-tight tracking-tight md:text-5xl">
-            Projetos selecionados.
-          </h2>
+          <RevealLines
+            as="h2"
+            className="font-editorial text-foreground text-3xl leading-tight tracking-tight md:text-5xl"
+            lines={["Projetos selecionados."]}
+          />
           <p className="text-muted mt-3 max-w-xl text-sm leading-relaxed sm:text-base">
             Uma seleção de marcas que ajudamos a construir, reposicionar e
             comunicar.

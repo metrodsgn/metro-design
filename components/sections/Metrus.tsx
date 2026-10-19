@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { RevealLines } from "@/components/ui/RevealLines";
 import { METRUS } from "@/lib/constants";
 
 type Status = "approved" | "pending" | "changes";
@@ -17,12 +18,14 @@ export function Metrus() {
       <Container>
         <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16 lg:gap-24">
           {/* Coluna esquerda — texto */}
-          <Reveal>
-            <div>
-              <h2 className="font-editorial text-foreground max-w-xl text-3xl leading-tight tracking-tight md:text-5xl">
-                {METRUS.title}
-              </h2>
+          <div>
+            <RevealLines
+              as="h2"
+              className="font-editorial text-foreground max-w-xl text-3xl leading-tight tracking-tight md:text-5xl"
+              lines={[METRUS.title]}
+            />
 
+            <Reveal delay={0.1}>
               <p className="text-muted mt-6 max-w-xl text-base leading-relaxed md:text-lg">
                 {METRUS.description}
               </p>
@@ -33,8 +36,8 @@ export function Metrus() {
               >
                 {METRUS.cta.label}
               </Link>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
 
           {/* Coluna direita — mockup */}
           <Reveal delay={0.15}>
