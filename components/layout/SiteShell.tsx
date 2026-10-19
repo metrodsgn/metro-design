@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { MotionConfig } from "framer-motion";
 import type { ReactNode } from "react";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { SiteIntro } from "@/components/layout/SiteIntro";
@@ -26,7 +27,7 @@ export function SiteShell({
   if (isStudio) return children;
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <SmoothScroll />
       <SiteIntro pathname={pathname} />
       {header}
@@ -34,6 +35,6 @@ export function SiteShell({
       {footer}
       {!isContactPage && floatingAction}
       <CursorArrow />
-    </>
+    </MotionConfig>
   );
 }
