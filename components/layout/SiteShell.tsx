@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { SiteIntro } from "@/components/layout/SiteIntro";
+import { CursorArrow } from "@/components/ui/CursorArrow";
 
 type SiteShellProps = {
   children: ReactNode;
@@ -32,6 +33,7 @@ export function SiteShell({
       <main>{children}</main>
       {footer}
       {!isContactPage && floatingAction}
+      <CursorArrow />
     </>
   );
 }

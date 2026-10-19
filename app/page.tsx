@@ -1,25 +1,19 @@
 import { Hero } from "@/components/sections/Hero";
-import { Somos } from "@/components/sections/Somos";
-import { Fazemos } from "@/components/sections/Fazemos";
-import { AntesDepois } from "@/components/sections/AntesDepois";
 import { Metrus } from "@/components/sections/Metrus";
 import { ProjetosSelecionados } from "@/components/sections/ProjetosSelecionados";
-import { Clientes } from "@/components/sections/Clientes";
 import { FaixaTexto } from "@/components/sections/FaixaTexto";
-import { Depoimentos } from "@/components/sections/Depoimentos";
+import { CtaFinal } from "@/components/sections/CtaFinal";
 
+// Home curta: Hero → Projetos selecionados → Metrus → faixa → CTA.
+// Somos, Fazemos, AntesDepois, Clientes e Depoimentos migraram para /sobre.
 export default function Home() {
   return (
     <>
       <Hero />
-      <Somos />
-      <Fazemos />
       <ProjetosSelecionados />
       <Metrus />
-      <AntesDepois />
-      <Clientes />
       <FaixaTexto />
-      <Depoimentos />
+      <CtaFinal />
     </>
   );
 }

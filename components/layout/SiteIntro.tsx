@@ -18,7 +18,7 @@ export function SiteIntro({ pathname }: { pathname: string }) {
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.35, ease: [0.2, 0, 0, 1] }}
+          transition={{ duration: 0.25, ease: [0.2, 0, 0, 1] }}
           aria-label="Abertura Metro Design"
         >
           <video
@@ -26,6 +26,9 @@ export function SiteIntro({ pathname }: { pathname: string }) {
             muted
             playsInline
             preload="auto"
+            onLoadedMetadata={(event) => {
+              event.currentTarget.playbackRate = 1.15;
+            }}
             onEnded={skip}
             onError={skip}
             className="h-full w-full object-contain"

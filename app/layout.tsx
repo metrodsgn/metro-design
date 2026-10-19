@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import {
-  Space_Grotesk,
   Inter,
   Instrument_Serif,
   JetBrains_Mono,
+  Space_Grotesk,
 } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -13,22 +13,23 @@ import { createSiteMetadata } from "@/lib/metadata";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-display",
-  subsets: ["latin"],
-  display: "swap",
-});
-
 const inter = Inter({
-  variable: "--font-sans",
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
 
 const instrumentSerif = Instrument_Serif({
-  variable: "--font-editorial",
+  variable: "--font-serif",
   subsets: ["latin"],
   weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-grotesk",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -51,10 +52,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body
-        className={`${spaceGrotesk.variable} ${inter.variable} ${instrumentSerif.variable} ${jetBrainsMono.variable} antialiased`}
-      >
+    <html
+      lang="pt-BR"
+      className={`${inter.variable} ${instrumentSerif.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable}`}
+    >
+      <body className="antialiased">
         <SiteShell
           header={<Header />}
           footer={<Footer />}

@@ -64,7 +64,7 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
             onClick={() => setActiveIndex(index)}
             aria-label={`Ampliar imagem ${index + 1} de ${title}`}
             style={{ aspectRatio: `${image.width} / ${image.height}` }}
-            className="group focus-visible:outline-accent relative block w-full cursor-zoom-in overflow-hidden bg-[#141414] focus-visible:outline-2 focus-visible:outline-offset-4"
+            className="group focus-visible:outline-accent relative block w-full cursor-zoom-in overflow-hidden bg-surface focus-visible:outline-2 focus-visible:outline-offset-4"
           >
             <Image
               src={image.src}
@@ -101,7 +101,7 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
                   type="button"
                   onClick={() => dialogRef.current?.close()}
                   aria-label="Fechar visualização"
-                  className="inline-flex size-10 shrink-0 items-center justify-center text-2xl font-bold text-[#e32626] transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e32626]"
+                  className="inline-flex size-11 shrink-0 items-center justify-center text-2xl font-bold text-accent transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 >
                   ×
                 </button>
@@ -128,7 +128,7 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
                       )
                     }
                     aria-label="Ver foto anterior"
-                    className="absolute left-2 z-10 inline-flex size-11 items-center justify-center text-[#e32626] transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e32626] md:left-8"
+                    className="absolute left-2 z-10 inline-flex size-11 items-center justify-center text-accent transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:left-8"
                   >
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M19 12H5m0 0 7-7m-7 7 7 7" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -142,7 +142,7 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
                       )
                     }
                     aria-label="Ver próxima foto"
-                    className="absolute right-2 z-10 inline-flex size-11 items-center justify-center text-[#e32626] transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e32626] md:right-8"
+                    className="absolute right-2 z-10 inline-flex size-11 items-center justify-center text-accent transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:right-8"
                   >
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M5 12h14m0 0-7-7m7 7-7 7" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />

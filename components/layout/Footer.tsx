@@ -1,5 +1,5 @@
 import { SITE, CONTACT, SOCIAL } from "@/lib/constants";
-import { BrandWordmark } from "@/components/ui/BrandWordmark";
+import { Container } from "@/components/ui/Container";
 import Link from "next/link";
 
 export function Footer() {
@@ -7,21 +7,18 @@ export function Footer() {
 
   return (
     <footer className="border-border mt-24 border-t">
-      <div className="mx-auto max-w-7xl px-6 py-16">
+      <Container className="py-16">
         <div className="grid gap-12 md:grid-cols-3">
-          {/* Coluna 1 — Marca */}
+          {/* Coluna 1 — Descrição */}
           <div className="footer-reveal">
-            <h2>
-              <BrandWordmark />
-            </h2>
-            <p className="text-muted mt-3 max-w-xs text-sm leading-relaxed">
+            <p className="text-muted max-w-xs text-sm leading-relaxed">
               {SITE.description}
             </p>
           </div>
 
           {/* Coluna 2 — Contato */}
           <div className="footer-reveal">
-            <h3 className="text-foreground text-sm font-semibold tracking-wide uppercase">
+            <h3 className="font-sans text-foreground text-sm font-semibold tracking-wide uppercase">
               Contato
             </h3>
             <ul className="mt-4 space-y-2 text-sm">
@@ -47,7 +44,7 @@ export function Footer() {
 
           {/* Coluna 3 — Redes Sociais */}
           <div className="footer-reveal">
-            <h3 className="text-foreground text-sm font-semibold tracking-wide uppercase">
+            <h3 className="font-sans text-foreground text-sm font-semibold tracking-wide uppercase">
               Redes
             </h3>
             <ul className="mt-4 space-y-2 text-sm">
@@ -67,11 +64,19 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Rodapé inferior — copyright */}
-        <div className="border-border mt-12 border-t pt-8">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        {/* Assinatura tipográfica */}
+        <p className="font-wordmark text-accent mt-16 leading-[0.78] font-medium tracking-[-0.035em] break-all select-none text-[clamp(4rem,22vw,18rem)]">
+          metro.
+        </p>
+
+        {/* Rodapé inferior */}
+        <div className="border-border mt-10 border-t pt-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
             <p className="text-muted text-xs">
               © {currentYear} {SITE.name}. Todos os direitos reservados.
+            </p>
+            <p className="label-mono normal-case">
+              Feito em Fortaleza, com método e emoção.
             </p>
             <Link
               href="/privacidade"
@@ -81,7 +86,7 @@ export function Footer() {
             </Link>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

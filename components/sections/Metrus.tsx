@@ -6,14 +6,14 @@ import { METRUS } from "@/lib/constants";
 type Status = "approved" | "pending" | "changes";
 
 const statusStyles: Record<Status, string> = {
-  approved: "bg-emerald-500/15 text-emerald-400",
-  pending: "bg-amber-500/15 text-amber-400",
+  approved: "bg-success/15 text-success",
+  pending: "bg-warning/15 text-warning",
   changes: "bg-accent/15 text-accent",
 };
 
 export function Metrus() {
   return (
-    <section id="metrus" className="py-24 md:py-32">
+    <section id="metrus" className="py-section-md md:py-section-lg">
       <Container>
         <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16 lg:gap-24">
           {/* Coluna esquerda — texto */}
@@ -38,7 +38,7 @@ export function Metrus() {
 
           {/* Coluna direita — mockup */}
           <Reveal delay={0.15}>
-            <div className="border-border bg-surface relative rounded-[var(--radius-card)] border p-6 shadow-2xl">
+            <div className="border-border bg-surface relative rounded-card border p-6 shadow-elevated">
               <div className="border-border flex items-center justify-between border-b pb-4">
                 <span className="font-display text-foreground text-base font-bold tracking-tight">
                   Metrus
@@ -53,9 +53,9 @@ export function Metrus() {
                 {METRUS.mockups.map((mockup) => (
                   <div
                     key={mockup.title}
-                    className="border-border bg-background/50 grid grid-cols-[2.5rem_minmax(0,1fr)] items-start gap-x-3 gap-y-2 rounded-[var(--radius-control)] border p-3 sm:grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:items-center sm:gap-4 sm:p-4"
+                    className="border-border bg-background/50 grid grid-cols-[2.5rem_minmax(0,1fr)] items-start gap-x-3 gap-y-2 rounded-control border p-3 sm:grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:items-center sm:gap-4 sm:p-4"
                   >
-                    <div className="bg-border h-10 w-10 shrink-0 rounded-md sm:h-14 sm:w-14" />
+                    <div className="bg-border h-10 w-10 shrink-0 rounded-control sm:h-14 sm:w-14" />
 
                     <div className="min-w-0 flex-1">
                       <p className="text-foreground truncate text-sm font-medium">

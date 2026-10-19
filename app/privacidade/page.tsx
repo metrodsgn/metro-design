@@ -11,10 +11,10 @@ export const metadata = createSiteMetadata({
 
 export default function PrivacidadePage() {
   return (
-    <section className="py-12 md:py-20">
+    <section className="pt-section-lg pb-section-md">
       <Container className="max-w-4xl">
         <span className="section-eyebrow">Privacidade</span>
-        <h1 className="font-editorial mt-4 text-4xl leading-tight tracking-tight md:text-6xl">
+        <h1 className="font-editorial text-foreground mt-4 text-4xl leading-[1.05] tracking-tight md:text-6xl">
           Aviso de Privacidade
         </h1>
         <p className="text-muted mt-5 text-sm">

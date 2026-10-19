@@ -1,14 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { NAV_LINKS } from "@/lib/constants";
 import { BrandWordmark } from "@/components/ui/BrandWordmark";
+import { getLenis } from "@/lib/smooth-scroll";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [visible, setVisible] = useState(true);
+  const [overText, setOverText] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const wasOpen = useRef(false);
+  const reduceMotion = useReducedMotion();
 
+  // Esconde ao rolar para baixo, mostra ao subir + inversão de cor quando o
+  // header sobrepõe texto da página (detecção geométrica, rAF-throttled).
   useEffect(() => {
     let previousY = window.scrollY;
     let frame = 0;
@@ -17,8 +29,11 @@ export function Header() {
       const inkItems = Array.from(
         document.querySelectorAll<HTMLElement>("[data-header-ink]"),
       );
-      const header = document.querySelector("header");
-      if (!header || inkItems.length === 0) return;
+      const header = headerRef.current;
+      if (!header || inkItems.length === 0) {
+        setOverText(false);
+        return;
+      }
 
       const inkRects = inkItems.map((item) => ({
         item,
@@ -59,12 +74,10 @@ export function Header() {
         node = walker.nextNode();
       }
 
-      inkItems.forEach((item) => {
-        item.dataset.overText = String(overlaps.has(item));
-      });
+      setOverText(overlaps.size > 0);
     };
 
-    const updateVisibility = () => {
+    const update = () => {
       const currentY = window.scrollY;
       const delta = currentY - previousY;
 
@@ -81,29 +94,88 @@ export function Header() {
       frame = requestAnimationFrame(detectTextOverlap);
     };
 
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-    window.addEventListener("resize", updateVisibility);
-    updateVisibility();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
     return () => {
-      window.removeEventListener("scroll", updateVisibility);
-      window.removeEventListener("resize", updateVisibility);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
       cancelAnimationFrame(frame);
     };
   }, []);
 
+  // Bloqueia o scroll do body (compatível com Lenis) enquanto o menu está aberto.
+  useEffect(() => {
+    if (menuOpen) {
+      getLenis()?.stop();
+      document.body.style.overflow = "hidden";
+    } else {
+      getLenis()?.start();
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      getLenis()?.start();
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  // Foco, trap e Esc no overlay do menu.
   useEffect(() => {
     if (!menuOpen) return;
+    const overlay = overlayRef.current;
+    if (!overlay) return;
 
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
+    const focusables = overlay.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled])',
+    );
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    first?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        return;
+      }
+      if (event.key !== "Tab" || !first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [menuOpen]);
+
+  // Devolve o foco ao botão ao fechar.
+  useEffect(() => {
+    if (menuOpen) {
+      wasOpen.current = true;
+    } else if (wasOpen.current) {
+      wasOpen.current = false;
+      toggleRef.current?.focus();
+    }
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const closeOnResize = () => {
+      if (window.innerWidth >= 1280) setMenuOpen(false);
+    };
+    window.addEventListener("resize", closeOnResize);
+    return () => window.removeEventListener("resize", closeOnResize);
+  }, []);
+
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
     <header
+      ref={headerRef}
       onFocusCapture={() => setVisible(true)}
       className={`sticky top-0 z-50 -mb-20 border-b border-transparent bg-transparent transition-transform duration-300 ease-out motion-reduce:transition-none md:-mb-24 ${
         visible || menuOpen ? "translate-y-0" : "-translate-y-full"
@@ -116,7 +188,18 @@ export function Header() {
       <div className="relative z-10 mx-auto flex h-20 max-w-none items-center justify-between px-5 sm:px-6 md:h-24 md:px-10 lg:px-12">
         {/* Logo Metro */}
         <div className="inline-flex items-center">
-          <BrandWordmark className="header-logo-ink" data-header-ink />
+          <Link
+            href="/"
+            aria-label="Metro Design — início"
+            className="inline-flex items-center"
+            onClick={menuOpen ? closeMenu : undefined}
+          >
+            <BrandWordmark
+              className="header-logo-ink"
+              data-header-ink
+              data-over-text={overText && !menuOpen}
+            />
+          </Link>
         </div>
 
         <nav
@@ -128,6 +211,7 @@ export function Header() {
               key={link.href}
               href={link.href}
               data-header-ink
+              data-over-text={overText}
               className="header-adaptive-ink text-sm font-medium transition-colors"
             >
               {link.label}
@@ -146,10 +230,11 @@ export function Header() {
         </div>
 
         <button
+          ref={toggleRef}
           type="button"
           aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={menuOpen}
-          aria-controls="mobile-navigation"
+          aria-controls="main-menu"
           onClick={() => setMenuOpen((open) => !open)}
           className="ui-icon-button -mr-2 xl:hidden"
         >
@@ -179,26 +264,73 @@ export function Header() {
         </button>
       </div>
 
-      <nav
-        id="mobile-navigation"
-        aria-label="Navegação para celular"
-        hidden={!menuOpen}
-        className="border-border bg-background absolute inset-x-0 top-full z-20 max-h-[calc(100svh-5rem)] overflow-y-auto border-b px-5 py-3 shadow-2xl sm:px-6 md:max-h-[calc(100svh-6rem)] xl:hidden"
-      >
-        {NAV_LINKS.map((link, index) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            onClick={() => setMenuOpen(false)}
-            className="border-border text-foreground hover:text-accent flex min-h-14 items-center justify-between border-b text-base transition-colors last:border-b-0"
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            id="main-menu"
+            ref={overlayRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu de navegação"
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.3, ease: EASE }}
+            className="bg-background fixed inset-0 z-40 flex flex-col justify-center overflow-y-auto px-5 pt-24 pb-10 sm:px-6 md:px-10 lg:px-12 xl:hidden"
           >
-            <span>{link.label}</span>
-            <span className="text-muted font-mono text-xs" aria-hidden="true">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-          </Link>
-        ))}
-      </nav>
+            <motion.nav
+              aria-label="Menu"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: {
+                    staggerChildren: reduceMotion ? 0 : 0.06,
+                    delayChildren: reduceMotion ? 0 : 0.08,
+                  },
+                },
+              }}
+              className="mx-auto flex w-full max-w-none flex-col"
+            >
+              {NAV_LINKS.map((link, index) => (
+                <motion.div
+                  key={link.href}
+                  variants={{
+                    hidden: { opacity: 0, y: reduceMotion ? 0 : 24 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: reduceMotion ? 0 : 0.5, ease: EASE }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={closeMenu}
+                    className="border-border group flex min-h-16 items-center justify-between gap-4 border-b py-3 transition-colors sm:min-h-20"
+                  >
+                    <span className="font-editorial text-foreground group-hover:text-accent text-4xl leading-none tracking-tight transition-colors sm:text-5xl md:text-6xl">
+                      {link.label}
+                    </span>
+                    <span className="label-mono shrink-0">
+                      ({String(index + 1).padStart(2, "0")})
+                    </span>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.nav>
+
+            <div className="mx-auto mt-10 flex w-full max-w-none flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <Link
+                href="/contato"
+                onClick={closeMenu}
+                className="ui-button ui-button-accent w-full sm:w-auto"
+              >
+                Fale conosco <span aria-hidden="true">↗</span>
+              </Link>
+              <p className="label-mono">Fortaleza · CE</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

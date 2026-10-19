@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Não foi possível carregar os projetos para o sitemap:", error);
   }
 
-  const staticRoutes = ["", "/projetos", "/contato", "/privacidade"];
+  const staticRoutes = ["", "/sobre", "/projetos", "/contato", "/privacidade"];
 
   return [
     ...staticRoutes.map((route) => ({

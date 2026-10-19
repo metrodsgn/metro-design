@@ -89,7 +89,7 @@ export function AntesDepoisSlider({ item, eager }: AntesDepoisSliderProps) {
     <div
       ref={frameRef}
       onPointerDown={handleFramePointerDown}
-      className="border-border bg-background focus-within:outline-accent relative aspect-video h-auto max-h-[55svh] min-h-40 touch-pan-y overflow-hidden rounded-[var(--radius-card)] border focus-within:outline-2 focus-within:outline-offset-2 md:aspect-[4/3]"
+      className="border-border bg-background focus-within:outline-accent relative aspect-video h-auto max-h-[55svh] min-h-40 touch-pan-y overflow-hidden rounded-card border focus-within:outline-2 focus-within:outline-offset-2 md:aspect-[4/3]"
     >
       <Image
         src={item.depois}

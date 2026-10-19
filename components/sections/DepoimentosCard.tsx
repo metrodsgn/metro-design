@@ -121,7 +121,7 @@ export function DepoimentosCard({
                     className="h-full shrink-0 px-2 sm:px-3"
                     style={{ width: `${100 / visibleTestimonials.length}%` }}
                   >
-                    <article className="flex h-full min-h-72 min-w-0 flex-col items-center rounded-xl border border-border bg-surface px-5 pt-0 pb-7 text-center sm:px-8">
+                    <article className="flex h-full min-h-72 min-w-0 flex-col items-center rounded-card border border-border bg-surface px-5 pt-0 pb-7 text-center sm:px-8">
                       <TestimonialContent testimonial={testimonial} />
                     </article>
                   </motion.div>

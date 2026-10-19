@@ -11,7 +11,7 @@ export async function Depoimentos() {
   return (
     <section
       id="depoimentos"
-      className="bg-background border-border border-y py-20 md:py-28"
+      className="bg-background border-border border-y py-section-md md:py-section-lg"
     >
       <Container>
         <div className="mx-auto mb-12 max-w-3xl text-center md:mb-16">

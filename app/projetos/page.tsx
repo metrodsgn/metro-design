@@ -15,7 +15,7 @@ export default async function ProjetosPage() {
   const cases = await getAllCases();
 
   return (
-    <section className="pt-12 pb-16 sm:pt-16 sm:pb-20 md:pt-20 md:pb-24 lg:pt-24 lg:pb-28">
+    <section className="pt-section-lg pb-section-lg">
       <Container>
         <ProjectsGallery projects={cases} />
       </Container>

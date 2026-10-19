@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { setLenis } from "@/lib/smooth-scroll";
 
 export function SmoothScroll() {
   useEffect(() => {
@@ -11,6 +12,7 @@ export function SmoothScroll() {
     let lenis: Lenis | null = null;
 
     const syncMotionPreference = () => {
+      setLenis(null);
       lenis?.destroy();
       lenis = motionPreference.matches
         ? null
@@ -20,6 +22,7 @@ export function SmoothScroll() {
             allowNestedScroll: true,
             lerp: 0.085,
           });
+      setLenis(lenis);
     };
 
     syncMotionPreference();
@@ -27,6 +30,7 @@ export function SmoothScroll() {
 
     return () => {
       motionPreference.removeEventListener("change", syncMotionPreference);
+      setLenis(null);
       lenis?.destroy();
     };
   }, []);

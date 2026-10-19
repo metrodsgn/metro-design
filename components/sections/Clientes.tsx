@@ -9,7 +9,7 @@ export async function Clientes() {
   const clients = await getAllClients();
 
   return (
-    <section id="clientes" className="py-24 md:py-32">
+    <section id="clientes" className="py-section-md md:py-section-lg">
       <Container>
         <Reveal>
           <h2 className="font-editorial text-foreground max-w-2xl text-3xl leading-tight tracking-tight md:text-5xl">

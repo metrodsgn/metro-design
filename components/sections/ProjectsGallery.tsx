@@ -7,7 +7,7 @@ export function ProjectsGallery({ projects }: { projects: CaseListItem[] }) {
     <>
       <header className="mb-10 flex flex-col gap-7 md:mb-12 md:flex-row md:items-end md:justify-between md:gap-8">
         <div>
-          <h1 className="font-editorial text-foreground max-w-3xl text-[clamp(2.75rem,8vw,4.5rem)] leading-[1.02] tracking-tight">
+          <h1 className="font-editorial text-foreground max-w-3xl text-4xl leading-[1.05] tracking-tight md:text-6xl">
             Projetos.
           </h1>
           <p className="text-muted mt-4 max-w-xl text-base leading-relaxed sm:mt-5 sm:text-lg">

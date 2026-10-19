@@ -19,10 +19,8 @@ export const SOCIAL = [
 
 export const NAV_LINKS = [
   { label: "Início", href: "/" },
-  { label: "Somos", href: "/#somos" },
-  { label: "Fazemos", href: "/#fazemos" },
+  { label: "Sobre", href: "/sobre" },
   { label: "Projetos", href: "/projetos" },
-  { label: "Clientes", href: "/#clientes" },
   { label: "Fale Conosco", href: "/contato" },
 ] as const;
 
@@ -122,11 +120,14 @@ export const CONTACT_FORM = {
   description:
     "Conte um pouco sobre o seu projeto. Respondemos em até 1 dia útil.",
   fields: {
-    name: { label: "Nome", placeholder: "Seu nome" },
-    email: { label: "Email", placeholder: "voce@empresa.com" },
-    company: { label: "Empresa", placeholder: "Nome da empresa (opcional)" },
+    name: { label: "Como podemos te chamar?", placeholder: "Seu nome" },
+    email: { label: "Qual o melhor e-mail?", placeholder: "voce@empresa.com" },
+    company: {
+      label: "Qual o nome da empresa?",
+      placeholder: "Nome da empresa (opcional)",
+    },
     message: {
-      label: "Mensagem",
+      label: "Conta pra gente o que você precisa",
       placeholder: "Conte sobre o seu projeto...",
     },
   },

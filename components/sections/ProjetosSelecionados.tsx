@@ -13,7 +13,7 @@ export async function ProjetosSelecionados() {
   );
 
   return (
-    <section id="jobs" className="py-12 md:py-16">
+    <section id="jobs" className="py-section-md md:py-section-lg">
       <Container>
         <SelectedProjectsGallery
           projects={allCases}

@@ -21,7 +21,7 @@ export function SelectedProjectsGallery({
     <div className="selected-projects">
       <header className="selected-projects__header mb-8 flex flex-col gap-6 pb-6 md:mb-10 md:flex-row md:items-end md:justify-between md:gap-8">
         <div>
-          <h2 className="font-editorial text-foreground text-3xl leading-tight tracking-tight md:text-4xl">
+          <h2 className="font-editorial text-foreground text-3xl leading-tight tracking-tight md:text-5xl">
             Projetos selecionados.
           </h2>
           <p className="text-muted mt-3 max-w-xl text-sm leading-relaxed sm:text-base">
@@ -50,6 +50,7 @@ export function SelectedProjectsGallery({
               cover={project.cover}
               year={project.year}
               number={index + 1}
+              total={visibleProjects.length}
             />
           ))}
         </div>

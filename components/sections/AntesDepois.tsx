@@ -9,7 +9,7 @@ export async function AntesDepois() {
   const items = editableItems.length > 0 ? editableItems : ANTES_DEPOIS;
 
   return (
-    <section id="antes-depois" className="py-14 md:py-20">
+    <section id="antes-depois" className="py-section-md md:py-section-lg">
       <Container>
         <Reveal>
           <h2 className="font-editorial text-foreground max-w-2xl text-3xl leading-tight tracking-tight md:text-5xl">

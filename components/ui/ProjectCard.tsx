@@ -12,6 +12,7 @@ type ProjectCardProps = {
   brandColor?: string;
   year: number;
   number: number;
+  total?: number;
   cover?: {
     asset: { _ref: string; _type: string };
     hotspot?: { x: number; y: number };
@@ -27,6 +28,7 @@ export function ProjectCard({
   brandColor,
   year,
   number,
+  total,
   cover,
 }: ProjectCardProps) {
   const accentStyle = /^#[\da-f]{6}$/i.test(brandColor ?? "")
@@ -37,6 +39,7 @@ export function ProjectCard({
     <Link
       href={`/projetos/${slug}`}
       style={accentStyle}
+      data-cursor="Ver ↗"
       className="projects-card group focus-visible:outline-accent block focus-visible:outline-2 focus-visible:outline-offset-4"
     >
       <div className="projects-card__frame border-border bg-surface relative isolate aspect-[4/3] overflow-hidden border">
@@ -66,7 +69,7 @@ export function ProjectCard({
             </span>
           </span>
         </div>
-        <span className="projects-card__year absolute top-3 left-3 z-10 rounded-sm bg-black/65 px-2.5 py-1 text-[10px] tracking-wide text-white/90 sm:text-[11px]">
+        <span className="projects-card__year label-mono absolute top-3 left-3 z-10 rounded-sm bg-black/65 px-2.5 py-1 text-white/90">
           {year}
         </span>
       </div>
@@ -89,8 +92,10 @@ export function ProjectCard({
             ))}
           </p>
         </div>
-        <span className="text-muted mt-1 shrink-0 font-mono text-xs">
-          {String(number).padStart(2, "0")}
+        <span className="label-mono mt-1 shrink-0">
+          {total
+            ? `(${String(number).padStart(2, "0")} / ${String(total).padStart(2, "0")})`
+            : String(number).padStart(2, "0")}
         </span>
       </div>
     </Link>

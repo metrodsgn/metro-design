@@ -11,6 +11,8 @@ export function Contato() {
   const [errorMessage, setErrorMessage] = useState("");
   const [phone, setPhone] = useState("");
   const [formToken, setFormToken] = useState("");
+  const [tokenError, setTokenError] = useState(false);
+  const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -23,10 +25,14 @@ export function Contato() {
       .then((result) => {
         if (active && typeof result.token === "string") {
           setFormToken(result.token);
+          setTokenError(false);
         }
       })
       .catch(() => {
-        if (active) setFormToken("");
+        if (active) {
+          setFormToken("");
+          setTokenError(true);
+        }
       });
 
     return () => {
@@ -41,7 +47,9 @@ export function Contato() {
 
     if (!formToken) {
       setStatus("error");
-      setErrorMessage("Não foi possível preparar o formulário. Tente novamente.");
+      setErrorMessage(
+        "Nosso sinal caiu entre a Aldeota e o servidor. Tente de novo ou chame no WhatsApp.",
+      );
       return;
     }
 
@@ -76,14 +84,16 @@ export function Contato() {
       setPhone("");
     } catch {
       setStatus("error");
-      setErrorMessage("Erro de conexão. Tente novamente.");
+      setErrorMessage(
+        "Nosso sinal caiu entre a Aldeota e o servidor. Tente de novo ou chame no WhatsApp.",
+      );
     }
   };
 
   return (
-    <section className="pt-28 pb-12 md:pt-36 md:pb-16">
-      <Container className="max-w-[100rem]">
-        <h1 className="font-editorial text-foreground max-w-2xl text-[clamp(2rem,9vw,3rem)] leading-tight tracking-tight break-words md:text-6xl">
+    <section className="pt-section-lg pb-section-md">
+      <Container>
+        <h1 className="font-editorial text-foreground max-w-2xl text-4xl leading-[1.05] tracking-tight break-words md:text-6xl">
           {CONTACT_FORM.title}
         </h1>
 
@@ -113,7 +123,7 @@ export function Contato() {
             <div className="grid gap-6 md:grid-cols-2">
               <Field
                 id="phone"
-                label="Telefone / WhatsApp"
+                label="Tem um telefone ou WhatsApp?"
                 placeholder="(00) 00000-0000"
                 type="tel"
                 value={phone}
@@ -132,7 +142,7 @@ export function Contato() {
                 htmlFor="service"
                 className="text-foreground mb-2 block text-sm font-medium"
               >
-                Tipo de projeto
+                Por onde a gente começa?
               </label>
               <select
                 id="service"
@@ -172,6 +182,22 @@ export function Contato() {
               />
             </div>
 
+            {tokenError && (
+              <p className="text-warning text-sm leading-relaxed" role="status">
+                O formulário não preparou direito. Tenta recarregar a página ou,
+                se preferir,{" "}
+                <a
+                  href={`https://wa.me/${CONTACT.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground underline decoration-accent underline-offset-4"
+                >
+                  chama no WhatsApp
+                </a>
+                .
+              </p>
+            )}
+
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <button
                 type="submit"
@@ -198,18 +224,20 @@ export function Contato() {
             </p>
 
             {status === "success" && (
-              <p className="text-sm text-emerald-400">
-                Mensagem enviada! Responderemos em breve.
+              <p className="text-success text-sm" role="status">
+                Mensagem na mesa. A gente responde em até 1 dia útil.
               </p>
             )}
             {status === "error" && (
-              <p className="text-accent text-sm">{errorMessage}</p>
+              <p className="text-accent text-sm" role="alert">
+                {errorMessage}
+              </p>
             )}
           </form>
 
           <aside className="space-y-10 md:pt-2">
-            <div className="border-border rounded-xl border p-6 md:p-8">
-              <h2 className="text-foreground text-sm font-semibold tracking-wide uppercase">
+            <div className="border-border rounded-card border p-6 md:p-8">
+              <h2 className="font-sans text-foreground text-sm font-semibold tracking-wide uppercase">
                 Contato direto
               </h2>
               <ul className="mt-4 text-sm">
@@ -247,7 +275,7 @@ export function Contato() {
             </div>
 
             <div>
-              <h2 className="text-foreground text-sm font-semibold tracking-wide uppercase">
+              <h2 className="font-sans text-foreground text-sm font-semibold tracking-wide uppercase">
                 Redes
               </h2>
               <ul className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
@@ -268,36 +296,52 @@ export function Contato() {
             </div>
           </aside>
         </div>
-
-        <section
-          className="relative left-1/2 mt-16 w-screen -translate-x-1/2 border-y border-[var(--color-border)] bg-[#0d0d0d] md:mt-20"
-          aria-label={`Mapa de localização: ${CONTACT.address}`}
-        >
-          <div className="mx-auto flex max-w-[100rem] flex-col gap-3 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8 md:px-12">
-            <div>
-              <p className="mt-2 text-sm leading-relaxed text-foreground sm:text-base">
-                {CONTACT.address}
-              </p>
-            </div>
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.address)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ui-button ui-button-secondary w-fit shrink-0"
-            >
-              Como chegar <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-          <iframe
-            title={`Mapa de localização: ${CONTACT.address}`}
-            src={`https://maps.google.com/maps?q=${encodeURIComponent(CONTACT.address)}&output=embed`}
-            className="mx-5 mb-6 h-[300px] w-[calc(100%-2.5rem)] overflow-hidden rounded-2xl border border-white/15 sm:mx-8 sm:w-[calc(100%-4rem)] sm:h-[360px] md:mx-12 md:mb-8 md:h-[420px] md:w-[calc(100%-6rem)]"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
-        </section>
       </Container>
+
+      <section
+        className="border-border bg-surface mt-16 border-y md:mt-20"
+        aria-label={`Mapa de localização: ${CONTACT.address}`}
+      >
+        <Container className="flex flex-col gap-3 py-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm leading-relaxed text-foreground sm:text-base">
+            {CONTACT.address}
+          </p>
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.address)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ui-button ui-button-secondary w-fit shrink-0"
+          >
+            Como chegar <span aria-hidden="true">↗</span>
+          </a>
+        </Container>
+        <Container className="pb-6 md:pb-8">
+          {showMap ? (
+            <iframe
+              title={`Mapa de localização: ${CONTACT.address}`}
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(CONTACT.address)}&output=embed`}
+              className="border-border rounded-card h-[300px] w-full overflow-hidden border sm:h-[360px] md:h-[420px]"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          ) : (
+            <div className="border-border bg-background/40 rounded-card flex h-[220px] flex-col items-center justify-center gap-4 border px-6 text-center sm:h-[300px]">
+              <p className="text-muted max-w-sm text-sm leading-relaxed">
+                O mapa só carrega quando você pedir — assim a página abre mais
+                leve.
+              </p>
+              <button
+                type="button"
+                onClick={() => setShowMap(true)}
+                className="ui-button ui-button-secondary"
+              >
+                Ver mapa <span aria-hidden="true">↗</span>
+              </button>
+            </div>
+          )}
+        </Container>
+      </section>
     </section>
   );
 }
