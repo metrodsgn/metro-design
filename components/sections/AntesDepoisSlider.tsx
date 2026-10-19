@@ -20,6 +20,7 @@ type AntesDepoisSliderProps = {
 export function AntesDepoisSlider({ item, eager }: AntesDepoisSliderProps) {
   const frameRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const hasPlayedRef = useRef(false);
   const [position, setPosition] = useState(50);
   const [isAnimating, setIsAnimating] = useState(false);
   const reduceMotion = useReducedMotion();
@@ -35,6 +36,28 @@ export function AntesDepoisSlider({ item, eager }: AntesDepoisSliderProps) {
   };
 
   useEffect(() => clearAnimationTimers, []);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame || reduceMotion || !item.antes) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0]?.isIntersecting || hasPlayedRef.current) return;
+        hasPlayedRef.current = true;
+        observer.disconnect();
+
+        setIsAnimating(true);
+        setPosition(35);
+        timersRef.current.push(setTimeout(() => setPosition(50), 900));
+        timersRef.current.push(setTimeout(() => setIsAnimating(false), 1200));
+      },
+      { threshold: 0.55 }
+    );
+
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, [reduceMotion, item.antes]);
 
   const updatePosition = (clientX: number) => {
     const frame = frameRef.current;
