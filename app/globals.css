@@ -386,6 +386,46 @@
   }
 }
 
+/* Saída do hero: parallax de saída escorado no scroll (view timeline).
+   Estado base = visível/repouso; os keyframes só descrevem a saída, então
+   sem suporte (ou com reduced motion) o conteúdo permanece intacto.
+   Desativado abaixo de 768px por performance e composição. */
+.hero-video-exit,
+.hero-text-exit {
+  will-change: auto;
+}
+
+@supports (animation-timeline: view()) {
+  @media (min-width: 768px) {
+    .hero-video-exit {
+      will-change: transform;
+      animation: hero-video-exit linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+
+    .hero-text-exit {
+      will-change: transform, opacity;
+      animation: hero-text-exit linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 60%;
+    }
+  }
+
+  @keyframes hero-video-exit {
+    to {
+      transform: translateY(-8%) scale(1.04);
+    }
+  }
+
+  @keyframes hero-text-exit {
+    to {
+      opacity: 0;
+      transform: translateY(-24px);
+    }
+  }
+}
+
 .about-composition {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -878,6 +918,11 @@
     animation: none !important;
     opacity: 1;
     transform: none;
+  }
+
+  .hero-video-exit,
+  .hero-text-exit {
+    will-change: auto;
   }
 }
 

@@ -25,7 +25,7 @@ export function Hero() {
       aria-labelledby="hero-title"
     >
       {/* O vídeo continua como elemento principal da composição. */}
-      <div className="absolute inset-0 -z-20" aria-hidden="true">
+      <div className="hero-video-exit absolute inset-0 -z-20" aria-hidden="true">
         <video
           autoPlay
           muted
@@ -48,7 +48,7 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      <Container className="py-section-md md:py-section-lg">
+      <Container className="hero-text-exit py-section-md md:py-section-lg">
         <motion.div
           className="max-w-4xl"
           initial={reduceMotion ? false : "hidden"}
