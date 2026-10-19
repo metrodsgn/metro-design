@@ -1,5 +1,6 @@
 import { SITE, CONTACT, SOCIAL } from "@/lib/constants";
 import { Container } from "@/components/ui/Container";
+import { RevealLines } from "@/components/ui/RevealLines";
 import Link from "next/link";
 
 export function Footer() {
@@ -65,9 +66,12 @@ export function Footer() {
         </div>
 
         {/* Assinatura tipográfica */}
-        <p className="font-wordmark text-accent mt-16 leading-[0.78] font-medium tracking-[-0.035em] break-all select-none text-[clamp(4rem,22vw,18rem)]">
-          metro.
-        </p>
+        <RevealLines
+          as="p"
+          className="font-wordmark text-accent mt-16 leading-[0.78] font-medium tracking-[-0.035em] break-all select-none text-[clamp(4rem,22vw,18rem)]"
+          maskClassName="pt-[0.18em] -mt-[0.18em] pb-0!"
+          lines={["metro."]}
+        />
 
         {/* Rodapé inferior */}
         <div className="border-border mt-10 border-t pt-8">

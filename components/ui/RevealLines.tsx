@@ -13,6 +13,7 @@ type RevealLinesProps = {
   lines: ReactNode[];
   as?: ElementType;
   className?: string;
+  maskClassName?: string;
   delay?: number;
 };
 
@@ -20,6 +21,7 @@ export function RevealLines({
   lines,
   as: Component = "h2",
   className = "",
+  maskClassName = "",
   delay = 0,
 }: RevealLinesProps) {
   const reduceMotion = useReducedMotion();
@@ -39,14 +41,17 @@ export function RevealLines({
   return (
     <Component className={className}>
       <motion.span
-        className="block"
+        className="flow-root"
         initial={reduceMotion ? false : "hidden"}
         whileInView="visible"
         viewport={{ once: true, amount: 0.3, margin: "0px 0px -10% 0px" }}
         variants={container}
       >
         {lines.map((content, index) => (
-          <span key={index} className="block overflow-hidden pb-[0.08em]">
+          <span
+            key={index}
+            className={`block overflow-hidden pb-[0.08em] ${maskClassName}`}
+          >
             <motion.span
               className="block"
               variants={reduceMotion ? undefined : line}
