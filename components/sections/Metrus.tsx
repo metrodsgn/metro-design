@@ -25,12 +25,14 @@ export function Metrus() {
             </Reveal>
 
             <Reveal delay={0.24}>
-              <Link
-                href={METRUS.cta.href}
-                className="ui-button ui-button-primary mt-10"
-              >
-                {METRUS.cta.label}
-              </Link>
+              <div className="mt-8">
+                <Link
+                  href={METRUS.cta.href}
+                  className="ui-button ui-button-primary"
+                >
+                  {METRUS.cta.label} <span aria-hidden="true">↗</span>
+                </Link>
+              </div>
             </Reveal>
           </div>
 

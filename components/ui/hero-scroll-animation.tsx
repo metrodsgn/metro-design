@@ -11,6 +11,7 @@ import {
   useTransform,
 } from "motion/react";
 import { Container } from "@/components/ui/Container";
+import AnimatedText from "@/components/ui/animated-text";
 import { urlFor } from "@/sanity/lib/image";
 import type { CaseListItem } from "@/sanity/lib/fetchers";
 
@@ -33,7 +34,7 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
   return (
     <motion.section
       style={reduceMotion ? undefined : { scale, rotate }}
-      className="bg-gradient-to-t to-[#dadada] from-[#ebebeb] sticky top-0 flex h-screen flex-col items-center justify-center text-black"
+      className="bg-gradient-to-t to-[#dadada] from-[#ebebeb] sticky top-0 z-10 flex h-screen flex-col items-center justify-center text-black"
     >
       <div className={GRID_PATTERN} aria-hidden="true" />
 
@@ -55,7 +56,7 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
   return (
     <motion.section
       style={reduceMotion ? undefined : { scale, rotate }}
-      className="bg-gradient-to-t to-[#1a1919] from-[#06060e] relative h-screen text-white"
+      className="bg-gradient-to-t to-[#1a1919] from-[#06060e] relative z-10 h-screen text-white"
     >
       <div className={GRID_PATTERN} aria-hidden="true" />
 
@@ -171,18 +172,39 @@ export default function HeroScrollAnimation({ projects }: HeroScrollAnimationPro
   });
 
   return (
-    <div ref={container} className="relative h-[200vh] bg-black">
-      <Section1 scrollYProgress={scrollYProgress} />
-      <Section2 scrollYProgress={scrollYProgress} projects={projects} />
-      <footer className="group bg-[#06060e]">
-        <h1 className="font-sans bg-gradient-to-r from-gray-400 to-gray-800 bg-clip-text text-center text-[16vw] font-semibold uppercase leading-[100%] tracking-tight text-transparent transition-all ease-linear translate-y-20">
-          metro design
-        </h1>
-        <div
-          aria-hidden="true"
-          className="bg-black text-white relative z-10 grid h-40 place-content-center rounded-tl-full rounded-tr-full text-2xl"
-        />
-      </footer>
+    <>
+      <div ref={container} className="relative h-[200vh] bg-black">
+        <Section1 scrollYProgress={scrollYProgress} />
+        <Section2 scrollYProgress={scrollYProgress} projects={projects} />
+      </div>
+      <WordmarkBand />
+    </>
+  );
+}
+
+function WordmarkBand() {
+  return (
+    <div className="@container relative z-20 h-[clamp(230px,38vw,400px)] overflow-hidden bg-[#06060e]">
+      <div className="absolute inset-0 flex flex-col">
+        <div className="relative z-10 flex flex-1 items-center justify-center px-6 pb-[clamp(1.5rem,3vw,3rem)]">
+          <AnimatedText
+            text="metro design"
+            className="font-sans text-accent max-w-full text-center text-[12cqw] leading-[1.05] font-semibold tracking-[-0.04em] whitespace-nowrap"
+            animationType="letters"
+            duration={0.6}
+            staggerDelay={0.045}
+            initialY={48}
+            initialOpacity={0}
+            repeat
+          />
+        </div>
+        <div className="h-[18%] shrink-0" aria-hidden="true" />
+      </div>
+
+      <div
+        aria-hidden="true"
+        className="bg-black absolute inset-x-0 bottom-0 h-[18%] rounded-tl-full rounded-tr-full"
+      />
     </div>
   );
 }
