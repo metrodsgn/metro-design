@@ -107,7 +107,7 @@ export default function ProjectsHero3D() {
         const targetU = uStart + (uEnd - uStart) * e;
         uCurrent += (targetU - uCurrent) * 0.12;
 
-        const targetPo = mobile ? 28 + (40 - 28) * e : 28 + (50 - 28) * e;
+        const targetPo = mobile ? 28 : 28 + (50 - 28) * e;
         poCurrent += (targetPo - poCurrent) * 0.12;
         wyCurrent += (0 - wyCurrent) * 0.12;
 
@@ -149,7 +149,7 @@ export default function ProjectsHero3D() {
     <>
       <style>{`
         .hero3d { height: 260vh; position: relative; background: #f2f2ef; }
-        .sticky3d { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; background: #f2f2ef; }
+        .sticky3d { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; background: #f2f2ef; }
         @media (prefers-reduced-motion: reduce) { .sticky3d { position: static; height: auto; padding: 6vh 0; } }
         .frame3d { width: 90vw; aspect-ratio: 1280 / 658; border-radius: 28px; overflow: hidden; background: #f2f2ef; position: relative; will-change: width, height, border-radius; }
         .scene3d { width: 100%; height: 100%; perspective: calc(var(--u, 1) * 3328px); perspective-origin: 50% var(--po, 28%); display: grid; place-items: center; background: #f2f2ef; overflow: hidden; transform: translateZ(0); will-change: transform; contain: layout paint; }
