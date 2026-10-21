@@ -35,11 +35,13 @@ export default function ProjectsHero3D() {
     const onResize = () => { cachedU = computeU(); };
     window.addEventListener("resize", onResize);
 
+    function isMobile() { return window.innerWidth < 768; }
     function computeU() {
       const vw = window.innerWidth, vh = window.innerHeight;
+      const mobile = isMobile();
       return {
-        uStart: Math.min(vw / 1280, vh / 658) * START_SCALE,
-        uEnd: Math.max(vw / 700, vh / 394) * 1.03,
+        uStart: Math.max(mobile ? 0.5 : 0.85, Math.min(vw / 1280, vh / 658)) * START_SCALE,
+        uEnd: Math.min(Math.max(vw / 700, vh / 394) * 1.03, mobile ? 1.6 : 2.09),
       };
     }
     function easeInOutCubic(x: number) {
@@ -57,9 +59,10 @@ export default function ProjectsHero3D() {
       const { uStart } = cachedU;
       uCurrent = uStart;
       const vw = window.innerWidth;
-      frameW = vw * 0.9;
+      const mobile = isMobile();
+      frameW = vw * (mobile ? 0.96 : 0.9);
       frameH = frameW * 658 / 1280;
-      frameR = START_RADIUS;
+      frameR = mobile ? 18 : START_RADIUS;
       scene.style.setProperty("--u", String(uCurrent));
       scene.style.setProperty("--po", poCurrent + "%");
       scene.style.setProperty("--a", angle + "deg");
@@ -87,13 +90,15 @@ export default function ProjectsHero3D() {
         const e = easeInOutCubic(t);
 
         const vw = window.innerWidth, vh = window.innerHeight;
-        const startW = vw * 0.9;
+        const mobile = isMobile();
+        const startW = vw * (mobile ? 0.96 : 0.9);
         const startH = startW * 658 / 1280;
         const endW = vw;
         const endH = vh;
         const targetW = startW + (endW - startW) * e;
         const targetH = startH + (endH - startH) * e;
-        const targetR = START_RADIUS + (0 - START_RADIUS) * e;
+        const startR = mobile ? 18 : START_RADIUS;
+        const targetR = startR + (0 - startR) * e;
         frameW += (targetW - frameW) * 0.12;
         frameH += (targetH - frameH) * 0.12;
         frameR += (targetR - frameR) * 0.12;
@@ -102,17 +107,17 @@ export default function ProjectsHero3D() {
         const targetU = uStart + (uEnd - uStart) * e;
         uCurrent += (targetU - uCurrent) * 0.12;
 
-        const targetPo = 28 + (50 - 28) * e;
+        const targetPo = mobile ? 28 + (40 - 28) * e : 28 + (50 - 28) * e;
         poCurrent += (targetPo - poCurrent) * 0.12;
         wyCurrent += (0 - wyCurrent) * 0.12;
 
-        const baseOmega = 360 / PERIOD;
+        const baseOmega = mobile ? 360 / 32 : 360 / PERIOD;
         let targetOmega = baseOmega;
         let attract = 0;
         if (t > 0.1) {
           const intensity = t < 0.8 ? (t - 0.1) / 0.7 : 1;
           targetOmega = baseOmega * (1 - intensity);
-          attract = intensity * 2.0;
+          attract = intensity * (mobile ? 1.0 : 2.0);
         }
         omega += (targetOmega - omega) * 0.12;
         const nearest = Math.round(angle / 360) * 360;
@@ -170,6 +175,7 @@ export default function ProjectsHero3D() {
         @media (max-width: 767px) {
           .hero3d { height: 200vh; }
           .frame3d { width: 96vw; border-radius: 18px; }
+          .scene3d { perspective: calc(var(--u, 1) * 4200px); }
           .front3d .screen .line1 { font-size: calc(var(--u, 1) * 52px); }
           .front3d .screen .line2 { font-size: calc(var(--u, 1) * 38px); }
         }
