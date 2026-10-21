@@ -1030,6 +1030,7 @@
 
 @media (max-width: 639px) {
   .project-navigation__links {
+    grid-template-columns: 1fr;
     min-height: 8rem;
     padding-inline: 0.75rem;
   }

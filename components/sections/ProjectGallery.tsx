@@ -53,7 +53,7 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
   return (
     <section
       id="galeria"
-      className="scroll-mt-36 mx-auto mt-12 max-w-6xl md:mt-16"
+      className="scroll-mt-36 mx-auto mt-12 max-w-7xl md:mt-16"
       aria-label={`Galeria de ${title}`}
     >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-6">
