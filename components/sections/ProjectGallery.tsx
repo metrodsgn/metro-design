@@ -56,7 +56,7 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
       className="scroll-mt-36 mx-auto mt-12 max-w-7xl md:mt-16"
       aria-label={`Galeria de ${title}`}
     >
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:gap-8">
         {images.map((image, index) => (
           <button
             key={`${image.src}-${index}`}
