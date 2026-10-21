@@ -167,6 +167,12 @@ export default function ProjectsHero3D() {
         .top3d { width: calc(var(--u, 1) * 700px); height: calc(var(--u, 1) * 18px); transform: translate(-50%, -50%) rotateX(90deg) translateZ(calc(var(--u, 1) * 197px)); background: #0e0e0e; }
         .bottom3d { width: calc(var(--u, 1) * 700px); height: calc(var(--u, 1) * 18px); transform: translate(-50%, -50%) rotateX(-90deg) translateZ(calc(var(--u, 1) * 197px)); background: #1a1a1a; }
         .role-hint3d { position: absolute; left: 50%; bottom: 6vh; transform: translateX(-50%); font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: #555; transition: opacity .4s ease; pointer-events: none; }
+        @media (max-width: 767px) {
+          .hero3d { height: 200vh; }
+          .frame3d { width: 96vw; border-radius: 18px; }
+          .front3d .screen .line1 { font-size: calc(var(--u, 1) * 52px); }
+          .front3d .screen .line2 { font-size: calc(var(--u, 1) * 38px); }
+        }
       `}</style>
 
       <section className="hero3d" id="hero" ref={heroRef}>

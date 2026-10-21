@@ -34,11 +34,11 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
   return (
     <motion.section
       style={reduceMotion ? undefined : { scale, rotate }}
-      className="bg-gradient-to-t to-[#dadada] from-[#ebebeb] sticky top-0 z-10 flex h-screen flex-col items-center justify-center text-black"
+      className="bg-gradient-to-t to-[#dadada] from-[#ebebeb] sticky top-0 z-10 flex h-[100svh] flex-col items-center justify-center text-black"
     >
       <div className={GRID_PATTERN} aria-hidden="true" />
 
-      <h1 className="font-editorial px-8 text-center text-7xl leading-[110%] tracking-tight text-accent 2xl:text-8xl 3xl:text-9xl">
+      <h1 className="font-editorial px-6 text-center text-5xl leading-[110%] tracking-tight text-accent sm:text-6xl md:text-7xl 2xl:text-8xl 3xl:text-9xl">
         Role para descobrir <br /> como pensamos
       </h1>
     </motion.section>
@@ -56,12 +56,12 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
   return (
     <motion.section
       style={reduceMotion ? undefined : { scale, rotate }}
-      className="bg-gradient-to-t to-[#1a1919] from-[#06060e] relative z-10 h-screen text-white"
+      className="bg-gradient-to-t to-[#1a1919] from-[#06060e] relative z-10 h-[100svh] text-white"
     >
       <div className={GRID_PATTERN} aria-hidden="true" />
 
       <Container className="relative z-10 pt-16 md:pt-24 lg:pt-32 pb-12 md:pb-16">
-        <h2 className="font-editorial pb-10 md:pb-12 text-6xl leading-[100%] tracking-tight">
+        <h2 className="font-editorial pb-8 md:pb-12 text-4xl leading-[100%] tracking-tight sm:text-5xl md:text-6xl">
           Forma, estratégia e detalhe <br /> em cada projeto
         </h2>
 
@@ -70,12 +70,12 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
             Nenhum projeto para exibir.
           </p>
         ) : (
-          <div className="grid grid-cols-2 gap-4 md:h-[24rem] md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:h-[24rem] md:grid-cols-4">
             {projects.map((project) => (
               <Link
                 key={project._id}
                 href={`/projetos/${project.slug}`}
-                className="bg-surface relative h-56 w-full overflow-hidden rounded-md sm:h-72 md:h-full group"
+                className="bg-surface relative h-48 w-full overflow-hidden rounded-md sm:h-56 md:h-full group"
               >
                 {project.cover ? (
                   <Image

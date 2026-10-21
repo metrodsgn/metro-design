@@ -2,20 +2,28 @@ import Link from "next/link";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import type { CaseListItem } from "@/sanity/lib/fetchers";
 
-export function ProjectsGallery({ projects }: { projects: CaseListItem[] }) {
+export function ProjectsGallery({
+  projects,
+  showHeader = true,
+}: {
+  projects: CaseListItem[];
+  showHeader?: boolean;
+}) {
   return (
     <>
-      <header className="mb-10 flex flex-col gap-7 md:mb-12 md:flex-row md:items-end md:justify-between md:gap-8">
-        <div>
-          <h1 className="font-editorial text-foreground max-w-3xl text-4xl leading-[1.05] tracking-tight md:text-6xl">
-            Projetos.
-          </h1>
-          <p className="text-muted mt-4 max-w-xl text-base leading-relaxed sm:mt-5 sm:text-lg">
-            Uma seleção de marcas que ajudamos a construir, reposicionar e
-            comunicar.
-          </p>
-        </div>
-      </header>
+      {showHeader && (
+        <header className="mb-10 flex flex-col gap-7 md:mb-12 md:flex-row md:items-end md:justify-between md:gap-8">
+          <div>
+            <h1 className="font-editorial text-foreground max-w-3xl text-4xl leading-[1.05] tracking-tight md:text-6xl">
+              Projetos.
+            </h1>
+            <p className="text-muted mt-4 max-w-xl text-base leading-relaxed sm:mt-5 sm:text-lg">
+              Uma seleção de marcas que ajudamos a construir, reposicionar e
+              comunicar.
+            </p>
+          </div>
+        </header>
+      )}
 
       {projects.length === 0 ? (
         <p className="text-muted mt-16 text-center text-sm">
@@ -23,7 +31,7 @@ export function ProjectsGallery({ projects }: { projects: CaseListItem[] }) {
         </p>
       ) : (
         <div
-          className="projects-gallery__grid grid gap-x-6 gap-y-16 sm:grid-cols-2 sm:gap-y-20"
+          className="projects-gallery__grid grid gap-x-4 gap-y-10 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 md:gap-y-20"
           aria-live="polite"
         >
           {projects.map((project) => (
