@@ -174,6 +174,7 @@ export function Header() {
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
+    <>
     <header
       ref={headerRef}
       onFocusCapture={() => setVisible(true)}
@@ -264,6 +265,8 @@ export function Header() {
         </button>
       </div>
 
+
+    </header>
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -331,6 +334,6 @@ export function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
