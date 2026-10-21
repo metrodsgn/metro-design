@@ -41,7 +41,7 @@ export default function ProjectsHero3D() {
       const mobile = isMobile();
       return {
         uStart: Math.max(mobile ? 0.5 : 0.85, Math.min(vw / 1280, vh / 658)) * START_SCALE,
-        uEnd: Math.min(Math.max(vw / 700, vh / 394) * 1.03, mobile ? 1.6 : 2.09),
+        uEnd: Math.max(vw / 700, vh / 394) * 1.03,
       };
     }
     function easeInOutCubic(x: number) {
