@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import { Container } from "@/components/ui/Container";
 import { RevealLines } from "@/components/ui/RevealLines";
 import { Somos } from "@/components/sections/Somos";
@@ -26,12 +27,12 @@ export default function SobrePage() {
             as="h1"
             className="font-editorial text-foreground mt-5 max-w-4xl text-4xl leading-[1.05] tracking-tight break-words md:text-6xl"
             lines={[
-              <>
+              <Fragment key="sobre-title">
                 Falamos alto com tipografia.{" "}
                 <span className="text-accent italic">
                   Levamos a sério o trabalho.
                 </span>
-              </>,
+              </Fragment>,
             ]}
           />
           <p className="text-muted mt-6 max-w-2xl text-base leading-relaxed md:text-lg">
