@@ -37,7 +37,8 @@ export default function ProjectsHero3D() {
 
     function isMobile() { return window.innerWidth < 768; }
     function computeU() {
-      const vw = window.innerWidth, vh = window.innerHeight;
+      const vw = document.documentElement.clientWidth || window.innerWidth;
+      const vh = window.innerHeight;
       const mobile = isMobile();
       return {
         uStart: Math.max(mobile ? 0.5 : 0.85, Math.min(vw / 1280, vh / 658)) * START_SCALE,
@@ -58,7 +59,7 @@ export default function ProjectsHero3D() {
     {
       const { uStart } = cachedU;
       uCurrent = uStart;
-      const vw = window.innerWidth;
+      const vw = document.documentElement.clientWidth || window.innerWidth;
       const mobile = isMobile();
       frameW = vw * (mobile ? 0.96 : 0.9);
       frameH = frameW * 658 / 1280;
@@ -89,7 +90,8 @@ export default function ProjectsHero3D() {
         const t = Math.min(p / (1 - HOLD), 1);
         const e = easeInOutCubic(t);
 
-        const vw = window.innerWidth, vh = window.innerHeight;
+        const vw = document.documentElement.clientWidth || window.innerWidth;
+        const vh = window.innerHeight;
         const mobile = isMobile();
         const startW = vw * (mobile ? 0.96 : 0.9);
         const startH = startW * 658 / 1280;
@@ -148,10 +150,10 @@ export default function ProjectsHero3D() {
   return (
     <>
       <style>{`
-        .hero3d { height: 260vh; position: relative; background: #f2f2ef; }
-        .sticky3d { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; background: #f2f2ef; }
+        .hero3d { height: 260vh; position: relative; background: #f2f2ef; overflow-x: clip; }
+        .sticky3d { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; background: #f2f2ef; overflow-x: clip; }
         @media (prefers-reduced-motion: reduce) { .sticky3d { position: static; height: auto; padding: 6vh 0; } }
-        .frame3d { width: 90vw; aspect-ratio: 1280 / 658; border-radius: 28px; overflow: hidden; background: #f2f2ef; position: relative; will-change: width, height, border-radius; }
+        .frame3d { width: 90%; aspect-ratio: 1280 / 658; border-radius: 28px; overflow: hidden; background: #f2f2ef; position: relative; will-change: width, height, border-radius; }
         .scene3d { width: 100%; height: 100%; perspective: calc(var(--u, 1) * 3328px); perspective-origin: 50% var(--po, 28%); display: grid; place-items: center; background: #f2f2ef; overflow: hidden; transform: translateZ(0); will-change: transform; contain: layout paint; }
         .world3d { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; transform: translateY(var(--wy, 0px)) rotateY(var(--a, 25deg)); will-change: transform; contain: layout; }
         .ground3d { position: absolute; left: 0; top: 0; width: calc(var(--u, 1) * 1400px); height: calc(var(--u, 1) * 1400px); transform: translate(-50%, -50%) translateY(calc(var(--u, 1) * 220px)) rotateX(90deg); transform-style: preserve-3d; background-image: linear-gradient(rgba(0,0,0,.17) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.17) 1px, transparent 1px); background-size: calc(var(--u, 1) * 80px) calc(var(--u, 1) * 80px); background-position: center; mask-image: radial-gradient(circle at center, black 28%, transparent 72%); -webkit-mask-image: radial-gradient(circle at center, black 28%, transparent 72%); }
@@ -174,7 +176,7 @@ export default function ProjectsHero3D() {
         .role-hint3d { position: absolute; left: 50%; bottom: 6vh; transform: translateX(-50%); font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: #555; transition: opacity .4s ease; pointer-events: none; }
         @media (max-width: 767px) {
           .hero3d { height: 200vh; }
-          .frame3d { width: 96vw; border-radius: 18px; }
+          .frame3d { width: 96%; border-radius: 18px; }
           .scene3d { perspective: calc(var(--u, 1) * 4200px); }
           .front3d .screen .line1 { font-size: calc(var(--u, 1) * 52px); }
           .front3d .screen .line2 { font-size: calc(var(--u, 1) * 38px); }
