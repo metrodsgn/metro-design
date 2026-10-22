@@ -64,7 +64,7 @@ function ImageFrame({
   alt: string;
 }) {
   return (
-    <figure className="relative group rounded-card border border-border overflow-hidden">
+    <figure className="relative group w-full aspect-[4/3] rounded-card border border-border overflow-hidden md:aspect-[3/2]">
       <Image
         src={src}
         alt={alt}
