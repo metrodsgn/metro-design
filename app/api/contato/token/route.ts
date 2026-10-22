@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { generateToken, verifyToken, escapeHtml } from "@/lib/anti-spam";
+import { rateLimit } from "@/lib/rate-limit";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+const TOKEN_WINDOW_MS = 60 * 60 * 1000; // 1h
+const TOKEN_LIMIT = 20;                 // 20 tokens por IP por hora
 
 type Body = {
   name?: unknown;
@@ -13,8 +17,26 @@ type Body = {
   formToken?: unknown;
 };
 
-export async function GET() {
+function getIp(request: Request): string {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim();
+  const real = request.headers.get("x-real-ip");
+  if (real) return real;
+  return "unknown";
+}
+
+export async function GET(request: Request) {
   try {
+    const ip = getIp(request);
+    const limit = rateLimit({ key: `token:${ip}`, limit: TOKEN_LIMIT, windowMs: TOKEN_WINDOW_MS });
+
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { error: "Muitas solicitações. Tente novamente mais tarde." },
+        { status: 429 },
+      );
+    }
+
     return NextResponse.json(generateToken(), {
       headers: { "Cache-Control": "no-store" },
     });

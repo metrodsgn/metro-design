@@ -1,7 +1,7 @@
 import crypto from "crypto";
 
 const SECRET = process.env.CONTACT_FORM_SECRET;
-const MIN_AGE_MS = 2000;                 // 2s — humano não envia mais rápido
+const MIN_AGE_MS = 8000;                 // 8s — tempo mínimo de preenchimento
 const MAX_AGE_MS = 60 * 60 * 1000;       // 1h — token expira
 
 /**
