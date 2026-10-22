@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { CONTACT } from "@/lib/constants";
 
-// Configurações ajustáveis dos serviços reais da Metro.
 const DELIVERIES = [
   "Naming e criação de marcas",
   "Identidade visual",
@@ -52,9 +51,9 @@ export function Contato() {
   const [tokenError, setTokenError] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [mapOpen, setMapOpen] = useState(false);
   const firstErrorRef = useRef<HTMLElement | null>(null);
 
-  // Busca o token de anti-spam (tempo mínimo de 8s de preenchimento).
   useEffect(() => {
     let active = true;
 
@@ -86,16 +85,15 @@ export function Contato() {
     let firstField: HTMLElement | null = null;
 
     const required: Record<string, string> = {
-      name: "Nome é obrigatório.",
-      email: "E-mail é obrigatório.",
-      company: "Nome da empresa é obrigatório.",
-      website: "Site é obrigatório.",
-      profession: "Seu cargo é obrigatório.",
-      companySize: "Nº de colaboradores é obrigatório.",
-      howHeard: "Como conheceu a Metro é obrigatório.",
-      phrase: "Qual frase melhor te representa é obrigatório.",
-      challenge: "Nos conte sobre o seu desafio é obrigatório.",
-      whatsapp: "Seu WhatsApp é obrigatório.",
+      name: "Preencha o nome.",
+      email: "Preencha o e-mail.",
+      company: "Preencha o nome da empresa.",
+      profession: "Preencha o cargo.",
+      companySize: "Informe o nº de colaboradores.",
+      howHeard: "Informe como conheceu a Metro.",
+      phrase: "Selecione uma frase.",
+      challenge: "Conte sobre o seu desafio.",
+      whatsapp: "Informe seu WhatsApp.",
     };
 
     for (const [field, msg] of Object.entries(required)) {
@@ -107,7 +105,6 @@ export function Contato() {
       }
     }
 
-    // E-mail válido
     const emailValue = (formData.email || "").trim();
     if (emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
       nextErrors.email = "Informe um e-mail válido.";
@@ -117,7 +114,6 @@ export function Contato() {
       }
     }
 
-    // WhatsApp com ao menos 10 dígitos
     const whatsappValue = (formData.whatsapp || "").trim();
     const whatsappDigits = whatsappValue.replace(/\D/g, "");
     if (whatsappDigits.length < 10) {
@@ -128,7 +124,6 @@ export function Contato() {
       }
     }
 
-    // Desafio máximo 800 caracteres
     const challengeValue = (formData.challenge || "").trim();
     if (challengeValue.length > 800) {
       nextErrors.challenge = "O desafio deve ter no máximo 800 caracteres.";
@@ -138,7 +133,6 @@ export function Contato() {
       }
     }
 
-    // Ao menos uma entrega
     const deliveries = DELIVERIES.filter((d) => formData[`delivery_${d}`] === "on");
     if (deliveries.length === 0) {
       nextErrors.deliveries = "Selecione ao menos uma entrega.";
@@ -148,8 +142,7 @@ export function Contato() {
       }
     }
 
-    // Consentimento obrigatório
-    if (formData.consent !== "on") {
+    if (formData.consent !== "true") {
       nextErrors.consent = "Você precisa concordar com o tratamento de dados.";
       if (!firstField) {
         const el = document.getElementById("consent");
@@ -163,12 +156,15 @@ export function Contato() {
   }, [formData]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = event.target;
-    if (type === "checkbox") {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    const target = event.target;
+    const { name } = target;
+    const value =
+      target instanceof HTMLInputElement && target.type === "checkbox"
+        ? target.checked
+          ? "true"
+          : ""
+        : target.value;
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (fieldErrors[name]) {
       setFieldErrors((prev) => {
         const next = { ...prev };
@@ -218,7 +214,7 @@ export function Contato() {
       phone: formData.phone,
       whatsapp: formData.whatsapp,
       company: formData.company,
-      website: "", // honeypot, sempre vazio
+      website: "",
       socialMedia: formData.socialMedia,
       profession: formData.profession,
       companySize: formData.companySize,
@@ -303,56 +299,17 @@ export function Contato() {
   return (
     <section className="pt-section-lg pb-section-lg">
       <Container>
-        {/* Cabeçalho da seção com três colunas */}
-        <div
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start md:items-center mb-16 md:mb-20"
-        >
-          <div className="order-2 md:order-1">
-            <Link
-              href="/"
-              className="label-mono hover:text-accent transition-colors"
-            >
-              Contato
-            </Link>
-          </div>
-          <div className="order-3 md:order-2 text-center">
-            <Link
-              href="/"
-              className="font-wordmark text-accent mt-16 leading-[0.78] font-medium tracking-[-0.035em] break-all select-none text-[clamp(4rem,22vw,18rem)]"
-              aria-label="Metro Design — início"
-            >
-              metro<span className="text-[clamp(1.1rem,4.6vw,3.8rem)]">.</span>
-            </Link>
-          </div>
-          <div className="order-1 md:order-3 text-right md:text-left">
-            <button
-              type="button"
-              className="label-mono hover:text-accent transition-colors"
-              onClick={() => {
-                const menuToggle = document.querySelector(
-                  '[aria-controls="main-menu"]',
-                ) as HTMLElement | null;
-                menuToggle?.click();
-              }}
-            >
-              Menu
-            </button>
-          </div>
-        </div>
-
-        <div className="contact-section-grid grid gap-16 md:gap-24 lg:gap-32 md:grid-cols-[2fr_3fr]">
-          {/* Coluna esquerda — título e texto de apoio */}
-          <div
-            className="flex flex-col justify-start md:sticky md:top-24"
-          >
-            <div className="space-y-8">
+        <div className="contact-grid">
+          {/* Coluna esquerda — título e texto (sticky no desktop) */}
+          <div className="contact-intro">
+            <div className="space-y-6">
               <h1
-                className="font-editorial text-foreground leading-[0.88] tracking-[-0.045em] md:text-[clamp(64px,18vw,128px)]"
-                style={{ fontSize: "clamp(64px, 18vw, 128px)" }}
+                className="font-editorial text-foreground leading-[0.88] tracking-[-0.045em]"
+                style={{ fontSize: "clamp(48px, 9vw, 128px)" }}
               >
                 Vamos<span className="block"> conversar?</span>
               </h1>
-              <p className="text-muted text-[19px] leading-relaxed max-w-[400px] md:text-base">
+              <p className="text-muted text-[19px] leading-relaxed max-w-[400px]">
                 Queremos entender os detalhes do seu próximo projeto. Será um
                 prazer co-criar com o seu time.
               </p>
@@ -362,9 +319,10 @@ export function Contato() {
           {/* Coluna direita — formulário */}
           <form
             onSubmit={handleSubmit}
-            className="space-y-6 md:grid md:grid-cols-2 md:gap-6 lg:gap-8"
+            className="contact-form grid"
             noValidate
           >
+            {/* Honeypot */}
             <input
               type="text"
               name="website"
@@ -373,49 +331,54 @@ export function Contato() {
               style={{ position: "absolute", left: "-9999px" }}
               aria-hidden="true"
             />
+
             {/* Linha 1: Nome e E-mail */}
-            <ContactField
+            <ContactInput
               id="name"
-              label="Nome"
+              type="text"
               required
+              placeholder="Nome*"
               value={formData.name || ""}
               onChange={handleChange}
               error={fieldErrors.name}
+              ariaLabel="Nome"
             />
-            <ContactField
+            <ContactInput
               id="email"
-              label="E-mail"
               type="email"
               required
+              placeholder="E-mail*"
               value={formData.email || ""}
               onChange={handleChange}
               error={fieldErrors.email}
+              ariaLabel="E-mail"
             />
 
-            {/* Select: frase */}
-            <ContactSelect
-              id="phrase"
-              label="Qual frase melhor te representa?"
-              options={PHRASE_OPTIONS}
-              required
-              value={formData.phrase || ""}
-              onChange={handleChange}
-              error={fieldErrors.phrase}
-            />
-
-            {/* Textarea: desafio */}
+            {/* Select: frase (largura total) */}
             <div className="md:col-span-2">
-              <ContactLabel htmlFor="challenge" label="Nos conte sobre o seu desafio" required />
+              <ContactSelect
+                id="phrase"
+                required
+                value={formData.phrase || ""}
+                onChange={handleChange}
+                error={fieldErrors.phrase}
+                ariaLabel="Qual frase melhor te representa"
+                options={PHRASE_OPTIONS}
+              />
+            </div>
+
+            {/* Textarea: desafio (largura total) */}
+            <div className="md:col-span-2">
               <textarea
                 id="challenge"
                 name="challenge"
-                rows={6}
                 required
                 maxLength={800}
                 value={formData.challenge || ""}
                 onChange={handleChange}
-                className="contact-input w-full min-h-[200px] resize-y"
-                placeholder="Conte sobre o seu desafio..."
+                className="contact-textarea"
+                placeholder="Nos conte sobre o seu desafio*"
+                aria-label="Nos conte sobre o seu desafio"
               />
               {fieldErrors.challenge && (
                 <span className="contact-error" role="alert">
@@ -427,7 +390,7 @@ export function Contato() {
               </p>
             </div>
 
-            {/* Fieldset: Entregas */}
+            {/* Fieldset: Entregas (largura total) */}
             <div className="md:col-span-2">
               <fieldset
                 className="contact-fieldset"
@@ -439,7 +402,7 @@ export function Contato() {
                 </legend>
                 <div className="contact-deliveries">
                   {DELIVERIES.map((delivery) => (
-                    <ContactCheckbox
+                    <ServiceToggle
                       key={delivery}
                       id={`delivery_${delivery}`}
                       name={`delivery_${delivery}`}
@@ -457,106 +420,118 @@ export function Contato() {
               </fieldset>
             </div>
 
-            {/* Select: investimento */}
-            <ContactSelect
-              id="investmentRange"
-              label="Qual a disponibilidade de investimento em design do seu projeto?"
-              options={INVESTMENT_RANGES}
-              required
-              value={formData.investmentRange || ""}
-              onChange={handleChange}
-              error={fieldErrors.investmentRange}
-            />
+            {/* Select: investimento (largura total) */}
+            <div className="md:col-span-2">
+              <ContactSelect
+                id="investmentRange"
+                required
+                value={formData.investmentRange || ""}
+                onChange={handleChange}
+                error={fieldErrors.investmentRange}
+                ariaLabel="Qual a disponibilidade de investimento em design do seu projeto"
+                options={INVESTMENT_RANGES}
+              />
+            </div>
 
             {/* Linha: Nome da empresa e Site */}
-            <ContactField
+            <ContactInput
               id="company"
-              label="Nome da empresa"
+              type="text"
               required
+              placeholder="Nome da empresa*"
               value={formData.company || ""}
               onChange={handleChange}
               error={fieldErrors.company}
+              ariaLabel="Nome da empresa"
             />
-            <ContactField
-              id="website"
-              label="Site"
+            <ContactInput
+              id="siteUrl"
               type="url"
-              required
-              value={formData.website || ""}
+              placeholder="Site (opcional)"
+              value={formData.siteUrl || ""}
               onChange={handleChange}
-              error={fieldErrors.website}
-              placeholder="https://"
+              error={fieldErrors.siteUrl}
+              ariaLabel="Site"
             />
 
             {/* Linha: Seu cargo e Nº de colaboradores */}
-            <ContactField
+            <ContactInput
               id="profession"
-              label="Seu cargo"
+              type="text"
               required
+              placeholder="Seu cargo*"
               value={formData.profession || ""}
               onChange={handleChange}
               error={fieldErrors.profession}
+              ariaLabel="Seu cargo"
             />
             <ContactSelect
               id="companySize"
-              label="Nº de colaboradores"
-              options={COMPANY_SIZES}
               required
               value={formData.companySize || ""}
               onChange={handleChange}
               error={fieldErrors.companySize}
+              ariaLabel="Nº de colaboradores"
+              options={COMPANY_SIZES}
             />
 
-            {/* Select: como conheceu */}
-            <ContactSelect
-              id="howHeard"
-              label="Como conheceu a Metro?"
-              options={HOW_HEARD_OPTIONS}
-              required
-              value={formData.howHeard || ""}
-              onChange={handleChange}
-              error={fieldErrors.howHeard}
-            />
+            {/* Select: como conheceu (largura total) */}
+            <div className="md:col-span-2">
+              <ContactSelect
+                id="howHeard"
+                required
+                value={formData.howHeard || ""}
+                onChange={handleChange}
+                error={fieldErrors.howHeard}
+                ariaLabel="Como conheceu a Metro"
+                options={HOW_HEARD_OPTIONS}
+              />
+            </div>
 
             {/* Linha: WhatsApp e rede social */}
-            <ContactField
+            <ContactInput
               id="whatsapp"
-              label="Seu WhatsApp"
               type="tel"
               required
+              placeholder="Seu WhatsApp*"
               value={formData.whatsapp || ""}
               onChange={handleChange}
               error={fieldErrors.whatsapp}
-              placeholder="(00) 00000-0000"
+              ariaLabel="Seu WhatsApp"
             />
-            <ContactField
+            <ContactInput
               id="socialMedia"
-              label="Sua rede social"
               type="url"
+              placeholder="Sua rede social"
               value={formData.socialMedia || ""}
               onChange={handleChange}
               error={fieldErrors.socialMedia}
-              placeholder="instagram.com/"
+              ariaLabel="Sua rede social"
             />
 
-            {/* Consentimento */}
-            <div className="md:col-span-2 flex items-start gap-3">
-              <ContactCheckbox
-                id="consent"
-                name="consent"
-                label="Concordo com o tratamento de meus dados conforme o "
-                checked={formData.consent === "on"}
-                onChange={handleChange}
-                inline
-              >
-                <Link
-                  href="/privacidade"
-                  className="contact-privacy-link"
-                >
-                  Aviso de Privacidade
-                </Link>
-                <span className="text-accent">*</span>
-              </ContactCheckbox>
+            {/* Consentimento (largura total) */}
+            <div className="md:col-span-2">
+              <label className="contact-checkbox-label cursor-pointer">
+                <input
+                  type="checkbox"
+                  id="consent"
+                  name="consent"
+                  checked={formData.consent === "true"}
+                  onChange={handleChange}
+                  className="contact-checkbox-input"
+                />
+                <span className="contact-checkbox-box"></span>
+                <span className="contact-checkbox-text">
+                  Concordo com o tratamento de meus dados conforme o{" "}
+                  <Link
+                    href="/privacidade"
+                    className="contact-privacy-link"
+                  >
+                    Aviso de Privacidade
+                  </Link>
+                  <span className="text-accent">*</span>
+                </span>
+              </label>
               {fieldErrors.consent && (
                 <span className="contact-error contact-error-block" role="alert">
                   {fieldErrors.consent}
@@ -564,7 +539,7 @@ export function Contato() {
               )}
             </div>
 
-            {/* Botão */}
+            {/* Botão (largura total) */}
             <div className="md:col-span-2">
               <button
                 type="submit"
@@ -603,32 +578,103 @@ export function Contato() {
           </form>
         </div>
       </Container>
+
+      <ContactMapWidget
+        open={mapOpen}
+        onToggle={() => setMapOpen((value) => !value)}
+      />
     </section>
   );
 }
 
-function ContactField({
+function ContactMapWidget({
+  open,
+  onToggle,
+}: {
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.address)}`;
+  const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(CONTACT.address)}&output=embed`;
+
+  return (
+    <div className="contact-map">
+      <div
+        id="contact-map-panel"
+        className="contact-map__panel"
+        hidden={!open}
+      >
+        <div className="contact-map__top">
+          <p className="contact-map__address">{CONTACT.address}</p>
+          <a
+            href={directionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-map__link"
+          >
+            Como chegar <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        {open && (
+          <iframe
+            title={`Mapa de localização: ${CONTACT.address}`}
+            src={embedUrl}
+            className="contact-map__frame"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        )}
+      </div>
+
+      <button
+        type="button"
+        onClick={onToggle}
+        className="contact-map__toggle"
+        aria-expanded={open}
+        aria-controls="contact-map-panel"
+      >
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11Z" />
+          <circle cx="12" cy="10" r="2.5" />
+        </svg>
+        {open ? "Fechar mapa" : "Abrir mapa"}
+      </button>
+    </div>
+  );
+}
+
+function ContactInput({
   id,
-  label,
   type = "text",
   required = false,
+  placeholder,
   value,
   onChange,
   error,
-  placeholder,
+  ariaLabel,
 }: {
   id: string;
-  label: string;
   type?: string;
   required?: boolean;
+  placeholder: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
-  placeholder?: string;
+  ariaLabel: string;
 }) {
   return (
     <div>
-      <ContactLabel htmlFor={id} label={label} required={required} />
       <input
         id={id}
         name={id}
@@ -637,7 +683,8 @@ function ContactField({
         value={value}
         onChange={(event) => onChange(event as React.ChangeEvent<HTMLInputElement>)}
         placeholder={placeholder}
-        className={`contact-input ${error ? "" : ""}`}
+        aria-label={ariaLabel}
+        className="contact-input"
       />
       {error && (
         <span className="contact-error" role="alert">
@@ -648,52 +695,32 @@ function ContactField({
   );
 }
 
-function ContactLabel({
-  htmlFor,
-  label,
-  required = false,
-}: {
-  htmlFor: string;
-  label: string;
-  required?: boolean;
-}) {
-  return (
-    <label
-      htmlFor={htmlFor}
-      className="contact-label block mb-2"
-    >
-      {label}
-      {required && <span className="text-accent">*</span>}
-    </label>
-  );
-}
-
 function ContactSelect({
   id,
-  label,
-  options,
   required = false,
   value,
   onChange,
   error,
+  ariaLabel,
+  options,
 }: {
   id: string;
-  label: string;
-  options: string[];
   required?: boolean;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   error?: string;
+  ariaLabel: string;
+  options: string[];
 }) {
   return (
     <div>
-      <ContactLabel htmlFor={id} label={label} required={required} />
       <select
         id={id}
         name={id}
         required={required}
         value={value}
         onChange={(event) => onChange(event as React.ChangeEvent<HTMLSelectElement>)}
+        aria-label={ariaLabel}
         className="contact-select"
       >
         <option value="" disabled>
@@ -714,40 +741,31 @@ function ContactSelect({
   );
 }
 
-function ContactCheckbox({
+function ServiceToggle({
   id,
   name,
   label,
   checked,
   onChange,
-  inline = false,
-  children,
 }: {
   id: string;
   name: string;
   label: string;
   checked: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  inline?: boolean;
-  children?: React.ReactNode;
 }) {
   return (
-    <label
-      className={`contact-checkbox-label ${inline ? "contact-checkbox-inline" : ""} cursor-pointer`}
-    >
+    <label className="service-toggle">
       <input
         type="checkbox"
         id={id}
         name={name}
+        value={label}
         checked={checked}
         onChange={onChange}
-        className="sr-only contact-checkbox-input"
+        className="service-toggle-input"
       />
-      <span className="contact-checkbox-box"></span>
-      <span className="contact-checkbox-text">
-        {label}
-        {children}
-      </span>
+      <span className="service-toggle-text">{label}</span>
     </label>
   );
 }
