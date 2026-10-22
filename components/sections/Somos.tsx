@@ -10,23 +10,23 @@ export function Somos() {
   return (
     <section id="somos" className="py-section-md md:py-section-lg">
       <Container>
-        <div className="grid gap-16 md:grid-cols-[1.15fr_1fr] md:gap-24 lg:gap-32">
+        <div className="grid gap-16 md:grid-cols-2 lg:gap-32">
           {/* Coluna lateral — identificador */}
-          <div className="flex flex-col items-start justify-start">
+          <div className="min-w-0 flex flex-col items-start justify-start">
             <Reveal>
               <p className="section-eyebrow">Quem somos</p>
             </Reveal>
           </div>
 
-          {/* Área principal — apresentação */}
-          <div className="about-story">
+          {/* Área principal — apresentação e indicadores */}
+          <div className="min-w-0">
             <Reveal>
               <h2 className="font-editorial text-foreground max-w-3xl text-3xl leading-tight tracking-tight md:text-5xl">
                 {ABOUT.title}
               </h2>
             </Reveal>
 
-            <div className="about-copy mt-6 md:mt-8">
+            <div className="mt-6 md:mt-8 space-y-5 md:space-y-6">
               {ABOUT.paragraphs.map((paragraph, index) => (
                 <Reveal key={index} delay={0.1 + index * 0.1}>
                   <p className="text-muted text-base leading-relaxed md:text-lg">
@@ -52,7 +52,11 @@ export function Somos() {
                   value={String(SERVICES.areas.length)}
                   note="Branding, conteúdo e audiovisual"
                 />
-                <Indicator label="Cidade / sede" value={cidadeSede} note="CE, Brasil" />
+                <Indicator
+                  label="Cidade / sede"
+                  value={cidadeSede}
+                  note="CE, Brasil"
+                />
               </div>
             </div>
           </div>
@@ -72,7 +76,7 @@ function Indicator({
   note: string;
 }) {
   return (
-    <div className="border-b border-border pb-6 last:border-b-0">
+    <div className="min-w-0 border-b border-border pb-6 last:border-b-0">
       <span className="label-mono block">{label}</span>
       <span className="font-display text-foreground text-lg leading-tight md:text-xl mt-1 block">
         {value}
