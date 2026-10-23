@@ -56,7 +56,7 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
   return (
     <motion.section
       style={reduceMotion ? undefined : { scale, rotate }}
-      className="bg-gradient-to-t to-[#1a1919] from-[#06060e] relative z-10 h-[100svh] text-white"
+      className="bg-gradient-to-t to-[#1a1919] from-background relative z-10 h-[100svh] text-white"
     >
       <div className={GRID_PATTERN} aria-hidden="true" />
 
@@ -173,7 +173,7 @@ export default function HeroScrollAnimation({ projects }: HeroScrollAnimationPro
 
   return (
     <>
-      <div ref={container} className="relative h-[200vh] bg-black">
+      <div ref={container} className="relative h-[200vh] bg-background">
         <Section1 scrollYProgress={scrollYProgress} />
         <Section2 scrollYProgress={scrollYProgress} projects={projects} />
       </div>
@@ -184,7 +184,7 @@ export default function HeroScrollAnimation({ projects }: HeroScrollAnimationPro
 
 function WordmarkBand() {
   return (
-    <div className="@container relative z-20 h-[clamp(230px,38vw,400px)] overflow-hidden bg-[#06060e]">
+    <div className="@container relative z-20 h-[clamp(230px,38vw,400px)] overflow-hidden bg-background">
       <div className="absolute inset-0 flex flex-col">
         <div className="relative z-10 flex flex-1 items-center justify-center px-6 pb-[clamp(1.5rem,3vw,3rem)]">
           <AnimatedText
@@ -200,11 +200,6 @@ function WordmarkBand() {
         </div>
         <div className="h-[18%] shrink-0" aria-hidden="true" />
       </div>
-
-      <div
-        aria-hidden="true"
-        className="bg-black absolute inset-x-0 bottom-0 h-[18%] rounded-tl-full rounded-tr-full"
-      />
     </div>
   );
 }
