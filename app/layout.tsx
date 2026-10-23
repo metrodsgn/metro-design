@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Inter,
-  Instrument_Serif,
-  JetBrains_Mono,
-  Space_Grotesk,
-} from "next/font/google";
+import { Inter, Instrument_Serif } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
@@ -27,18 +22,6 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-grotesk",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const jetBrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export const metadata: Metadata = createSiteMetadata({
   title: "Metro Design — Branding e Comunicação Estratégica",
   description:
@@ -54,7 +37,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${inter.variable} ${instrumentSerif.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable}`}
+      className={`${inter.variable} ${instrumentSerif.variable}`}
     >
       <body className="antialiased">
         <SiteShell

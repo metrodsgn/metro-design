@@ -56,7 +56,7 @@ export function Fazemos() {
                       aria-expanded={isOpen}
                       aria-controls={panelId}
                       onClick={() => toggle(index)}
-                      className="border-b border-border font-display text-foreground flex min-h-14 w-full cursor-pointer items-center justify-between gap-3 border-b py-5 text-left text-lg leading-tight font-normal tracking-tight transition-colors duration-150 md:text-xl"
+                      className="border-b border-border font-editorial text-foreground flex min-h-14 w-full cursor-pointer items-center justify-between gap-3 border-b py-5 text-left text-lg leading-tight font-normal tracking-tight transition-colors duration-150 md:text-xl"
                     >
                       <span>{area.title}</span>
                       <span

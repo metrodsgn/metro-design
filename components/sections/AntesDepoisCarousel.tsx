@@ -105,7 +105,7 @@ export function AntesDepoisCarousel({ items }: { items: AntesDepoisItem[] }) {
           >
             <article className="before-after-composition">
               <div className="before-after-story flex flex-col items-start px-1 md:px-0 md:pt-2">
-                <p className="text-accent font-mono text-[11px] tracking-[0.18em] uppercase">
+                <p className="text-accent font-sans text-[11px] tracking-[0.18em] uppercase">
                   {item.segmento} <span className="text-border px-1">/</span>{" "}
                   {String(index + 1).padStart(2, "0")}
                 </p>
@@ -117,7 +117,7 @@ export function AntesDepoisCarousel({ items }: { items: AntesDepoisItem[] }) {
                 </p>
                 <div className="border-border mt-7 flex w-full items-center gap-3 border-t pt-5">
                   <span className="bg-accent h-1.5 w-1.5 shrink-0 rounded-full" />
-                  <p className="text-foreground min-w-0 font-mono text-[11px] tracking-[0.12em] break-words uppercase">
+                  <p className="text-foreground min-w-0 font-sans text-[11px] tracking-[0.12em] break-words uppercase">
                     {item.entrega}
                   </p>
                 </div>
@@ -153,7 +153,7 @@ export function AntesDepoisCarousel({ items }: { items: AntesDepoisItem[] }) {
           </button>
           <span
             aria-live="polite"
-            className="text-muted ml-2 font-mono text-xs tracking-widest"
+            className="text-muted ml-2 font-sans text-xs tracking-widest"
           >
             {formattedIndex} / {formattedTotal}
           </span>

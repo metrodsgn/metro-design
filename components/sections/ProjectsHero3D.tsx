@@ -166,7 +166,7 @@ export default function ProjectsHero3D() {
         .front3d .screen .text-stack { display: flex; flex-direction: column; align-items: center; gap: calc(var(--u, 1) * 4px); }
         .front3d .screen .line1, .front3d .screen .line2 { color: var(--color-accent, #ff2e2e); text-shadow: 0 0 6px rgba(255,46,46,.35), 0 0 14px rgba(255,46,46,.15); line-height: 0.95; }
         .front3d .screen .line1 { font-family: var(--font-display); font-size: calc(var(--u, 1) * 74px); font-weight: 600; letter-spacing: 0; }
-        .front3d .screen .line2 { font-family: var(--font-wordmark); font-size: calc(var(--u, 1) * 52px); font-weight: 500; letter-spacing: 0; }
+        .front3d .screen .line2 { font-family: var(--font-sans); font-size: calc(var(--u, 1) * 52px); font-weight: 500; letter-spacing: 0; }
         .back3d { width: calc(var(--u, 1) * 700px); height: calc(var(--u, 1) * 394px); transform: translate(-50%, -50%) rotateY(180deg) translateZ(calc(var(--u, 1) * 9px)); background: #121212; }
         .back3d .sq { position: absolute; left: 50%; top: 38%; width: calc(var(--u, 1) * 90px); height: calc(var(--u, 1) * 90px); background: #000; transform: translate(-50%, -50%); }
         .left3d { width: calc(var(--u, 1) * 18px); height: calc(var(--u, 1) * 394px); transform: translate(-50%, -50%) rotateY(-90deg) translateZ(calc(var(--u, 1) * 350px)); background: #1a1a1a; }

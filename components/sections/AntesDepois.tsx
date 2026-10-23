@@ -74,7 +74,7 @@ function ImageFrame({
         loading="lazy"
       />
       <span
-        className="absolute left-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-mono text-white tracking-widest uppercase select-none"
+        className="absolute left-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-sans text-white tracking-widest uppercase select-none"
         aria-hidden="true"
       >
         {label}

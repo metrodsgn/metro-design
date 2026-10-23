@@ -39,13 +39,10 @@
   --color-whatsapp: #25d366;
 
   /* ---- Tipografia: 2 famílias ---------------------------------------- */
-  /* Inter → corpo, UI, botões e labels. Instrument Serif → títulos. */
+  /* Inter → corpo, UI, botões, labels e wordmark. Instrument Serif → títulos. */
   --font-sans: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
   --font-display: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
   --font-editorial: var(--font-serif), "Instrument Serif", Georgia, serif;
-  --font-mono: var(--font-jetbrains), "JetBrains Mono", "SFMono-Regular", Menlo,
-    Consolas, monospace;
-  --font-wordmark: var(--font-grotesk), "Space Grotesk", system-ui, sans-serif;
 
   /* ---- Tipografia: escala modular (razão ~1.25) ---------------------- */
   --text-xs: 0.75rem;    /* 12px */
@@ -282,9 +279,9 @@
     outline-offset: 2px;
   }
 
-  /* Rótulo/mono — metadados, contadores, numeração */
+  /* Rótulo — metadados, contadores, numeração */
   .label-mono {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: var(--text-xs);
     letter-spacing: 0.12em;
     line-height: 1.5;
@@ -498,7 +495,7 @@
 
 .sobre-photos__caption {
   color: var(--color-subtle);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.625rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -509,7 +506,7 @@
   right: 0;
   bottom: 0;
   color: var(--color-subtle);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.625rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -588,7 +585,7 @@
 
 .about-visual__meta {
   color: var(--color-subtle);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.625rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1675,7 +1672,7 @@
 .contact-map__link {
   flex-shrink: 0;
   color: var(--color-foreground);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.625rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1707,7 +1704,7 @@
   border: 1px solid var(--color-border);
   border-radius: 999px;
   color: var(--color-foreground);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.625rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;

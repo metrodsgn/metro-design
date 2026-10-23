@@ -93,7 +93,7 @@ export function ProjectGallery({ title, images }: ProjectGalleryProps) {
             <div className="flex items-center justify-between gap-4 px-4 py-4 md:px-8">
               <p className="min-w-0 truncate text-sm text-white/75">{title}</p>
               <div className="flex shrink-0 items-center gap-5">
-                <span className="font-mono text-xs text-white/60">
+                <span className="font-sans text-xs text-white/60">
                   {String(activeIndex + 1).padStart(2, "0")} /{" "}
                   {String(images.length).padStart(2, "0")}
                 </span>

@@ -23,7 +23,7 @@ export default function PrivacidadePage() {
 
         <div className="text-muted mt-10 space-y-8 text-base leading-relaxed">
           <section>
-            <h2 className="text-foreground text-lg font-semibold">
+            <h2 className="text-foreground text-lg">
               Quem trata seus dados
             </h2>
             <p className="mt-2">
@@ -41,7 +41,7 @@ export default function PrivacidadePage() {
           </section>
 
           <section>
-            <h2 className="text-foreground text-lg font-semibold">
+            <h2 className="text-foreground text-lg">
               Quais informações são recebidas e para quê
             </h2>
             <p className="mt-2">
@@ -52,7 +52,7 @@ export default function PrivacidadePage() {
           </section>
 
           <section>
-            <h2 className="text-foreground text-lg font-semibold">
+            <h2 className="text-foreground text-lg">
               Envio e armazenamento
             </h2>
             <p className="mt-2">
@@ -66,7 +66,7 @@ export default function PrivacidadePage() {
           </section>
 
           <section>
-            <h2 className="text-foreground text-lg font-semibold">
+            <h2 className="text-foreground text-lg">
               Proteção contra envios automatizados
             </h2>
             <p className="mt-2">
@@ -77,7 +77,7 @@ export default function PrivacidadePage() {
           </section>
 
           <section>
-            <h2 className="text-foreground text-lg font-semibold">
+            <h2 className="text-foreground text-lg">
               Serviços externos
             </h2>
             <p className="mt-2">
@@ -88,7 +88,7 @@ export default function PrivacidadePage() {
           </section>
 
           <section>
-            <h2 className="text-foreground text-lg font-semibold">
+            <h2 className="text-foreground text-lg">
               Seus direitos e contato
             </h2>
             <p className="mt-2">

@@ -154,7 +154,7 @@ export function DepoimentosCard({
       )}
 
       {total > 1 && (
-        <p className="text-muted mt-7 text-center font-mono text-xs" aria-live="polite">
+        <p className="text-muted mt-7 text-center font-sans text-xs" aria-live="polite">
           {String(activeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </p>
       )}

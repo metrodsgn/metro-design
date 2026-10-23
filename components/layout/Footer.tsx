@@ -68,7 +68,7 @@ export function Footer() {
         {/* Assinatura tipográfica */}
         <RevealLines
           as="p"
-          className="font-wordmark text-accent mt-16 leading-[0.78] font-medium tracking-[-0.035em] break-all select-none text-[clamp(4rem,22vw,18rem)]"
+          className="font-sans text-accent mt-16 leading-[0.78] font-medium tracking-[-0.035em] break-all select-none text-[clamp(4rem,22vw,18rem)]"
           maskClassName="pt-[0.18em] -mt-[0.18em] pb-0!"
           lines={["metro."]}
         />

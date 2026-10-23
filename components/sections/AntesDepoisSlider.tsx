@@ -150,10 +150,10 @@ export function AntesDepoisSlider({ item, eager }: AntesDepoisSliderProps) {
             />
           </div>
 
-          <span className="text-foreground bg-background/80 pointer-events-none absolute top-3 left-3 z-20 rounded-sm px-2 py-1 font-mono text-[10px] tracking-widest">
+          <span className="text-foreground bg-background/80 pointer-events-none absolute top-3 left-3 z-20 rounded-sm px-2 py-1 font-sans text-[10px] tracking-widest">
             ANTES
           </span>
-          <span className="text-foreground bg-background/80 pointer-events-none absolute top-3 right-3 z-20 rounded-sm px-2 py-1 font-mono text-[10px] tracking-widest">
+          <span className="text-foreground bg-background/80 pointer-events-none absolute top-3 right-3 z-20 rounded-sm px-2 py-1 font-sans text-[10px] tracking-widest">
             DEPOIS
           </span>
 
