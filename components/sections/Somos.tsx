@@ -1,13 +1,12 @@
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { ABOUT } from "@/lib/constants";
+import { SOBRE_STORY_PHOTO } from "@/data/sobre-fotos";
 
 export function Somos() {
   return (
-    <section
-      id="somos"
-      className="py-section-md md:py-section-lg"
-    >
+    <section id="somos" className="py-section-md md:py-section-lg">
       <Container>
         <div className="about-composition">
           <div className="about-story">
@@ -26,6 +25,26 @@ export function Somos() {
               ))}
             </div>
           </div>
+
+          <Reveal className="about-visual" delay={0.15}>
+            <figure className="about-visual__figure">
+              <span className="about-visual__frame">
+                <Image
+                  src={SOBRE_STORY_PHOTO.src}
+                  alt={SOBRE_STORY_PHOTO.alt}
+                  fill
+                  sizes="(max-width: 639px) 90vw, (max-width: 1023px) 50vw, 28vw"
+                  className="about-visual__image"
+                />
+              </span>
+              <figcaption className="about-visual__caption">
+                <span className="about-visual__meta">Estúdio Metro</span>
+                <span className="about-visual__title">
+                  {SOBRE_STORY_PHOTO.caption}
+                </span>
+              </figcaption>
+            </figure>
+          </Reveal>
         </div>
       </Container>
     </section>
