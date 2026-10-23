@@ -6,12 +6,12 @@ const words = TAGLINE.text.split(" ");
 
 export function FaixaTexto() {
   return (
-    <section className="py-section-md md:py-section-lg">
+    <section className="pb-section-md md:pb-section-lg">
       <p className="sr-only">{TAGLINE.text}</p>
 
       <div
         aria-hidden="true"
-        className="marquee border-border flex overflow-hidden border-y py-6 md:py-10"
+        className="marquee border-border flex overflow-hidden border-b py-6 md:py-10"
       >
         <div className="animate-marquee flex w-max shrink-0 items-center">
           {[0, 1, 2, 3].map((copy) => (

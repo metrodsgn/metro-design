@@ -77,30 +77,6 @@ export const SERVICES = {
     },
   ],
 } as const;
-export const METRUS = {
-  label: "Metrus",
-  title: "Aprovação de posts sem WhatsApp, sem e-mail, sem estresse.",
-  description:
-    "A Metrus é nossa ferramenta própria que centraliza a aprovação de conteúdo. O cliente vê os posts, comenta, aprova ou pede alteração — tudo em um lugar só, com histórico e sem ruído de comunicação.",
-  cta: { label: "Fale conosco", href: "/contato" },
-  mockups: [
-    {
-      title: "Campanha de lançamento",
-      status: "approved" as const,
-      statusLabel: "Aprovado",
-    },
-    {
-      title: "Post institucional",
-      status: "pending" as const,
-      statusLabel: "Pendente",
-    },
-    {
-      title: "Reels de produto",
-      status: "changes" as const,
-      statusLabel: "Alteração solicitada",
-    },
-  ],
-} as const;
 export const CLIENTS = {
   label: "Clientes",
   title: "Marcas que confiam na Metro.",
