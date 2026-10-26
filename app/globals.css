@@ -1053,6 +1053,28 @@
   }
 }
 
+.site-intro {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  background-color: #0b0e0b;
+}
+
+.site-intro__video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 767px) and (orientation: portrait) {
+  .site-intro__video {
+    width: min(160vw, 64rem);
+    height: auto;
+    max-width: none;
+    flex: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-intro {
     display: none !important;
@@ -1618,39 +1640,21 @@
   outline-offset: 2px;
 }
 
-/* Mapa flutuante — canto inferior esquerdo (apenas /contato) */
+/* Mapa de localização — integrado ao fim da seção de contato */
 .contact-map {
-  position: fixed;
-  left: 1rem;
-  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-  z-index: 40;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5rem;
-  max-width: calc(100vw - 2rem);
-  pointer-events: none;
-}
-
-.contact-map > * {
-  pointer-events: auto;
-}
-
-@media (min-width: 640px) {
-  .contact-map {
-    left: 1.5rem;
-    bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
-  }
-}
-
-@media (min-width: 1024px) {
-  .contact-map {
-    left: 3rem;
-  }
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 24rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
 }
 
 .contact-map__panel {
-  width: min(20rem, calc(100vw - 2rem));
+  width: 100%;
   overflow: hidden;
   background: var(--color-surface);
   border: 1px solid var(--color-border);

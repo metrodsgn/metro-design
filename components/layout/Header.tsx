@@ -121,17 +121,15 @@ export function Header() {
 
   // Bloqueia o scroll do body (compatível com Lenis) enquanto o menu está aberto.
   useEffect(() => {
-    if (menuOpen) {
-      getLenis()?.stop();
-      document.body.style.overflow = "hidden";
-    } else {
-      getLenis()?.start();
-      document.body.style.overflow = "";
-    }
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    getLenis()?.stop();
+    document.body.style.overflow = "hidden";
 
     return () => {
       getLenis()?.start();
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
   }, [menuOpen]);
 

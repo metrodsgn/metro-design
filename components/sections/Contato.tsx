@@ -215,6 +215,7 @@ export function Contato() {
       whatsapp: formData.whatsapp,
       company: formData.company,
       website: "",
+      siteUrl: formData.siteUrl,
       socialMedia: formData.socialMedia,
       profession: formData.profession,
       companySize: formData.companySize,
@@ -577,12 +578,12 @@ export function Contato() {
             )}
           </form>
         </div>
-      </Container>
 
-      <ContactMapWidget
-        open={mapOpen}
-        onToggle={() => setMapOpen((value) => !value)}
-      />
+        <ContactMapWidget
+          open={mapOpen}
+          onToggle={() => setMapOpen((value) => !value)}
+        />
+      </Container>
     </section>
   );
 }

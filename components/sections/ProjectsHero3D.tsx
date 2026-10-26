@@ -183,6 +183,8 @@ export default function ProjectsHero3D() {
         .front3d .screen { position: absolute; inset: calc(var(--u, 1) * 16px); background: linear-gradient(#0a0a0a, #171717); display: grid; place-items: center; text-align: center; }
         .front3d .screen { gap: 0; }
         .front3d .screen .text-stack { display: flex; flex-direction: column; align-items: center; gap: calc(var(--u, 1) * 4px); }
+        .front3d .screen .kicker { margin-bottom: calc(var(--u, 1) * 14px); color: #8a8a8a; font-family: var(--font-sans); font-size: clamp(10px, calc(var(--u, 1) * 14px), 14px); font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; }
+        .front3d .screen .note { margin-top: calc(var(--u, 1) * 14px); color: #777; font-family: var(--font-sans); font-size: clamp(10px, calc(var(--u, 1) * 15px), 15px); letter-spacing: 0.04em; line-height: 1.3; }
         .front3d .screen .line1, .front3d .screen .line2 { color: var(--color-accent, #ff2e2e); text-shadow: 0 0 6px rgba(255,46,46,.35), 0 0 14px rgba(255,46,46,.15); line-height: 0.95; }
         .front3d .screen .line1 { font-family: var(--font-display); font-size: calc(var(--u, 1) * 74px); font-weight: 600; letter-spacing: 0; }
         .front3d .screen .line2 { font-family: var(--font-sans); font-size: calc(var(--u, 1) * 52px); font-weight: 500; letter-spacing: 0; }
@@ -192,13 +194,14 @@ export default function ProjectsHero3D() {
         .right3d { width: calc(var(--u, 1) * 18px); height: calc(var(--u, 1) * 394px); transform: translate(-50%, -50%) rotateY(90deg) translateZ(calc(var(--u, 1) * 350px)); background: #1d1d1d; }
         .top3d { width: calc(var(--u, 1) * 700px); height: calc(var(--u, 1) * 18px); transform: translate(-50%, -50%) rotateX(90deg) translateZ(calc(var(--u, 1) * 197px)); background: #0e0e0e; }
         .bottom3d { width: calc(var(--u, 1) * 700px); height: calc(var(--u, 1) * 18px); transform: translate(-50%, -50%) rotateX(-90deg) translateZ(calc(var(--u, 1) * 197px)); background: #1a1a1a; }
-        .role-hint3d { position: absolute; left: 50%; bottom: 6vh; transform: translateX(-50%); font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: #555; transition: opacity .4s ease; pointer-events: none; }
+        .role-hint3d { position: absolute; left: 50%; bottom: 6vh; width: max-content; max-width: calc(100vw - 2rem); transform: translateX(-50%); font-size: 13px; letter-spacing: 1.5px; line-height: 1.4; text-align: center; text-transform: uppercase; color: #555; transition: opacity .4s ease; pointer-events: none; }
         @media (max-width: 767px) {
           .hero3d { height: 200vh; }
           .frame3d { width: 96%; border-radius: 18px; }
           .scene3d { perspective: calc(var(--u, 1) * 4200px); }
           .front3d .screen .line1 { font-size: min(calc(var(--u, 1) * 52px), 19vw); }
           .front3d .screen .line2 { font-size: min(calc(var(--u, 1) * 38px), 13.5vw); }
+          .role-hint3d { bottom: 11vh; }
         }
         @media (prefers-reduced-motion: reduce) {
           .hero3d { height: auto; }
@@ -207,22 +210,29 @@ export default function ProjectsHero3D() {
         }
       `}</style>
 
-      <section className="hero3d" id="hero" ref={heroRef}>
+      <section
+        className="hero3d"
+        id="hero"
+        ref={heroRef}
+        aria-label="Abertura do portfólio de projetos"
+      >
         <div className="sticky3d">
           <div className="frame3d" id="frame" ref={frameRef}>
             <div className="scene3d" id="scene" ref={sceneRef}>
               <div className="world3d" id="world">
                 <div className="ground3d">
-                  <svg className="shadow3d" viewBox="0 0 200 100" preserveAspectRatio="none">
+                  <svg className="shadow3d" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
                     <polygon points="20,25 180,25 150,75 0,75" fill="rgba(60,60,60,0.35)" />
                   </svg>
                 </div>
-                <div className="panel3d">
+                <div className="panel3d" aria-hidden="true">
                   <div className="face3d front3d">
                     <div className="screen">
                       <div className="text-stack">
+                        <div className="kicker">Portfólio</div>
                         <div className="line1">Projetos</div>
                         <div className="line2">metro</div>
+                        <div className="note">Branding, comunicação e audiovisual</div>
                       </div>
                     </div>
                   </div>
@@ -235,7 +245,9 @@ export default function ProjectsHero3D() {
               </div>
             </div>
           </div>
-          <div className="role-hint3d" id="roleHint" ref={roleRef}>Role para baixo</div>
+          <div className="role-hint3d" id="roleHint" ref={roleRef} aria-hidden="true">
+            Role para explorar os projetos
+          </div>
         </div>
       </section>
     </>

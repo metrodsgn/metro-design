@@ -100,7 +100,7 @@ export function Hero() {
             <Link
               href="/projetos"
               className="ui-button ui-button-accent"
-              data-cursor="Ver ↗"
+              data-cursor="Ver projetos ↗"
             >
               Ver projetos <span aria-hidden="true">↗</span>
             </Link>

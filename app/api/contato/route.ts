@@ -16,6 +16,7 @@ type Body = {
   whatsapp?: unknown;
   company?: unknown;
   website?: unknown; // honeypot
+  siteUrl?: unknown;
   socialMedia?: unknown;
   profession?: unknown;
   companySize?: unknown;
@@ -73,6 +74,8 @@ export async function POST(request: Request) {
     const whatsapp = typeof body.whatsapp === "string" ? body.whatsapp.trim() : "";
     const company =
       typeof body.company === "string" ? body.company.trim() : "";
+    const siteUrl =
+      typeof body.siteUrl === "string" ? body.siteUrl.trim() : "";
     const socialMedia =
       typeof body.socialMedia === "string" ? body.socialMedia.trim() : "";
     const profession =
@@ -137,6 +140,7 @@ export async function POST(request: Request) {
       phone.length > 30 ||
       whatsapp.length > 30 ||
       company.length > 100 ||
+      siteUrl.length > 200 ||
       socialMedia.length > 200 ||
       profession.length > 100 ||
       companySize.length > 50 ||
@@ -169,7 +173,7 @@ export async function POST(request: Request) {
 
     // 10. Registro de consentimento LGPD (data/hora + versão da política)
     const consentRecordedAt = new Date().toISOString();
-    const privacyPolicyVersion = "1.0";
+    const privacyPolicyVersion = "1.1";
 
     // 11. Escape HTML para e-mail
     const safeName = escapeHtml(name);
@@ -177,6 +181,7 @@ export async function POST(request: Request) {
     const safePhone = escapeHtml(phone);
     const safeWhatsapp = escapeHtml(whatsapp);
     const safeCompany = escapeHtml(company);
+    const safeSiteUrl = escapeHtml(siteUrl);
     const safeSocialMedia = escapeHtml(socialMedia);
     const safeProfession = escapeHtml(profession);
     const safeCompanySize = escapeHtml(companySize);
@@ -199,6 +204,7 @@ export async function POST(request: Request) {
         ${safePhone ? `<p><strong>Telefone:</strong> ${safePhone}</p>` : ""}
         ${safeWhatsapp ? `<p><strong>WhatsApp:</strong> ${safeWhatsapp}</p>` : ""}
         ${safeCompany ? `<p><strong>Empresa:</strong> ${safeCompany}</p>` : ""}
+        ${safeSiteUrl ? `<p><strong>Site:</strong> ${safeSiteUrl}</p>` : ""}
         ${safeSocialMedia ? `<p><strong>Rede social:</strong> ${safeSocialMedia}</p>` : ""}
         ${safeProfession ? `<p><strong>Cargo:</strong> ${safeProfession}</p>` : ""}
         ${safeCompanySize ? `<p><strong>Nº de colaboradores:</strong> ${safeCompanySize}</p>` : ""}

@@ -133,7 +133,7 @@ function ViewAllProjectsButton({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <Link
       href="/projetos"
-      className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full border border-white/20 bg-transparent px-10 py-4 text-sm font-semibold uppercase text-white whitespace-nowrap transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-transparent hover:text-white focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+      className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/20 bg-transparent px-4 py-4 text-sm font-semibold uppercase text-white whitespace-nowrap transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-transparent hover:text-white focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 sm:gap-4 sm:px-10"
       style={
         reduceMotion
           ? { transitionDuration: "0ms" }

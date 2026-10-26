@@ -4,7 +4,6 @@ import { Somos } from "@/components/sections/Somos";
 import { Fazemos } from "@/components/sections/Fazemos";
 import { AntesDepois } from "@/components/sections/AntesDepois";
 import { Clientes } from "@/components/sections/Clientes";
-import { Depoimentos } from "@/components/sections/Depoimentos";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { createSiteMetadata } from "@/lib/metadata";
 
@@ -33,7 +32,6 @@ export default function SobrePage() {
       <Fazemos />
       <AntesDepois />
       <Clientes />
-      <Depoimentos />
       <CtaFinal />
     </>
   );

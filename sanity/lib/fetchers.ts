@@ -73,7 +73,19 @@ export async function getFeaturedCases(): Promise<CaseListItem[]> {
 }
 
 export async function getCaseBySlug(slug: string): Promise<CaseFull | null> {
-  return client.fetch(caseBySlugQuery, { slug });
+  const project = await client.fetch<CaseFull | null>(caseBySlugQuery, { slug });
+  if (!project?.description) return project;
+
+  return {
+    ...project,
+    description: project.description.map((block) => ({
+      ...block,
+      children: block.children.map((child) => ({
+        ...child,
+        text: (child.text ?? "").replace(/\bcraçao\b/gi, "criação"),
+      })),
+    })),
+  };
 }
 
 export async function getAllTestimonials(): Promise<Testimonial[]> {

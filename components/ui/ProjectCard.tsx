@@ -39,7 +39,8 @@ export function ProjectCard({
     <Link
       href={`/projetos/${slug}`}
       style={accentStyle}
-      data-cursor="Ver ↗"
+      data-cursor="Ver projeto ↗"
+      aria-label={`Ver projeto ${title}`}
       className="projects-card group focus-visible:outline-accent block focus-visible:outline-2 focus-visible:outline-offset-4"
     >
       <div className="projects-card__frame border-border bg-surface relative isolate aspect-[4/3] overflow-hidden border">
