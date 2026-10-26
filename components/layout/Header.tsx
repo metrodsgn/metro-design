@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { NAV_LINKS } from "@/lib/constants";
 import { BrandWordmark } from "@/components/ui/BrandWordmark";
@@ -10,6 +11,7 @@ import { getLenis } from "@/lib/smooth-scroll";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function Header() {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [visible, setVisible] = useState(true);
   const [overText, setOverText] = useState(false);
@@ -24,8 +26,16 @@ export function Header() {
   useEffect(() => {
     let previousY = window.scrollY;
     let frame = 0;
+    let lastDetect = 0;
 
     const detectTextOverlap = () => {
+      // Abaixo de xl só o wordmark aparece no header: a varredura de todos os
+      // nós de texto da página é desnecessária e custosa no mobile.
+      if (window.innerWidth < 1280) {
+        setOverText(false);
+        return;
+      }
+
       const inkItems = Array.from(
         document.querySelectorAll<HTMLElement>("[data-header-ink]"),
       );
@@ -90,6 +100,11 @@ export function Header() {
       }
 
       previousY = currentY;
+
+      // A detecção geométrica não precisa rodar a cada frame do scroll.
+      const now = performance.now();
+      if (now - lastDetect < 160) return;
+      lastDetect = now;
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(detectTextOverlap);
     };
@@ -178,7 +193,7 @@ export function Header() {
     <header
       ref={headerRef}
       onFocusCapture={() => setVisible(true)}
-      className={`sticky top-0 z-50 -mb-20 border-b border-transparent bg-transparent transition-transform duration-300 ease-out motion-reduce:transition-none md:-mb-24 ${
+      className={`sticky top-0 z-[60] -mb-20 border-b border-transparent bg-transparent transition-transform duration-300 ease-out motion-reduce:transition-none md:-mb-24 ${
         visible || menuOpen ? "translate-y-0" : "-translate-y-full"
       }`}
     >
@@ -207,17 +222,24 @@ export function Header() {
           aria-label="Navegação principal"
           className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 xl:flex"
         >
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              data-header-ink
-              data-over-text={overText}
-              className="header-adaptive-ink text-sm font-medium transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const isActive =
+              link.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                data-header-ink
+                data-over-text={overText}
+                className={`header-adaptive-ink text-sm font-medium transition-colors ${isActive ? "header-adaptive-ink-active" : ""}`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-3 xl:flex">
@@ -279,57 +301,70 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: reduceMotion ? 0 : 0.3, ease: EASE }}
-            className="bg-background fixed inset-0 z-40 flex flex-col justify-center overflow-y-auto px-5 pt-24 pb-10 sm:px-6 md:px-10 lg:px-12 xl:hidden"
+            className="bg-background fixed inset-0 z-[55] flex flex-col justify-start overflow-y-auto px-5 pt-24 pb-10 sm:px-6 md:px-10 lg:px-12 xl:hidden"
           >
-            <motion.nav
-              aria-label="Menu"
-              initial="hidden"
-              animate="visible"
-              variants={{
-                hidden: {},
-                visible: {
-                  transition: {
-                    staggerChildren: reduceMotion ? 0 : 0.06,
-                    delayChildren: reduceMotion ? 0 : 0.08,
+            <div className="my-auto flex w-full flex-col">
+              <motion.nav
+                aria-label="Menu"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: {},
+                  visible: {
+                    transition: {
+                      staggerChildren: reduceMotion ? 0 : 0.06,
+                      delayChildren: reduceMotion ? 0 : 0.08,
+                    },
                   },
-                },
-              }}
-              className="mx-auto flex w-full max-w-none flex-col"
-            >
-              {NAV_LINKS.map((link, index) => (
-                <motion.div
-                  key={link.href}
-                  variants={{
-                    hidden: { opacity: 0, y: reduceMotion ? 0 : 24 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                  transition={{ duration: reduceMotion ? 0 : 0.5, ease: EASE }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={closeMenu}
-                    className="border-border group flex min-h-16 items-center justify-between gap-4 border-b py-3 transition-colors sm:min-h-20"
-                  >
-                    <span className="font-editorial text-foreground group-hover:text-accent text-4xl leading-none tracking-tight transition-colors sm:text-5xl md:text-6xl">
-                      {link.label}
-                    </span>
-                    <span className="label-mono shrink-0">
-                      ({String(index + 1).padStart(2, "0")})
-                    </span>
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.nav>
-
-            <div className="mx-auto mt-10 flex w-full max-w-none flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <Link
-                href="/contato"
-                onClick={closeMenu}
-                className="ui-button ui-button-accent w-full sm:w-auto"
+                }}
+                className="mx-auto flex w-full max-w-none flex-col"
               >
-                Fale conosco <span aria-hidden="true">↗</span>
-              </Link>
-              <p className="label-mono">Fortaleza · CE</p>
+                {NAV_LINKS.map((link, index) => {
+                  const isActive =
+                    link.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(link.href);
+                  return (
+                    <motion.div
+                      key={link.href}
+                      variants={{
+                        hidden: { opacity: 0, y: reduceMotion ? 0 : 24 },
+                        visible: { opacity: 1, y: 0 },
+                      }}
+                      transition={{ duration: reduceMotion ? 0 : 0.5, ease: EASE }}
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={closeMenu}
+                        aria-current={isActive ? "page" : undefined}
+                        className="border-border group flex min-h-16 items-center justify-between gap-4 border-b py-3 transition-colors sm:min-h-20"
+                      >
+                        <span
+                          className={`font-editorial group-hover:text-accent text-4xl leading-none tracking-tight transition-colors sm:text-5xl md:text-6xl ${
+                            isActive ? "text-accent" : "text-foreground"
+                          }`}
+                        >
+                          {link.label}
+                        </span>
+                        <span className="label-mono shrink-0">
+                          ({String(index + 1).padStart(2, "0")})
+                        </span>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </motion.nav>
+
+              <div className="mx-auto mt-10 flex w-full max-w-none flex-col gap-4 pb-[env(safe-area-inset-bottom)] sm:flex-row sm:items-center sm:justify-between">
+                <Link
+                  href="/contato"
+                  onClick={closeMenu}
+                  className="ui-button ui-button-accent w-full sm:w-auto"
+                >
+                  Fale conosco <span aria-hidden="true">↗</span>
+                </Link>
+                <p className="label-mono">Fortaleza · CE</p>
+              </div>
             </div>
           </motion.div>
         )}

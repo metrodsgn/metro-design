@@ -19,10 +19,12 @@ export default function Template({ children }: { children: ReactNode }) {
   if (pathname.startsWith("/studio")) return <>{children}</>;
 
   return (
+    // Sem transform residual: um `transform` no wrapper cria containing block
+    // e quebra elementos `position: fixed` (mapa do contato, progresso etc.).
     <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      initial={reduceMotion ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>

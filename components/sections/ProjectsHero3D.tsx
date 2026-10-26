@@ -73,13 +73,22 @@ export default function ProjectsHero3D() {
       frame.style.borderRadius = frameR + "px";
     }
 
+    let last = performance.now();
+    let raf = 0;
+
     const io = new IntersectionObserver((entries) => {
       isVisible = entries[0].isIntersecting;
+
+      if (isVisible && !reduced && !raf) {
+        last = performance.now();
+        raf = requestAnimationFrame(tick);
+      } else if ((!isVisible || reduced) && raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
     }, { threshold: 0 });
     io.observe(hero);
 
-    let last = performance.now();
-    let raf = 0;
     function tick(now: number) {
       if (now - last < 33) { raf = requestAnimationFrame(tick); return; }
       const dt = Math.min((now - last) / 1000, 0.05);
@@ -136,9 +145,10 @@ export default function ProjectsHero3D() {
         frame!.style.borderRadius = frameR + "px";
       }
 
-      raf = requestAnimationFrame(tick);
+      raf = isVisible && !reduced ? requestAnimationFrame(tick) : 0;
     }
-    raf = requestAnimationFrame(tick);
+
+    if (!reduced) raf = requestAnimationFrame(tick);
 
     return () => {
       cancelAnimationFrame(raf);

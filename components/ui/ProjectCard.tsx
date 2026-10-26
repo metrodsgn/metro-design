@@ -49,7 +49,7 @@ export function ProjectCard({
               src={urlFor(cover).width(800).height(500).url()}
               alt={title}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 50vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="projects-card__image object-cover"
             />
           ) : (

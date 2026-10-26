@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -23,13 +23,29 @@ interface HeroScrollAnimationProps {
   projects: CaseListItem[];
 }
 
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const update = () => setMatches(mq.matches);
+
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [query]);
+
+  return matches;
+}
+
 const GRID_PATTERN =
   "absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:54px_54px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]";
 
 const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
   const reduceMotion = useReducedMotion();
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, -5]);
+  const isMobile = useMediaQuery("(max-width: 767px)");
+  const scale = useTransform(scrollYProgress, [0, 1], [1, isMobile ? 0.92 : 0.8]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -2 : -5]);
 
   return (
     <motion.section
@@ -50,18 +66,19 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
   projects,
 }) => {
   const reduceMotion = useReducedMotion();
-  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [5, 0]);
+  const isMobile = useMediaQuery("(max-width: 767px)");
+  const scale = useTransform(scrollYProgress, [0, 1], [isMobile ? 0.94 : 0.8, 1]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [isMobile ? 2 : 5, 0]);
 
   return (
     <motion.section
       style={reduceMotion ? undefined : { scale, rotate }}
-      className="bg-gradient-to-t to-[#1a1919] from-background relative z-10 h-[100svh] text-white"
+      className="bg-gradient-to-t to-[#1a1919] from-background relative z-10 min-h-[100svh] text-white"
     >
       <div className={GRID_PATTERN} aria-hidden="true" />
 
       <Container className="relative z-10 pt-16 md:pt-24 lg:pt-32 pb-12 md:pb-16">
-        <h2 className="font-editorial pb-8 md:pb-12 text-4xl leading-[100%] tracking-tight sm:text-5xl md:text-6xl">
+        <h2 className="font-editorial pb-6 text-3xl leading-[100%] tracking-tight sm:pb-8 sm:text-5xl md:pb-12 md:text-6xl">
           Forma, estratégia e detalhe <br /> em cada projeto
         </h2>
 
@@ -70,12 +87,12 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
             Nenhum projeto para exibir.
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:h-[24rem] md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:h-[24rem] md:grid-cols-4">
             {projects.map((project) => (
               <Link
                 key={project._id}
                 href={`/projetos/${project.slug}`}
-                className="bg-surface relative h-48 w-full overflow-hidden rounded-md sm:h-56 md:h-full group"
+                className="bg-surface group relative aspect-[4/3] w-full overflow-hidden rounded-md md:aspect-auto md:h-full"
               >
                 {project.cover ? (
                   <Image
@@ -92,13 +109,13 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
                     </span>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-4 left-4 right-4 text-left opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-300 md:opacity-0 md:group-hover:opacity-100" />
+                <div className="absolute bottom-3 left-3 right-3 text-left transition-all duration-300 md:bottom-4 md:left-4 md:right-4 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
                   <span className="label-mono text-white/80">{project.category}</span>
-                  <h3 className="font-editorial text-white mt-1 text-xl leading-tight sm:text-2xl">
+                  <h3 className="font-editorial mt-1 text-base leading-tight text-white sm:text-2xl">
                     {project.title}
                   </h3>
-                  <span className="label-mono text-white/60 mt-2 block">{project.year}</span>
+                  <span className="label-mono mt-1.5 block text-white/60 md:mt-2">{project.year}</span>
                 </div>
               </Link>
             ))}
@@ -173,7 +190,7 @@ export default function HeroScrollAnimation({ projects }: HeroScrollAnimationPro
 
   return (
     <>
-      <div ref={container} className="relative h-[200vh] bg-background">
+      <div ref={container} className="relative h-auto overflow-x-clip bg-background">
         <Section1 scrollYProgress={scrollYProgress} />
         <Section2 scrollYProgress={scrollYProgress} projects={projects} />
       </div>

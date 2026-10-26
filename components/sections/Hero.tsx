@@ -60,17 +60,9 @@ export function Hero() {
             },
           }}
         >
-          <motion.p
-            variants={fadeVariants}
-            transition={{ duration: 0.5, ease: EASE }}
-            className="section-eyebrow"
-          >
-            Estratégia · Identidade · Experiência
-          </motion.p>
-
           <h1
             id="hero-title"
-            className="font-editorial text-foreground mt-6 text-display leading-[0.95] tracking-[-0.03em]"
+            className="font-editorial text-foreground text-display leading-[0.95] tracking-[-0.03em]"
           >
             <span className="block overflow-hidden pb-[0.08em]">
               <motion.span
