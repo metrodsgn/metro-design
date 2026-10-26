@@ -1057,22 +1057,13 @@
   overflow: hidden;
   overscroll-behavior: none;
   touch-action: none;
-  background-color: #0b0e0b;
+  background-color: #0b0d0d;
 }
 
 .site-intro__video {
   width: 100%;
   height: 100%;
   object-fit: contain;
-}
-
-@media (max-width: 767px) and (orientation: portrait) {
-  .site-intro__video {
-    width: min(160vw, 64rem);
-    height: auto;
-    max-width: none;
-    flex: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
