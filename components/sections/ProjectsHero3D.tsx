@@ -42,7 +42,7 @@ export default function ProjectsHero3D() {
       const mobile = isMobile();
       return {
         uStart: mobile
-          ? Math.max(0.38, Math.min((vw * 0.96 - 10) / 700, (vh * 0.75) / 394))
+          ? Math.max(0.34, Math.min(((vw * 0.96 - 10) / 700) * 0.9, (vh * 0.75) / 394))
           : Math.max(0.85, Math.min(vw / 1280, vh / 658)) * START_SCALE,
         uEnd: Math.max(vw / 700, vh / 394) * 1.03,
       };
