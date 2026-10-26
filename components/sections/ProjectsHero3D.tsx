@@ -23,7 +23,7 @@ export default function ProjectsHero3D() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    let angle = START_ANGLE;
+    let angle = window.innerWidth < 768 ? -10 : START_ANGLE;
     let omega = 360 / PERIOD;
     let uCurrent = 0;
     let frameW = 0, frameH = 0, frameR = START_RADIUS;
@@ -41,7 +41,9 @@ export default function ProjectsHero3D() {
       const vh = window.innerHeight;
       const mobile = isMobile();
       return {
-        uStart: Math.max(mobile ? 0.5 : 0.85, Math.min(vw / 1280, vh / 658)) * START_SCALE,
+        uStart: mobile
+          ? Math.max(0.38, Math.min((vw * 0.96 - 10) / 700, (vh * 0.75) / 394))
+          : Math.max(0.85, Math.min(vw / 1280, vh / 658)) * START_SCALE,
         uEnd: Math.max(vw / 700, vh / 394) * 1.03,
       };
     }
@@ -62,7 +64,7 @@ export default function ProjectsHero3D() {
       const vw = document.documentElement.clientWidth || window.innerWidth;
       const mobile = isMobile();
       frameW = vw * (mobile ? 0.96 : 0.9);
-      frameH = frameW * 658 / 1280;
+      frameH = frameW * (mobile ? 0.58 : 658 / 1280);
       frameR = mobile ? 18 : START_RADIUS;
       scene.style.setProperty("--u", String(uCurrent));
       scene.style.setProperty("--po", poCurrent + "%");
@@ -103,7 +105,7 @@ export default function ProjectsHero3D() {
         const vh = window.innerHeight;
         const mobile = isMobile();
         const startW = vw * (mobile ? 0.96 : 0.9);
-        const startH = startW * 658 / 1280;
+        const startH = startW * (mobile ? 0.58 : 658 / 1280);
         const endW = vw;
         const endH = vh;
         const targetW = startW + (endW - startW) * e;
@@ -122,17 +124,25 @@ export default function ProjectsHero3D() {
         poCurrent += (targetPo - poCurrent) * 0.12;
         wyCurrent += (0 - wyCurrent) * 0.12;
 
-        const baseOmega = mobile ? 360 / 32 : 360 / PERIOD;
-        let targetOmega = baseOmega;
-        let attract = 0;
-        if (t > 0.1) {
-          const intensity = t < 0.8 ? (t - 0.1) / 0.7 : 1;
-          targetOmega = baseOmega * (1 - intensity);
-          attract = intensity * (mobile ? 1.0 : 2.0);
+        if (mobile) {
+          // No mobile o monitor balança de leve e encara a câmera durante o
+          // zoom, em vez de girar até ficar de perfil e sumir.
+          const sway = -10 + Math.sin(now * 0.0005) * 7;
+          const targetAngle = sway * (1 - e);
+          angle += (targetAngle - angle) * 0.08;
+        } else {
+          const baseOmega = 360 / PERIOD;
+          let targetOmega = baseOmega;
+          let attract = 0;
+          if (t > 0.1) {
+            const intensity = t < 0.8 ? (t - 0.1) / 0.7 : 1;
+            targetOmega = baseOmega * (1 - intensity);
+            attract = intensity * 2.0;
+          }
+          omega += (targetOmega - omega) * 0.12;
+          const nearest = Math.round(angle / 360) * 360;
+          angle += omega * dt + (nearest - angle) * attract * dt;
         }
-        omega += (targetOmega - omega) * 0.12;
-        const nearest = Math.round(angle / 360) * 360;
-        angle += omega * dt + (nearest - angle) * attract * dt;
 
         if (roleHint) roleHint.style.opacity = p > 0.02 ? "0" : "1";
 
@@ -162,7 +172,6 @@ export default function ProjectsHero3D() {
       <style>{`
         .hero3d { height: 260vh; position: relative; background: #f2f2ef; overflow-x: clip; }
         .sticky3d { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; background: #f2f2ef; overflow-x: clip; }
-        @media (prefers-reduced-motion: reduce) { .sticky3d { position: static; height: auto; padding: 6vh 0; } }
         .frame3d { width: 90%; aspect-ratio: 1280 / 658; border-radius: 28px; overflow: hidden; background: #f2f2ef; position: relative; will-change: width, height, border-radius; }
         .scene3d { width: 100%; height: 100%; perspective: calc(var(--u, 1) * 3328px); perspective-origin: 50% var(--po, 28%); display: grid; place-items: center; background: #f2f2ef; overflow: hidden; transform: translateZ(0); will-change: transform; contain: layout paint; }
         .world3d { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; transform: translateY(var(--wy, 0px)) rotateY(var(--a, 25deg)); will-change: transform; contain: layout; }
@@ -188,8 +197,13 @@ export default function ProjectsHero3D() {
           .hero3d { height: 200vh; }
           .frame3d { width: 96%; border-radius: 18px; }
           .scene3d { perspective: calc(var(--u, 1) * 4200px); }
-          .front3d .screen .line1 { font-size: calc(var(--u, 1) * 52px); }
-          .front3d .screen .line2 { font-size: calc(var(--u, 1) * 38px); }
+          .front3d .screen .line1 { font-size: min(calc(var(--u, 1) * 52px), 19vw); }
+          .front3d .screen .line2 { font-size: min(calc(var(--u, 1) * 38px), 13.5vw); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero3d { height: auto; }
+          .sticky3d { position: static; height: auto; padding: 7rem 0 4rem; }
+          .role-hint3d { display: none; }
         }
       `}</style>
 
