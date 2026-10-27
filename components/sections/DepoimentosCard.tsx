@@ -136,7 +136,7 @@ export function DepoimentosCard({
         <>
           <button
             type="button"
-            onClick={() => goTo(activeIndex + 1, -1)}
+            onClick={() => goTo(activeIndex - 1, 1)}
             className="absolute top-1/2 -left-5 z-10 flex size-11 -translate-y-1/2 items-center justify-center bg-transparent text-accent transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-none"
             aria-label="Depoimento anterior"
           >
@@ -144,7 +144,7 @@ export function DepoimentosCard({
           </button>
           <button
             type="button"
-            onClick={() => goTo(activeIndex - 1, 1)}
+            onClick={() => goTo(activeIndex + 1, -1)}
             className="absolute top-1/2 -right-5 z-10 flex size-11 -translate-y-1/2 items-center justify-center bg-transparent text-accent transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-none"
             aria-label="Próximo depoimento"
           >

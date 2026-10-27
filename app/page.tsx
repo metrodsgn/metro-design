@@ -1,11 +1,11 @@
 import { Hero } from "@/components/sections/Hero";
 import HeroScrollAnimation from "@/components/ui/hero-scroll-animation";
+import { Depoimentos } from "@/components/sections/Depoimentos";
 import { FaixaTexto } from "@/components/sections/FaixaTexto";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { getAllCases, getFeaturedCases, type CaseListItem } from "@/sanity/lib/fetchers";
 
-// Home curta: Hero → Projetos selecionados → faixa → CTA.
-// Somos, Fazemos, AntesDepois, Clientes e Depoimentos migraram para /sobre.
+// Home curta: Hero → Projetos selecionados → Depoimentos → faixa → CTA.
 export default async function Home() {
   const [allCases, featuredCases] = await Promise.all([
     getAllCases(),
@@ -20,6 +20,7 @@ export default async function Home() {
     <>
       <Hero />
       <HeroScrollAnimation projects={projects} />
+      <Depoimentos />
       <FaixaTexto />
       <CtaFinal />
     </>

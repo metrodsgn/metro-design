@@ -330,12 +330,125 @@
   will-change: transform;
 }
 
-.marquee-word {
-  transition: color var(--dur-fast) ease;
+/* Faixa de texto — marquee editorial */
+.faixa-texto {
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
 }
 
-.marquee-word:hover {
-  color: var(--color-accent);
+@keyframes faixa-texto-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-25%, 0, 0);
+  }
+}
+
+.faixa-texto__track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  animation: faixa-texto-marquee 26s linear infinite;
+  will-change: transform;
+}
+
+.faixa-texto__copy {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 2.25rem);
+  padding-right: clamp(1rem, 2.5vw, 2.25rem);
+}
+
+.faixa-texto__text {
+  color: var(--color-foreground);
+  font-family: var(--font-editorial);
+  font-size: clamp(2.25rem, 6.5vw, 6rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+
+.faixa-texto__dot {
+  flex: none;
+  width: clamp(0.35rem, 0.6vw, 0.55rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background-color: var(--color-accent);
+}
+
+@media (min-width: 640px) {
+  .faixa-texto__track {
+    animation-duration: 30s;
+  }
+}
+
+@media (min-width: 768px) {
+  .faixa-texto__track {
+    animation-duration: 34s;
+  }
+}
+
+@media (min-width: 1280px) {
+  .faixa-texto__track {
+    animation-duration: 42s;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .faixa-texto:hover .faixa-texto__track {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faixa-texto {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .faixa-texto__track {
+    width: 100%;
+    animation: none;
+    transform: none;
+  }
+
+  .faixa-texto__copy {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .faixa-texto__copy:not(:first-child) {
+    display: none;
+  }
+
+  .faixa-texto__text {
+    text-align: center;
+    white-space: normal;
+  }
+
+  .faixa-texto__dot {
+    display: none;
+  }
 }
 
 .footer-link {

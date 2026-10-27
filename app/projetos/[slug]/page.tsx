@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { Container } from "@/components/ui/Container";
 import { ProjectGallery } from "@/components/sections/ProjectGallery";
+import { ProjectSpotlight } from "@/components/sections/ProjectSpotlight";
 import { ProjectTransitionCard } from "@/components/sections/ProjectTransitionCard";
 import { getAllCases, getCaseBySlug } from "@/sanity/lib/fetchers";
 import { urlFor } from "@/sanity/lib/image";
@@ -66,6 +67,12 @@ export default async function ProjetoPage({ params }: PageProps) {
       height: image.dimensions?.height ?? 900,
     })),
   ];
+  const spotlightImages = projectImages.slice(0, 2);
+  const galleryImages = projectImages.slice(spotlightImages.length);
+  const spotlightCaptions = [
+    `${project.client} · ${project.category}`,
+    `${project.client} · ${project.services?.filter(Boolean)[0] ?? project.category}`,
+  ];
 
   return (
     <article className="bg-background text-foreground pb-section-md">
@@ -81,9 +88,29 @@ export default async function ProjetoPage({ params }: PageProps) {
           )}
         </header>
 
+        {spotlightImages.length > 0 && (
+          <div
+            className={`mx-auto mt-12 grid grid-cols-1 gap-6 md:mt-16 md:gap-8 ${
+              spotlightImages.length > 1
+                ? "max-w-6xl md:grid-cols-2"
+                : "max-w-3xl"
+            }`}
+          >
+            {spotlightImages.map((image, index) => (
+              <ProjectSpotlight
+                key={image.src}
+                image={image}
+                caption={spotlightCaptions[index] ?? spotlightCaptions[0]}
+                ariaLabel={`Imagem em destaque ${index + 1} do projeto ${project.title}`}
+                parallaxDirection={index % 2 === 0 ? "up" : "down"}
+              />
+            ))}
+          </div>
+        )}
+
         <ProjectGallery
           title={`${project.client} — ${project.title}`}
-          images={projectImages}
+          images={galleryImages}
         />
 
         <div className="mx-auto max-w-6xl">

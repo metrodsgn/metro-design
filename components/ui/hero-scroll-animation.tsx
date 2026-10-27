@@ -11,7 +11,6 @@ import {
   useTransform,
 } from "motion/react";
 import { Container } from "@/components/ui/Container";
-import AnimatedText from "@/components/ui/animated-text";
 import { urlFor } from "@/sanity/lib/image";
 import type { CaseListItem } from "@/sanity/lib/fetchers";
 
@@ -189,34 +188,9 @@ export default function HeroScrollAnimation({ projects }: HeroScrollAnimationPro
   });
 
   return (
-    <>
-      <div ref={container} className="relative h-auto overflow-x-clip bg-background">
-        <Section1 scrollYProgress={scrollYProgress} />
-        <Section2 scrollYProgress={scrollYProgress} projects={projects} />
-      </div>
-      <WordmarkBand />
-    </>
-  );
-}
-
-function WordmarkBand() {
-  return (
-    <div className="@container relative z-20 h-[clamp(230px,38vw,400px)] overflow-hidden bg-background">
-      <div className="absolute inset-0 flex flex-col">
-        <div className="relative z-10 flex flex-1 items-center justify-center px-6 pb-[clamp(1.5rem,3vw,3rem)]">
-          <AnimatedText
-            text="metro design"
-            className="font-sans text-accent max-w-full text-center text-[12cqw] leading-[1.05] font-semibold tracking-[-0.04em] whitespace-nowrap"
-            animationType="letters"
-            duration={0.6}
-            staggerDelay={0.045}
-            initialY={48}
-            initialOpacity={0}
-            repeat
-          />
-        </div>
-        <div className="h-[18%] shrink-0" aria-hidden="true" />
-      </div>
+    <div ref={container} className="relative h-auto overflow-x-clip bg-background">
+      <Section1 scrollYProgress={scrollYProgress} />
+      <Section2 scrollYProgress={scrollYProgress} projects={projects} />
     </div>
   );
 }

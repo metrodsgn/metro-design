@@ -183,7 +183,6 @@ export default function ProjectsHero3D() {
         .front3d .screen { position: absolute; inset: calc(var(--u, 1) * 16px); background: linear-gradient(#0a0a0a, #171717); display: grid; place-items: center; text-align: center; }
         .front3d .screen { gap: 0; }
         .front3d .screen .text-stack { display: flex; flex-direction: column; align-items: center; gap: calc(var(--u, 1) * 4px); }
-        .front3d .screen .kicker { margin-bottom: calc(var(--u, 1) * 14px); color: #8a8a8a; font-family: var(--font-sans); font-size: clamp(10px, calc(var(--u, 1) * 14px), 14px); font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; }
         .front3d .screen .note { margin-top: calc(var(--u, 1) * 14px); color: #777; font-family: var(--font-sans); font-size: clamp(10px, calc(var(--u, 1) * 15px), 15px); letter-spacing: 0.04em; line-height: 1.3; }
         .front3d .screen .line1, .front3d .screen .line2 { color: var(--color-accent, #ff2e2e); text-shadow: 0 0 6px rgba(255,46,46,.35), 0 0 14px rgba(255,46,46,.15); line-height: 0.95; }
         .front3d .screen .line1 { font-family: var(--font-display); font-size: calc(var(--u, 1) * 74px); font-weight: 600; letter-spacing: 0; }
@@ -229,7 +228,6 @@ export default function ProjectsHero3D() {
                   <div className="face3d front3d">
                     <div className="screen">
                       <div className="text-stack">
-                        <div className="kicker">Portfólio</div>
                         <div className="line1">Projetos</div>
                         <div className="line2">metro</div>
                         <div className="note">Branding, comunicação e audiovisual</div>

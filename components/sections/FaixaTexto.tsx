@@ -1,33 +1,56 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 import { TAGLINE } from "@/lib/constants";
 
-const words = TAGLINE.text.split(" ");
+const COPIES = 4;
 
 export function FaixaTexto() {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let previousDuration = 0;
+
+    const preservePhase = () => {
+      const animation = track.getAnimations()[0];
+      if (!animation) return;
+
+      const duration = Number(
+        animation.effect?.getComputedTiming().duration ?? 0,
+      );
+      if (!duration) return;
+
+      if (previousDuration && duration !== previousDuration) {
+        const currentTime = Number(animation.currentTime ?? 0);
+        animation.currentTime = (currentTime / previousDuration) * duration;
+      }
+
+      previousDuration = duration;
+    };
+
+    preservePhase();
+
+    const observer = new ResizeObserver(preservePhase);
+    observer.observe(track);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="pb-section-md md:pb-section-lg">
       <p className="sr-only">{TAGLINE.text}</p>
 
-      <div
-        aria-hidden="true"
-        className="marquee border-border flex overflow-hidden border-b py-6 md:py-10"
-      >
-        <div className="animate-marquee flex w-max shrink-0 items-center">
-          {[0, 1, 2, 3].map((copy) => (
-            <p
-              key={copy}
-              className="font-editorial text-foreground flex shrink-0 items-center gap-x-[0.25em] pr-[0.25em] text-[clamp(2rem,6vw,5rem)] leading-none tracking-tight"
-            >
-              {words.map((word, index) => (
-                <span
-                  key={`${word}-${index}`}
-                  className="marquee-word inline-block"
-                >
-                  {word}
-                </span>
-              ))}
-            </p>
+      <div aria-hidden="true" className="faixa-texto py-7 md:py-11">
+        <div ref={trackRef} className="faixa-texto__track">
+          {Array.from({ length: COPIES }, (_, copy) => (
+            <div key={copy} className="faixa-texto__copy">
+              <span className="faixa-texto__text">{TAGLINE.text}</span>
+              <span className="faixa-texto__dot" />
+            </div>
           ))}
         </div>
       </div>
