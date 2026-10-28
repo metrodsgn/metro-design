@@ -5,9 +5,7 @@ import {
   caseBySlugQuery,
   allTestimonialsQuery,
   allClientsQuery,
-  allBeforeAfterQuery,
 } from "./queries";
-import type { AntesDepoisItem } from "@/data/antes-depois";
 
 export type CaseListItem = {
   _id: string;
@@ -20,6 +18,7 @@ export type CaseListItem = {
   cover?: {
     asset: { _ref: string; _type: string };
     hotspot?: { x: number; y: number };
+    background?: string;
   };
   coverDimensions?: { width: number; height: number; aspectRatio: number };
   gallery?: Array<{
@@ -27,7 +26,9 @@ export type CaseListItem = {
     asset: { _ref: string; _type: string };
     hotspot?: { x: number; y: number };
     dimensions?: { width: number; height: number; aspectRatio: number };
+    background?: string;
   }>;
+  paragraphs?: string[];
   description?: Array<{
     _type: string;
     _key: string;
@@ -73,7 +74,9 @@ export async function getFeaturedCases(): Promise<CaseListItem[]> {
 }
 
 export async function getCaseBySlug(slug: string): Promise<CaseFull | null> {
-  const project = await client.fetch<CaseFull | null>(caseBySlugQuery, { slug });
+  const project = await client.fetch<CaseFull | null>(caseBySlugQuery, {
+    slug,
+  });
   if (!project?.description) return project;
 
   return {
@@ -94,15 +97,4 @@ export async function getAllTestimonials(): Promise<Testimonial[]> {
 
 export async function getAllClients(): Promise<ClientLogo[]> {
   return client.fetch(allClientsQuery);
-}
-
-export async function getBeforeAfterItems(): Promise<
-  (AntesDepoisItem & { _id: string })[]
-> {
-  try {
-    return await client.fetch(allBeforeAfterQuery);
-  } catch (error) {
-    console.error("Não foi possível carregar os comparativos do Sanity:", error);
-    return [];
-  }
 }

@@ -4,6 +4,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { CONTACT } from "@/lib/constants";
+import {
+  EMAIL_ERROR_MESSAGE,
+  SITE_URL_ERROR_MESSAGE,
+  isValidEmail,
+  isValidSiteUrl,
+  normalizeSiteUrl,
+} from "@/lib/validation";
 
 const DELIVERIES = [
   "Naming e criação de marcas",
@@ -43,6 +50,28 @@ const PHRASE_OPTIONS = [
 ];
 
 type Status = "idle" | "loading" | "success" | "error";
+
+const PHONE_FIELDS = new Set(["phone", "whatsapp"]);
+
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, "");
+  if (!digits) return "";
+
+  const local =
+    digits.length > 11 && digits.startsWith("55")
+      ? digits.slice(2, 13)
+      : digits.slice(0, 11);
+  const area = local.slice(0, 2);
+  const number = local.slice(2);
+
+  if (local.length <= 2) return `(${area}`;
+  if (number.length <= 4) return `(${area}) ${number}`;
+  if (number.length <= 8) {
+    return `(${area}) ${number.slice(0, 4)}-${number.slice(4)}`;
+  }
+
+  return `(${area}) ${number.slice(0, 5)}-${number.slice(5)}`;
+}
 
 export function Contato() {
   const [status, setStatus] = useState<Status>("idle");
@@ -106,10 +135,19 @@ export function Contato() {
     }
 
     const emailValue = (formData.email || "").trim();
-    if (emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-      nextErrors.email = "Informe um e-mail válido.";
+    if (emailValue && !isValidEmail(emailValue)) {
+      nextErrors.email = EMAIL_ERROR_MESSAGE;
       if (!firstField) {
         const el = document.getElementById("email");
+        if (el) firstField = el;
+      }
+    }
+
+    const siteUrlValue = normalizeSiteUrl(formData.siteUrl || "");
+    if (siteUrlValue && !isValidSiteUrl(siteUrlValue)) {
+      nextErrors.siteUrl = SITE_URL_ERROR_MESSAGE;
+      if (!firstField) {
+        const el = document.getElementById("siteUrl");
         if (el) firstField = el;
       }
     }
@@ -158,17 +196,56 @@ export function Contato() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const target = event.target;
     const { name } = target;
-    const value =
-      target instanceof HTMLInputElement && target.type === "checkbox"
-        ? target.checked
-          ? "true"
-          : ""
-        : target.value;
+    const rawValue = target.value;
+    let value = rawValue;
+
+    if (target instanceof HTMLInputElement && target.type === "checkbox") {
+      value = target.checked ? "true" : "";
+    } else if (PHONE_FIELDS.has(name)) {
+      value = formatPhone(rawValue);
+    }
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (fieldErrors[name]) {
       setFieldErrors((prev) => {
         const next = { ...prev };
         delete next[name];
+        return next;
+      });
+    }
+  };
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    if (name === "siteUrl") {
+      const normalized = normalizeSiteUrl(value);
+      if (normalized !== value) {
+        setFormData((prev) => ({ ...prev, siteUrl: normalized }));
+      }
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        if (!normalized || isValidSiteUrl(normalized)) {
+          delete next.siteUrl;
+        } else {
+          next.siteUrl = SITE_URL_ERROR_MESSAGE;
+        }
+        return next;
+      });
+      return;
+    }
+
+    if (name === "email") {
+      const trimmed = value.trim();
+      if (trimmed !== value) {
+        setFormData((prev) => ({ ...prev, email: trimmed }));
+      }
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        if (!trimmed || isValidEmail(trimmed)) {
+          delete next.email;
+        } else {
+          next.email = EMAIL_ERROR_MESSAGE;
+        }
         return next;
       });
     }
@@ -207,15 +284,17 @@ export function Contato() {
     }
 
     const deliveries = DELIVERIES.filter((d) => formData[`delivery_${d}`] === "on");
+    const email = (formData.email || "").trim();
+    const siteUrl = normalizeSiteUrl(formData.siteUrl || "");
 
     const payload = {
       name: formData.name,
-      email: formData.email,
+      email,
       phone: formData.phone,
       whatsapp: formData.whatsapp,
       company: formData.company,
       website: "",
-      siteUrl: formData.siteUrl,
+      siteUrl,
       socialMedia: formData.socialMedia,
       profession: formData.profession,
       companySize: formData.companySize,
@@ -348,9 +427,12 @@ export function Contato() {
               id="email"
               type="email"
               required
+              inputMode="email"
+              autoComplete="email"
               placeholder="E-mail*"
               value={formData.email || ""}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={fieldErrors.email}
               ariaLabel="E-mail"
             />
@@ -448,9 +530,12 @@ export function Contato() {
             <ContactInput
               id="siteUrl"
               type="url"
+              inputMode="url"
+              autoComplete="url"
               placeholder="Site (opcional)"
               value={formData.siteUrl || ""}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={fieldErrors.siteUrl}
               ariaLabel="Site"
             />
@@ -494,11 +579,13 @@ export function Contato() {
               id="whatsapp"
               type="tel"
               required
-              placeholder="Seu WhatsApp*"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder="WhatsApp com DDD*"
               value={formData.whatsapp || ""}
               onChange={handleChange}
               error={fieldErrors.whatsapp}
-              ariaLabel="Seu WhatsApp"
+              ariaLabel="Seu WhatsApp com DDD"
             />
             <ContactInput
               id="socialMedia"
@@ -662,8 +749,11 @@ function ContactInput({
   placeholder,
   value,
   onChange,
+  onBlur,
   error,
   ariaLabel,
+  inputMode,
+  autoComplete,
 }: {
   id: string;
   type?: string;
@@ -671,8 +761,11 @@ function ContactInput({
   placeholder: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   error?: string;
   ariaLabel: string;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  autoComplete?: string;
 }) {
   return (
     <div>
@@ -683,12 +776,17 @@ function ContactInput({
         required={required}
         value={value}
         onChange={(event) => onChange(event as React.ChangeEvent<HTMLInputElement>)}
+        onBlur={onBlur}
         placeholder={placeholder}
         aria-label={ariaLabel}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${id}-error` : undefined}
+        inputMode={inputMode}
+        autoComplete={autoComplete}
         className="contact-input"
       />
       {error && (
-        <span className="contact-error" role="alert">
+        <span id={`${id}-error`} className="contact-error" role="alert">
           {error}
         </span>
       )}

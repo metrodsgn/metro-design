@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projetos — Metro Design</title>
+  <style>
+    :root {
+      --bg: #f2f2ef;
+      --red: #ff2a1f;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: #111;
+      font-family: "Gill Sans", "Gill Sans MT", Optima, Candara, "Trebuchet MS", "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Hero com scroll longo para o zoom acontecer sem saltos */
+    .hero {
+      position: relative;
+      height: 260vh;
+      background: var(--bg);
+    }
+
+    .hero__sticky {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero__frame {
+      position: relative;
+      width: 90vw;
+      height: calc(90vw * 658 / 1280);
+      border-radius: 28px;
+      overflow: hidden;
+      background: var(--bg);
+      /* perspective da camera fica no quadro, olhando para a cena 3D */
+      perspective: calc(var(--u, 1) * 1280px * 2.6);
+      perspective-origin: 50% 28%;
+      transform-style: preserve-3d;
+      will-change: width, height, border-radius;
+    }
+
+    .hero__frame.is-full {
+      border-radius: 0;
+    }
+
+    .scene {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: calc(var(--u, 1) * 1280px);
+      height: calc(var(--u, 1) * 658px);
+      transform: translate(-50%, -50%) rotateY(var(--angle, 25deg));
+      transform-style: preserve-3d;
+      /* desenho base 1280 x 658 */
+    }
+
+    /* Painel (caixa fina) */
+    .panel {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: calc(var(--u, 1) * 700px);
+      height: calc(var(--u, 1) * 394px);
+      transform: translate(-50%, -50%);
+      transform-style: preserve-3d;
+    }
+
+    .panel__face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .panel__face--front {
+      transform: translateZ(calc(var(--u, 1) * 9px));
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .panel__screen {
+      position: absolute;
+      inset: calc(var(--u, 1) * 18px);
+      background: linear-gradient(180deg, #0a0a0a 0%, #171717 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: calc(var(--u, 1) * 6px);
+      box-shadow: inset 0 0 calc(var(--u, 1) * 30px) rgba(0,0,0,.8);
+    }
+
+    .panel__title {
+      margin: 0;
+      color: var(--red);
+      font-size: calc(var(--u, 1) * 62px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 calc(var(--u, 1) * 12px) rgba(255, 42, 31, .45);
+      line-height: 1;
+    }
+
+    .panel__subtitle {
+      margin: 0;
+      color: var(--red);
+      font-size: calc(var(--u, 1) * 26px);
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      text-shadow: 0 0 calc(var(--u, 1) * 8px) rgba(255, 42, 31, .35);
+      line-height: 1;
+    }
+
+    .panel__face--back {
+      transform: rotateY(180deg) translateZ(calc(var(--u, 1) * 9px));
+      background: #121212;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .panel__back-square {
+      width: calc(var(--u, 1) * 90px);
+      height: calc(var(--u, 1) * 90px);
+      background: #000;
+      transform: translateY(calc(var(--u, 1) * -40px));
+    }
+
+    .panel__face--right {
+      transform: rotateY(90deg) translateZ(calc(var(--u, 1) * 350px));
+      background: #1a1a1a;
+    }
+
+    .panel__face--left {
+      transform: rotateY(-90deg) translateZ(calc(var(--u, 1) * 350px));
+      background: #1d1d1d;
+    }
+
+    .panel__face--top {
+      transform: rotateX(90deg) translateZ(calc(var(--u, 1) * 197px));
+      background: #0e0e0e;
+    }
+
+    .panel__face--bottom {
+      transform: rotateX(-90deg) translateZ(calc(var(--u, 1) * 197px));
+      background: #1a1a1a;
+    }
+
+    /* Chao */
+    .floor {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: calc(var(--u, 1) * 4200px);
+      height: calc(var(--u, 1) * 4200px);
+      transform: translate(-50%, -50%) rotateX(90deg) translateZ(calc(var(--u, 1) * 197px));
+      transform-style: preserve-3d;
+      background-image:
+        linear-gradient(rgba(0,0,0,.17) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.17) 1px, transparent 1px);
+      background-size: calc(var(--u, 1) * 40px) calc(var(--u, 1) * 40px);
+      background-position: center center;
+      -webkit-mask-image: radial-gradient(circle at center, #000 0%, #000 35%, transparent 72%);
+      mask-image: radial-gradient(circle at center, #000 0%, #000 35%, transparent 72%);
+    }
+
+    .shadow-svg {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: calc(var(--u, 1) * 520px);
+      height: calc(var(--u, 1) * 260px);
+      transform: translate(-50%, -50%) translate(calc(var(--u, 1) * 40px), calc(var(--u, 1) * 30px));
+      filter: blur(calc(var(--u, 1) * 14px));
+      opacity: .45;
+      pointer-events: none;
+    }
+
+    .hero__hint {
+      position: absolute;
+      left: 50%;
+      bottom: calc(var(--u, 1) * 34px);
+      transform: translateX(-50%);
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #444;
+      opacity: 1;
+      transition: opacity .35s ease;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .hero__hint.is-hidden { opacity: 0; }
+
+    /* Secao de projetos */
+    .projects {
+      background: var(--bg);
+      padding: 96px 24px 120px;
+    }
+
+    .projects__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .projects__title {
+      margin: 0 0 48px;
+      font-size: clamp(40px, 7vw, 84px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .projects__title .metro { color: var(--red); }
+
+    .projects__grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 24px;
+    }
+
+    @media (min-width: 640px) {
+      .projects__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 960px) {
+      .projects__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .project-card {
+      aspect-ratio: 4 / 3;
+      background: #141414;
+      border-radius: 20px;
+      display: flex;
+      align-items: flex-end;
+      padding: 18px;
+      color: #fff;
+      font-size: 15px;
+      letter-spacing: .02em;
+    }
+
+    /* Acessibilidade / movimento reduzido */
+    @media (prefers-reduced-motion: reduce) {
+      .hero { height: auto; }
+      .hero__sticky { position: relative; height: auto; padding: 40px 0; }
+      .hero__frame {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        perspective: none;
+      }
+      .scene { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero" id="hero">
+    <div class="hero__sticky">
+      <div class="hero__frame" id="frame">
+        <div class="scene" id="scene">
+          <div class="floor" aria-hidden="true"></div>
+
+          <svg class="shadow-svg" viewBox="0 0 520 260" aria-hidden="true">
+            <defs>
+              <filter id="shadow-blur">
+                <feGaussianBlur stdDeviation="18" />
+              </filter>
+            </defs>
+            <polygon points="80,40 440,40 470,220 110,220" fill="rgba(90,90,90,0.35)" filter="url(#shadow-blur)" />
+          </svg>
+
+          <div class="panel" aria-hidden="true">
+            <div class="panel__face panel__face--front">
+              <div class="panel__screen">
+                <p class="panel__title">Projetos</p>
+                <p class="panel__subtitle">metro</p>
+              </div>
+            </div>
+            <div class="panel__face panel__face--back">
+              <div class="panel__back-square"></div>
+            </div>
+            <div class="panel__face panel__face--right"></div>
+            <div class="panel__face panel__face--left"></div>
+            <div class="panel__face panel__face--top"></div>
+            <div class="panel__face panel__face--bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hero__hint" id="hint">Role para baixo</div>
+    </div>
+  </section>
+
+  <section class="projects">
+    <div class="projects__inner">
+      <h2 class="projects__title">Projetos <span class="metro">metro</span></h2>
+      <div class="projects__grid">
+        <div class="project-card">Projeto 01</div>
+        <div class="project-card">Projeto 02</div>
+        <div class="project-card">Projeto 03</div>
+        <div class="project-card">Projeto 04</div>
+        <div class="project-card">Projeto 05</div>
+        <div class="project-card">Projeto 06</div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* ============================================================
+       Constantes ajustaveis
+       ============================================================ */
+    const PERIOD = 22;          // segundos por volta completa
+    const START_ANGLE = 25;     // angulo inicial em graus
+    const START_SCALE = 0.9;    // escala inicial do quadro (90%)
+    const START_RADIUS = 28;    // border-radius inicial em px
+    const HOLD = 0.12;          // ultimos 12% do scroll ficam parados
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const hero = document.getElementById('hero');
+    const frame = document.getElementById('frame');
+    const scene = document.getElementById('scene');
+    const hint = document.getElementById('hint');
+
+    // Estado animado (valores "current")
+    let currentW = 0;
+    let currentH = 0;
+    let currentR = START_RADIUS;
+    let currentU = 0;
+    let currentPoY = 28;
+    let angle = START_ANGLE;
+    let lastTime = performance.now();
+    let visible = true;
+
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function measure() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const uFull = Math.min(vw / 1280, vh / 658);
+      return { vw, vh, uFull };
+    }
+
+    function getProgress() {
+      const rect = hero.getBoundingClientRect();
+      const total = hero.offsetHeight - window.innerHeight;
+      const scrolled = -rect.top;
+      return clamp(total > 0 ? scrolled / total : 0, 0, 1);
+    }
+
+    // Observa visibilidade para pausar as atualizacoes
+    const observer = new IntersectionObserver((entries) => {
+      visible = entries[0].isIntersecting;
+    }, { threshold: 0 });
+    observer.observe(hero);
+
+    function update(now) {
+      const dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+
+      if (!visible && !reduceMotion) {
+        requestAnimationFrame(update);
+        return;
+      }
+
+      const { vw, vh, uFull } = measure();
+      const rawProgress = getProgress();
+
+      // ultimos HOLD ficam parados no estado final
+      const t = rawProgress >= (1 - HOLD) ? 1 : rawProgress / (1 - HOLD);
+
+      // Texto some assim que comeca a rolar
+      if (rawProgress > 0.02) hint.classList.add('is-hidden');
+      else hint.classList.remove('is-hidden');
+
+      if (reduceMotion) {
+        // Sem animacao: estado final estatico
+        frame.style.width = vw + 'px';
+        frame.style.height = vh + 'px';
+        frame.style.borderRadius = '0px';
+        scene.style.setProperty('--u', (Math.max(vw / 700, vh / 394) * 1.03).toFixed(6));
+        scene.style.setProperty('--angle', '0deg');
+        frame.style.perspectiveOrigin = '50% 50%';
+        requestAnimationFrame(update);
+        return;
+      }
+
+      const e = easeInOutCubic(t);
+
+      // Quadro: 90% -> 100vw x 100vh
+      const startW = START_SCALE * vw;
+      const startH = startW * 658 / 1280;
+      const targetW = lerp(startW, vw, e);
+      const targetH = lerp(startH, vh, e);
+      const targetR = lerp(START_RADIUS, 0, e);
+
+      currentW += (targetW - currentW) * 0.12;
+      currentH += (targetH - currentH) * 0.12;
+      currentR += (targetR - currentR) * 0.12;
+
+      frame.style.width = currentW.toFixed(2) + 'px';
+      frame.style.height = currentH.toFixed(2) + 'px';
+      frame.style.borderRadius = currentR.toFixed(2) + 'px';
+
+      // Zoom da camera: --u
+      const uStart = START_SCALE * uFull;
+      const uEnd = Math.max(vw / 700, vh / 394) * 1.03;
+      const targetU = lerp(uStart, uEnd, e);
+      currentU += (targetU - currentU) * 0.12;
+      scene.style.setProperty('--u', currentU.toFixed(6));
+
+      // perspective-origin migra de 28% para 50%
+      const targetPoY = lerp(28, 50, e);
+      currentPoY += (targetPoY - currentPoY) * 0.12;
+      frame.style.perspectiveOrigin = '50% ' + currentPoY.toFixed(2) + '%';
+
+      // Giro: desacelera e atrai para multiplo de 360 entre 10% e 80%
+      const pullRaw = (t - 0.1) / 0.7;
+      const pull = clamp(pullRaw, 0, 1);
+      const easedPull = pull * pull * (3 - 2 * pull);
+
+      const speed = (360 / PERIOD) * (1 - easedPull); // graus por segundo
+      const nearest = Math.round(angle / 360) * 360;
+
+      // atracao exponencial para o multiplo mais proximo
+      const k = easedPull * 6;
+      angle += (nearest - angle) * (1 - Math.exp(-k * dt));
+      // rotacao residual
+      angle += speed * dt;
+      angle = ((angle % 360) + 360) % 360;
+
+      scene.style.setProperty('--angle', angle.toFixed(4) + 'deg');
+
+      requestAnimationFrame(update);
+    }
+
+    // Inicializa valores para evitar salto no primeiro frame
+    const init = measure();
+    currentW = START_SCALE * init.vw;
+    currentH = currentW * 658 / 1280;
+    currentU = START_SCALE * init.uFull;
+    scene.style.setProperty('--u', currentU.toFixed(6));
+    scene.style.setProperty('--angle', START_ANGLE + 'deg');
+
+    if (reduceMotion) {
+      // Garante estado final sem animacao
+      const { vw, vh } = init;
+      frame.style.width = vw + 'px';
+      frame.style.height = vh + 'px';
+      frame.style.borderRadius = '0px';
+      scene.style.setProperty('--u', (Math.max(vw / 700, vh / 394) * 1.03).toFixed(6));
+      scene.style.setProperty('--angle', '0deg');
+      frame.style.perspectiveOrigin = '50% 50%';
+    } else {
+      requestAnimationFrame(update);
+    }
+  </script>
+</body>
+</html>
+EOF
+echo created

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-type ContainerVariant = "default" | "wide" | "bleed";
+type ContainerVariant = "default" | "wide" | "bleed" | "detail";
 
 type ContainerProps = {
   children: ReactNode;
@@ -12,6 +12,7 @@ const variantStyles: Record<ContainerVariant, string> = {
   default: "max-w-content",
   wide: "max-w-[120rem]",
   bleed: "max-w-none",
+  detail: "max-w-[87rem]",
 };
 
 export function Container({

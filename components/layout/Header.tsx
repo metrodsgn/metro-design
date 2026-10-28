@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { NAV_LINKS } from "@/lib/constants";
 import { BrandWordmark } from "@/components/ui/BrandWordmark";
+import NavigationMenuWithActiveItem from "@/components/ui/navigation-menu-05";
 import { getLenis } from "@/lib/smooth-scroll";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -218,26 +219,9 @@ export function Header() {
 
         <nav
           aria-label="Navegação principal"
-          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 xl:flex"
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center xl:flex"
         >
-          {NAV_LINKS.map((link) => {
-            const isActive =
-              link.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(link.href);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                aria-current={isActive ? "page" : undefined}
-                data-header-ink
-                data-over-text={overText}
-                className={`header-adaptive-ink text-sm font-medium transition-colors ${isActive ? "header-adaptive-ink-active" : ""}`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          <NavigationMenuWithActiveItem overText={overText} />
         </nav>
 
         <div className="hidden items-center gap-3 xl:flex">

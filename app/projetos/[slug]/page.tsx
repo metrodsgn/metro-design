@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PortableText } from "@portabletext/react";
-import { Container } from "@/components/ui/Container";
-import { ProjectGallery } from "@/components/sections/ProjectGallery";
-import { ProjectSpotlight } from "@/components/sections/ProjectSpotlight";
-import { ProjectTransitionCard } from "@/components/sections/ProjectTransitionCard";
+import { ProjectDetail } from "@/components/sections/ProjectDetail";
+import { buildProjectDetail } from "@/lib/project-detail";
 import { getAllCases, getCaseBySlug } from "@/sanity/lib/fetchers";
-import { urlFor } from "@/sanity/lib/image";
 import { createSiteMetadata } from "@/lib/metadata";
 
 type PageProps = {
@@ -23,13 +18,14 @@ export async function generateMetadata({
   if (!project) {
     return createSiteMetadata({
       title: "Projeto não encontrado — Metro Design",
-      description: "Este projeto não foi encontrado no portfólio da Metro Design.",
+      description:
+        "Este projeto não foi encontrado no portfólio da Metro Design.",
       path: `/projetos/${slug}`,
     });
   }
 
   return createSiteMetadata({
-    title: `${project.title} — Metro Design`,
+    title: `${project.title.trim()} — Metro Design`,
     description: `${project.client} · ${project.category} · ${project.year}`,
     path: `/projetos/${project.slug}`,
   });
@@ -46,112 +42,10 @@ export default async function ProjetoPage({ params }: PageProps) {
     notFound();
   }
 
-  const projectIndex = allCases.findIndex((item) => item.slug === project.slug);
-  const previousProject = projectIndex > 0 ? allCases[projectIndex - 1] : null;
-  const nextProject = projectIndex >= 0 ? allCases[projectIndex + 1] : null;
-  const projectImages = [
-    ...(project.cover
-      ? [
-          {
-            src: urlFor(project.cover).width(1920).fit("max").url(),
-            alt: `${project.client} — ${project.title}`,
-            width: project.coverDimensions?.width ?? 1200,
-            height: project.coverDimensions?.height ?? 900,
-          },
-        ]
-      : []),
-    ...(project.gallery ?? []).map((image, index) => ({
-      src: urlFor(image).width(1800).quality(85).fit("max").url(),
-      alt: `${project.client} — ${project.title}, imagem ${index + 1}`,
-      width: image.dimensions?.width ?? 1200,
-      height: image.dimensions?.height ?? 900,
-    })),
-  ];
-  const spotlightImages = projectImages.slice(0, 2);
-  const galleryImages = projectImages.slice(spotlightImages.length);
-  const spotlightCaptions = [
-    `${project.client} · ${project.category}`,
-    `${project.client} · ${project.services?.filter(Boolean)[0] ?? project.category}`,
-  ];
-
   return (
-    <article className="bg-background text-foreground pb-section-md">
-      <Container>
-        <header className="mx-auto max-w-5xl pt-section-lg text-center">
-          <h1 className="font-editorial text-foreground text-4xl leading-[1.05] tracking-tight break-words md:text-6xl">
-            {project.title}
-          </h1>
-          {project.description && project.description.length > 0 && (
-            <div className="text-muted mx-auto mt-6 max-w-4xl space-y-5 text-sm leading-relaxed break-words sm:text-base md:mt-8 md:text-lg">
-              <PortableText value={project.description} />
-            </div>
-          )}
-        </header>
-
-        {spotlightImages.length > 0 && (
-          <div
-            className={`mx-auto mt-12 grid grid-cols-1 gap-6 md:mt-16 md:gap-8 ${
-              spotlightImages.length > 1
-                ? "max-w-6xl md:grid-cols-2"
-                : "max-w-3xl"
-            }`}
-          >
-            {spotlightImages.map((image, index) => (
-              <ProjectSpotlight
-                key={image.src}
-                image={image}
-                caption={spotlightCaptions[index] ?? spotlightCaptions[0]}
-                ariaLabel={`Imagem em destaque ${index + 1} do projeto ${project.title}`}
-                parallaxDirection={index % 2 === 0 ? "up" : "down"}
-              />
-            ))}
-          </div>
-        )}
-
-        <ProjectGallery
-          title={`${project.client} — ${project.title}`}
-          images={galleryImages}
-        />
-
-        <div className="mx-auto max-w-6xl">
-          <section
-            id="proximo-projeto"
-            aria-label="Navegação entre projetos"
-            className="project-navigation scroll-mt-36 pt-8 md:pt-10"
-          >
-            {(previousProject || nextProject) && (
-              <div className="project-navigation__links">
-                {previousProject && (
-                  <ProjectTransitionCard
-                    project={previousProject}
-                    direction="previous"
-                  />
-                )}
-                {nextProject && (
-                  <ProjectTransitionCard project={nextProject} direction="next" />
-                )}
-              </div>
-            )}
-          </section>
-        </div>
-
-        <div className="mx-auto mt-8 flex max-w-6xl justify-center sm:justify-start">
-          <Link href="/projetos" className="project-back-button">
-            <span className="project-back-button__circle" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M5 12h14m-6-6 6 6-6 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-            <span className="project-back-button__text">Todos os projetos</span>
-          </Link>
-        </div>
-      </Container>
-    </article>
+    <ProjectDetail
+      key={project.slug}
+      project={buildProjectDetail(project, allCases)}
+    />
   );
 }

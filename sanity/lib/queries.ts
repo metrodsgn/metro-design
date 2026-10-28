@@ -47,6 +47,7 @@ export const caseBySlugQuery = groq`
       ...,
       "dimensions": asset->metadata.dimensions
     },
+    paragraphs,
     description,
     services
   }
@@ -71,19 +72,5 @@ export const allClientsQuery = groq`
     _id,
     name,
     logo
-  }
-`;
-
-export const allBeforeAfterQuery = groq`
-  *[_type == "beforeAfter" && defined(before.asset) && defined(after.asset)] | order(order asc, _createdAt desc) {
-    _id,
-    "cliente": client,
-    "segmento": segment,
-    "resumo": summary,
-    "entrega": deliverable,
-    "antes": before.asset->url,
-    "depois": after.asset->url,
-    "altAntes": before.alt,
-    "altDepois": after.alt
   }
 `;

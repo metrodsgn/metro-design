@@ -1,31 +1,26 @@
 import Link from "next/link";
-import type { CaseListItem } from "@/sanity/lib/fetchers";
+import type { ProjectLink } from "@/lib/project-detail";
 
 type ProjectTransitionCardProps = {
-  project: CaseListItem;
-  direction: "previous" | "next";
+  project: ProjectLink;
 };
 
-export function ProjectTransitionCard({
-  project,
-  direction,
-}: ProjectTransitionCardProps) {
-  const isPrevious = direction === "previous";
-  const label = isPrevious ? "Anterior" : "Próximo";
+export function ProjectTransitionCard({ project }: ProjectTransitionCardProps) {
+  const accessibleName = project.client
+    ? `${project.client} — ${project.title}`
+    : project.title;
+
   return (
     <Link
       href={`/projetos/${project.slug}`}
-      aria-label={`${label}: ${project.client} — ${project.title}`}
-      className={`project-next-card group ${isPrevious ? "project-next-card--previous" : ""}`}
+      aria-label={`Próximo projeto: ${accessibleName}`}
+      className="project-next-card group"
     >
-      {isPrevious && (
-        <span className="project-next-card__arrow project-next-card__arrow--previous" aria-hidden="true" />
-      )}
       <span className="project-next-card__copy">
-        <span className="project-next-card__label">{label}</span>
+        <span className="project-next-card__label">Próximo projeto</span>
         <span className="project-next-card__title">{project.title}</span>
       </span>
-      {!isPrevious && <span className="project-next-card__arrow" aria-hidden="true" />}
+      <span className="project-next-card__arrow" aria-hidden="true" />
     </Link>
   );
 }

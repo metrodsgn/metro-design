@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ParallaxHero } from "@/components/ui/parallax-scrolling";
 import { Somos } from "@/components/sections/Somos";
 import { Fazemos } from "@/components/sections/Fazemos";
-import { AntesDepois } from "@/components/sections/AntesDepois";
+import { MetroHouse } from "@/components/sections/MetroHouse";
 import { Clientes } from "@/components/sections/Clientes";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { createSiteMetadata } from "@/lib/metadata";
@@ -30,7 +30,7 @@ export default function SobrePage() {
 
       <Somos />
       <Fazemos />
-      <AntesDepois />
+      <MetroHouse />
       <Clientes />
       <CtaFinal />
     </>

@@ -3,6 +3,13 @@ import { Resend } from "resend";
 import { verifyToken, escapeHtml } from "@/lib/anti-spam";
 import { rateLimit } from "@/lib/rate-limit";
 import { qualifyContact } from "@/lib/contact-qualification";
+import {
+  EMAIL_ERROR_MESSAGE,
+  SITE_URL_ERROR_MESSAGE,
+  isValidEmail,
+  isValidSiteUrl,
+  normalizeSiteUrl,
+} from "@/lib/validation";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -74,8 +81,9 @@ export async function POST(request: Request) {
     const whatsapp = typeof body.whatsapp === "string" ? body.whatsapp.trim() : "";
     const company =
       typeof body.company === "string" ? body.company.trim() : "";
-    const siteUrl =
-      typeof body.siteUrl === "string" ? body.siteUrl.trim() : "";
+    const siteUrl = normalizeSiteUrl(
+      typeof body.siteUrl === "string" ? body.siteUrl : "",
+    );
     const socialMedia =
       typeof body.socialMedia === "string" ? body.socialMedia.trim() : "";
     const profession =
@@ -153,12 +161,22 @@ export async function POST(request: Request) {
     }
 
     // 8. Formato de email — 400 (usuário legítimo)
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json({ error: "Email inválido." }, { status: 400 });
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: EMAIL_ERROR_MESSAGE },
+        { status: 400 },
+      );
     }
 
-    // 9. Qualificação interna (nunca exposta ao visitante)
+    // 9. URL opcional, sempre HTTPS e com domínio válido
+    if (siteUrl && !isValidSiteUrl(siteUrl)) {
+      return NextResponse.json(
+        { error: SITE_URL_ERROR_MESSAGE },
+        { status: 400 },
+      );
+    }
+
+    // 10. Qualificação interna (nunca exposta ao visitante)
     const decisionMaker =
       phrase === "Sou fundador(a) ou proprietário(a) de uma empresa" ||
       phrase === "Sou diretor(a) ou gestor(a) de marketing";
@@ -171,11 +189,11 @@ export async function POST(request: Request) {
       isDecisionMaker: decisionMaker,
     });
 
-    // 10. Registro de consentimento LGPD (data/hora + versão da política)
+    // 11. Registro de consentimento LGPD (data/hora + versão da política)
     const consentRecordedAt = new Date().toISOString();
     const privacyPolicyVersion = "1.1";
 
-    // 11. Escape HTML para e-mail
+    // 12. Escape HTML para e-mail
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
     const safePhone = escapeHtml(phone);
@@ -191,7 +209,7 @@ export async function POST(request: Request) {
     const safeInvestmentRange = escapeHtml(investmentRange);
     const safeDeliveries = deliveries.map((d) => escapeHtml(d)).join(", ");
 
-    // 12. Envio por e-mail
+    // 13. Envio por e-mail
     const { error } = await resend.emails.send({
       from: "Metro Design <onboarding@resend.dev>",
       to: process.env.CONTACT_EMAIL_TO || "contato@metrodesign.com.br",

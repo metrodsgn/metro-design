@@ -67,7 +67,9 @@ export const caseType = defineType({
       },
       components: { input: BrandColorInput },
       validation: (rule) =>
-        rule.regex(/^#[0-9a-fA-F]{6}$/).error("Use uma cor hexadecimal como #1A73E8."),
+        rule
+          .regex(/^#[0-9a-fA-F]{6}$/)
+          .error("Use uma cor hexadecimal como #1A73E8."),
     }),
     defineField({
       name: "year",
@@ -84,14 +86,56 @@ export const caseType = defineType({
       description:
         "Imagem principal usada nas listagens e na abertura do projeto.",
       options: { hotspot: true },
+      fields: [
+        {
+          name: "background",
+          title: "Cor de fallback",
+          type: "string",
+          description:
+            "Cor exibida enquanto a imagem carrega. Use hexadecimal, como #2F403D.",
+          validation: (rule) =>
+            rule
+              .regex(/^#[0-9a-fA-F]{6}$/)
+              .error("Use uma cor hexadecimal como #2F403D."),
+        },
+      ],
     }),
     defineField({
       name: "gallery",
       title: "Galeria",
       type: "array",
       group: "images",
-      description: "Imagens adicionais do projeto; arraste para ordenar.",
-      of: [{ type: "image", options: { hotspot: true } }],
+      description:
+        "Imagens do projeto; arraste para ordenar.",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            {
+              name: "background",
+              title: "Cor de fallback",
+              type: "string",
+              description:
+                "Cor exibida enquanto a imagem carrega. Use hexadecimal, como #2F403D.",
+              validation: (rule) =>
+                rule
+                  .regex(/^#[0-9a-fA-F]{6}$/)
+                  .error("Use uma cor hexadecimal como #2F403D."),
+            },
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: "paragraphs",
+      title: "Parágrafos de introdução",
+      type: "array",
+      group: "content",
+      description:
+        "Até 3 parágrafos exibidos no topo da página do projeto. Se vazio, o site usa a descrição.",
+      of: [{ type: "text", rows: 4 }],
+      validation: (rule) => rule.max(3),
     }),
     defineField({
       name: "description",

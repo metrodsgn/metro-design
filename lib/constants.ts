@@ -90,22 +90,3 @@ export const TESTIMONIALS = {
   description:
     "Parcerias construídas com estratégia, confiança e bons resultados.",
 } as const;
-export const CONTACT_FORM = {
-  label: "Fale Conosco",
-  title: "Vamos construir algo juntos.",
-  description:
-    "Conte um pouco sobre o seu projeto. Respondemos em até 1 dia útil.",
-  fields: {
-    name: { label: "Como podemos te chamar?", placeholder: "Seu nome" },
-    email: { label: "Qual o melhor e-mail?", placeholder: "voce@empresa.com" },
-    company: {
-      label: "Qual o nome da empresa?",
-      placeholder: "Nome da empresa (opcional)",
-    },
-    message: {
-      label: "Conta pra gente o que você precisa",
-      placeholder: "Conte sobre o seu projeto...",
-    },
-  },
-  submit: "Enviar mensagem",
-} as const;
