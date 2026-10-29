@@ -9,7 +9,7 @@ import {
   useReducedMotion,
   useScroll,
   useTransform,
-} from "motion/react";
+} from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { urlFor } from "@/sanity/lib/image";
 import type { CaseListItem } from "@/sanity/lib/fetchers";
@@ -93,7 +93,7 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
                 href={`/projetos/${project.slug}`}
                 className="bg-surface group relative aspect-[4/3] w-full overflow-hidden rounded-md md:aspect-auto md:h-full"
               >
-                {project.cover ? (
+                {project.cover?.asset?._ref ? (
                   <Image
                     src={urlFor(project.cover).width(900).height(600).url()}
                     alt={project.title}
@@ -110,7 +110,11 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-300 md:opacity-0 md:group-hover:opacity-100" />
                 <div className="absolute bottom-3 left-3 right-3 text-left transition-all duration-300 md:bottom-4 md:left-4 md:right-4 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
-                  <span className="label-mono text-white/80">{project.category}</span>
+                  {project.services?.find(Boolean) && (
+                    <span className="label-mono text-white/80">
+                      {project.services.find(Boolean)}
+                    </span>
+                  )}
                   <h3 className="font-editorial mt-1 text-base leading-tight text-white sm:text-2xl">
                     {project.title}
                   </h3>

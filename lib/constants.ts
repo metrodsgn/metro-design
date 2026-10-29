@@ -11,6 +11,15 @@ export const CONTACT = {
   address: "Av. Santos Dumont, 2088 - Sl 310 - Aldeota, Fortaleza - CE, 60150-161",
 } as const;
 
+/**
+ * Número comercial usado nos links do WhatsApp.
+ * Pode ser sobrescrito por `NEXT_PUBLIC_WHATSAPP_NUMBER` (somente dígitos,
+ * com DDI). Caso a variável não exista, usa o número já configurado em CONTACT.
+ */
+export const WHATSAPP_NUMBER =
+  (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "").replace(/\D/g, "") ||
+  CONTACT.whatsapp;
+
 export const SOCIAL = [
   { name: "Instagram", url: "https://instagram.com/metrodesign" },
   { name: "TikTok", url: "https://tiktok.com/@metrodesign" },
@@ -22,14 +31,6 @@ export const NAV_LINKS = [
   { label: "Sobre", href: "/sobre" },
   { label: "Projetos", href: "/projetos" },
   { label: "Fale Conosco", href: "/contato" },
-] as const;
-
-export const CASE_CATEGORIES = [
-  "Branding",
-  "Audiovisual",
-  "Comunicação",
-  "Campanha",
-  "Digital",
 ] as const;
 
 export const ABOUT = {

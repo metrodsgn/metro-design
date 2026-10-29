@@ -6,9 +6,7 @@ import { urlFor } from "@/sanity/lib/image";
 type ProjectCardProps = {
   title: string;
   slug: string;
-  category: string;
   services?: string[];
-  showServices?: boolean;
   brandColor?: string;
   year: number;
   number: number;
@@ -22,9 +20,7 @@ type ProjectCardProps = {
 export function ProjectCard({
   title,
   slug,
-  category,
   services,
-  showServices = false,
   brandColor,
   year,
   number,
@@ -45,7 +41,7 @@ export function ProjectCard({
     >
       <div className="projects-card__frame border-border bg-surface relative isolate aspect-[4/3] overflow-hidden border">
         <div className="projects-card__media">
-          {cover ? (
+          {cover?.asset?._ref ? (
             <Image
               src={urlFor(cover).width(800).height(500).url()}
               alt={title}
@@ -63,6 +59,9 @@ export function ProjectCard({
         </div>
 
         <div className="projects-card__overlay absolute inset-0 flex items-end justify-between p-4 sm:p-5">
+          <span className="projects-card__hover-title" aria-hidden="true">
+            {title}
+          </span>
           <span className="projects-card__cta inline-flex items-center gap-2 text-sm font-medium text-white">
             Ver projeto{" "}
             <span className="projects-card__arrow" aria-hidden="true">
@@ -81,17 +80,16 @@ export function ProjectCard({
             <span className="projects-card__title-arrow" aria-hidden="true">→</span>
             <span>{title}</span>
           </h3>
-          <p className="projects-card__tags text-muted mt-1 text-sm break-words">
-            {(showServices && services?.filter(Boolean).length
-              ? services.filter(Boolean)
-              : [category]
-            ).map((service, index) => (
-              <span key={`${service}-${index}`}>
-                {index > 0 && <span aria-hidden="true"> • </span>}
-                {service}
-              </span>
-            ))}
-          </p>
+          {services?.some(Boolean) && (
+            <p className="projects-card__tags text-muted mt-1 text-sm break-words">
+              {services.filter(Boolean).map((service, index) => (
+                <span key={`${service}-${index}`}>
+                  {index > 0 && <span aria-hidden="true"> • </span>}
+                  {service}
+                </span>
+              ))}
+            </p>
+          )}
         </div>
         <span className="label-mono mt-1 shrink-0">
           {total

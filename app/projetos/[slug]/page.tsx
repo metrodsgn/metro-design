@@ -26,7 +26,7 @@ export async function generateMetadata({
 
   return createSiteMetadata({
     title: `${project.title.trim()} — Metro Design`,
-    description: `${project.client} · ${project.category} · ${project.year}`,
+    description: `${project.client} · ${project.year}`,
     path: `/projetos/${project.slug}`,
   });
 }

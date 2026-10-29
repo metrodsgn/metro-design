@@ -7,7 +7,6 @@ export const allCasesQuery = groq`
     title,
     "slug": slug.current,
     client,
-    category,
     services,
     brandColor,
     year,
@@ -22,7 +21,6 @@ export const featuredCasesQuery = groq`
     title,
     "slug": slug.current,
     client,
-    category,
     services,
     brandColor,
     year,
@@ -38,7 +36,6 @@ export const caseBySlugQuery = groq`
     title,
     "slug": slug.current,
     client,
-    category,
     brandColor,
     year,
     cover,
@@ -47,7 +44,6 @@ export const caseBySlugQuery = groq`
       ...,
       "dimensions": asset->metadata.dimensions
     },
-    paragraphs,
     description,
     services
   }

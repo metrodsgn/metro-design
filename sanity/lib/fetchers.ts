@@ -12,7 +12,6 @@ export type CaseListItem = {
   title: string;
   slug: string;
   client: string;
-  category: string;
   brandColor?: string;
   year: number;
   cover?: {
@@ -28,7 +27,6 @@ export type CaseListItem = {
     dimensions?: { width: number; height: number; aspectRatio: number };
     background?: string;
   }>;
-  paragraphs?: string[];
   description?: Array<{
     _type: string;
     _key: string;

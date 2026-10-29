@@ -9,6 +9,7 @@ import { ProjectTransitionCard } from "@/components/sections/ProjectTransitionCa
 
 export function ProjectDetail({ project }: { project: ProjectDetailData }) {
   const rootRef = useRef<HTMLElement>(null);
+  const description = project.description ?? [];
 
   useEffect(() => {
     const root = rootRef.current;
@@ -54,14 +55,14 @@ export function ProjectDetail({ project }: { project: ProjectDetailData }) {
         <header className="pt-32 text-center md:pt-44">
           <h1
             data-project-reveal
-            className={`project-detail-reveal text-foreground font-sans text-[2.25rem] leading-[1.1] font-light tracking-[0.08em] text-balance break-words md:text-[4rem]`}
+            className="project-detail-reveal text-foreground font-editorial text-[clamp(3.25rem,9vw,7rem)] leading-[1.05] font-normal tracking-normal text-balance break-words"
           >
             {project.title}
           </h1>
 
-          {project.paragraphs.length > 0 && (
+          {description.length > 0 && (
             <div className="mx-auto mt-10 flex max-w-[44rem] flex-col gap-10">
-              {project.paragraphs.map((paragraph, index) => (
+              {description.map((paragraph, index) => (
                 <p
                   key={index}
                   data-project-reveal

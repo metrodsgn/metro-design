@@ -111,7 +111,6 @@ export function Contato() {
 
   const validate = useCallback((): boolean => {
     const nextErrors: Record<string, string> = {};
-    let firstField: HTMLElement | null = null;
 
     const required: Record<string, string> = {
       name: "Preencha o nome.",
@@ -126,71 +125,49 @@ export function Contato() {
     };
 
     for (const [field, msg] of Object.entries(required)) {
-      const el = document.getElementById(field);
       const value = (formData[field] || "").trim();
       if (!value) {
         nextErrors[field] = msg;
-        if (!firstField && el) firstField = el;
       }
     }
 
     const emailValue = (formData.email || "").trim();
     if (emailValue && !isValidEmail(emailValue)) {
       nextErrors.email = EMAIL_ERROR_MESSAGE;
-      if (!firstField) {
-        const el = document.getElementById("email");
-        if (el) firstField = el;
-      }
     }
 
     const siteUrlValue = normalizeSiteUrl(formData.siteUrl || "");
     if (siteUrlValue && !isValidSiteUrl(siteUrlValue)) {
       nextErrors.siteUrl = SITE_URL_ERROR_MESSAGE;
-      if (!firstField) {
-        const el = document.getElementById("siteUrl");
-        if (el) firstField = el;
-      }
     }
 
     const whatsappValue = (formData.whatsapp || "").trim();
     const whatsappDigits = whatsappValue.replace(/\D/g, "");
     if (whatsappDigits.length < 10) {
       nextErrors.whatsapp = "Informe um WhatsApp com ao menos 10 dígitos.";
-      if (!firstField) {
-        const el = document.getElementById("whatsapp");
-        if (el) firstField = el;
-      }
     }
 
     const challengeValue = (formData.challenge || "").trim();
     if (challengeValue.length > 800) {
       nextErrors.challenge = "O desafio deve ter no máximo 800 caracteres.";
-      if (!firstField) {
-        const el = document.getElementById("challenge");
-        if (el) firstField = el;
-      }
     }
 
     const deliveries = DELIVERIES.filter((d) => formData[`delivery_${d}`] === "on");
     if (deliveries.length === 0) {
       nextErrors.deliveries = "Selecione ao menos uma entrega.";
-      if (!firstField) {
-        const el = document.querySelector('[name^="delivery_"]');
-        if (el) firstField = el as HTMLElement;
-      }
     }
 
     if (formData.consent !== "true") {
       nextErrors.consent = "Você precisa concordar com o tratamento de dados.";
-      if (!firstField) {
-        const el = document.getElementById("consent");
-        if (el) firstField = el;
-      }
     }
 
+    const firstKey = Object.keys(nextErrors)[0];
+    const firstField = firstKey === "deliveries"
+      ? document.querySelector<HTMLElement>('[name^="delivery_"]')
+      : firstKey ? document.getElementById(firstKey) : null;
     setFieldErrors(nextErrors);
     firstErrorRef.current = firstField;
-    return Object.keys(nextErrors).length === 0;
+    return !firstKey;
   }, [formData]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -266,7 +243,7 @@ export function Contato() {
   const handleSubmit = useCallback(async (event: React.FormEvent) => {
     event.preventDefault();
     if (!validate()) {
-      firstErrorRef.current?.focus?.();
+      requestAnimationFrame(() => firstErrorRef.current?.focus());
       setStatus("error");
       setErrorMessage("Por favor, revise os campos destacados.");
       return;
@@ -377,7 +354,7 @@ export function Contato() {
   }
 
   return (
-    <section className="pt-section-lg pb-section-lg">
+    <section className="contact-page">
       <Container>
         <div className="contact-grid">
           {/* Coluna esquerda — título e texto (sticky no desktop) */}
@@ -385,7 +362,6 @@ export function Contato() {
             <div className="space-y-6">
               <h1
                 className="font-editorial text-foreground leading-[0.88] tracking-[-0.045em]"
-                style={{ fontSize: "clamp(48px, 9vw, 128px)" }}
               >
                 Vamos<span className="block"> conversar?</span>
               </h1>
@@ -399,9 +375,10 @@ export function Contato() {
           {/* Coluna direita — formulário */}
           <form
             onSubmit={handleSubmit}
-            className="contact-form grid"
+            className="contact-form"
             noValidate
           >
+            <div className="contact-area">
             {/* Honeypot */}
             <input
               type="text"
@@ -473,7 +450,10 @@ export function Contato() {
               </p>
             </div>
 
+            </div>
+
             {/* Fieldset: Entregas (largura total) */}
+            <div className="contact-area">
             <div className="md:col-span-2">
               <fieldset
                 className="contact-fieldset"
@@ -516,7 +496,10 @@ export function Contato() {
               />
             </div>
 
+            </div>
+
             {/* Linha: Nome da empresa e Site */}
+            <div className="contact-area">
             <ContactInput
               id="company"
               type="text"
@@ -636,6 +619,7 @@ export function Contato() {
               >
                 {status === "loading" ? "Enviando…" : "Enviar proposta de projeto"}
               </button>
+            </div>
             </div>
 
             {tokenError && (

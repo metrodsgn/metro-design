@@ -4,8 +4,8 @@ import { usePathname } from "next/navigation";
 import { MotionConfig } from "framer-motion";
 import type { ReactNode } from "react";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
-import { SiteIntro } from "@/components/layout/SiteIntro";
 import { CursorArrow } from "@/components/ui/CursorArrow";
+import { ExitIntentModal } from "@/components/ui/ExitIntentModal";
 
 type SiteShellProps = {
   children: ReactNode;
@@ -29,11 +29,11 @@ export function SiteShell({
   return (
     <MotionConfig reducedMotion="user">
       <SmoothScroll />
-      <SiteIntro pathname={pathname} />
       {header}
       <main>{children}</main>
       {footer}
       {!isContactPage && floatingAction}
+      {!isContactPage && <ExitIntentModal />}
       <CursorArrow />
     </MotionConfig>
   );

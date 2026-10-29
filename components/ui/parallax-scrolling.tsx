@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { onLenisScroll } from "@/lib/smooth-scroll";
 
 type ParallaxHeroProps = {
   eyebrow?: string;
@@ -66,6 +67,11 @@ export function ParallaxHero({
     });
 
     return () => mm.revert();
+  }, []);
+
+  // Mantém o ScrollTrigger sincronizado com o scroll suave do Lenis.
+  useEffect(() => {
+    return onLenisScroll(() => ScrollTrigger.update());
   }, []);
 
   return (

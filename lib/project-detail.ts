@@ -19,7 +19,7 @@ export type ProjectLink = {
 export type ProjectDetailData = {
   slug: string;
   title: string;
-  paragraphs: string[];
+  description: string[];
   media: ProjectMedia[];
   nextProject?: ProjectLink;
 };
@@ -53,23 +53,11 @@ export function buildProjectDetail(
   const override = PROJECT_CONTENT[project.slug];
   const title = clean(project.title);
   const client = clean(project.client);
-  const savedParagraphs = (project.paragraphs ?? [])
-    .map((paragraph) => clean(paragraph))
-    .filter(Boolean);
-  const overrideParagraphs = (override?.paragraphs ?? [])
-    .map((paragraph) => clean(paragraph))
-    .filter(Boolean);
-  const paragraphs = (
-    savedParagraphs.length
-      ? savedParagraphs
-      : overrideParagraphs.length
-        ? overrideParagraphs
-        : descriptionToParagraphs(project.description)
-  ).slice(0, 3);
+  const description = descriptionToParagraphs(project.description);
 
   const media: ProjectMedia[] = [];
   const coverOverride = override?.media?.[0];
-  const coverImage = project.cover
+  const coverImage = project.cover?.asset?._ref
     ? urlFor(project.cover).width(2200).fit("max").url()
     : "";
   if (coverImage) {
@@ -90,8 +78,10 @@ export function buildProjectDetail(
   }
 
   (project.gallery ?? []).forEach((image, index) => {
+    if (!image?.asset?._ref) return;
+
     const imageSrc = urlFor(image).width(2200).fit("max").url();
-    const mediaOverride = override?.media?.[index + (project.cover ? 1 : 0)];
+    const mediaOverride = override?.media?.[index + (coverImage ? 1 : 0)];
     const bg =
       hexColor(image.background) ||
       hexColor(mediaOverride?.background) ||
@@ -114,7 +104,7 @@ export function buildProjectDetail(
   return {
     slug: project.slug,
     title,
-    paragraphs,
+    description,
     media,
     nextProject: next
       ? {

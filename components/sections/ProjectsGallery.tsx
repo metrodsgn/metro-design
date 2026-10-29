@@ -37,9 +37,7 @@ export function ProjectsGallery({
               key={project._id}
               title={project.title}
               slug={project.slug}
-              category={project.category}
               services={project.services}
-              showServices
               brandColor={project.brandColor}
               cover={project.cover}
               year={project.year}
