@@ -86,12 +86,12 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
             Nenhum projeto para exibir.
           </p>
         ) : (
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:h-[24rem] md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 md:[grid-auto-rows:clamp(18rem,26vw,24rem)]">
             {projects.map((project) => (
               <Link
                 key={project._id}
                 href={`/projetos/${project.slug}`}
-                className="bg-surface group relative aspect-[4/3] w-full overflow-hidden rounded-md md:aspect-auto md:h-full"
+                className="bg-surface group relative aspect-[4/3] w-full overflow-hidden rounded-md"
               >
                 {project.cover?.asset?._ref ? (
                   <Image

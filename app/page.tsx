@@ -14,7 +14,7 @@ export default async function Home() {
 
   const featuredIds = new Set(featuredCases.map((item) => item._id));
   const rest = allCases.filter((item) => !featuredIds.has(item._id));
-  const projects: CaseListItem[] = [...featuredCases, ...rest].slice(0, 4);
+  const projects: CaseListItem[] = [...featuredCases, ...rest].slice(0, 8);
 
   return (
     <>
