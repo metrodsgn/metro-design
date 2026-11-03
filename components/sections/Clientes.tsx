@@ -1,28 +1,33 @@
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { CLIENTS } from "@/lib/constants";
-import { getAllClients, type ClientLogo } from "@/sanity/lib/fetchers";
+import type { ClientLogo } from "@/sanity/lib/fetchers";
 import { urlFor } from "@/sanity/lib/image";
 
-export async function Clientes() {
-  const clients = await getAllClients();
+export function Clientes({ clients }: { clients: ClientLogo[] }) {
+  const visibleClients = clients.filter((client) => client.logo?.asset?._ref);
+  const marqueeClients = visibleClients.length >= 4
+    ? Array.from({ length: Math.ceil(16 / visibleClients.length) }, () => visibleClients).flat()
+    : visibleClients;
 
   return (
     <section id="clientes" className="py-section-md md:py-section-lg">
       <Container>
         <Reveal>
+          <Eyebrow>{CLIENTS.label}</Eyebrow>
           <h2 className="font-editorial text-foreground max-w-2xl text-3xl leading-tight tracking-tight md:text-5xl">
             {CLIENTS.title}
           </h2>
         </Reveal>
       </Container>
 
-      {clients.length > 0 && clients.length < 4 && (
+      {visibleClients.length > 0 && visibleClients.length < 4 && (
         <Reveal delay={0.15}>
           <Container>
             <div className="mt-12 flex flex-wrap justify-center gap-4 md:mt-16">
-              {clients.map((client) => (
+              {visibleClients.map((client) => (
                 <ClientCard key={client._id} client={client} />
               ))}
             </div>
@@ -30,20 +35,20 @@ export async function Clientes() {
         </Reveal>
       )}
 
-      {clients.length >= 4 && (
+      {visibleClients.length >= 4 && (
         <>
           <Reveal delay={0.15}>
-            <div className="mt-16 overflow-hidden">
+            <div className="clients-marquee mt-16 overflow-hidden">
               <div className="animate-marquee flex w-max">
-                {[0, 1, 2, 3].map((copy) => (
+                {[0, 1].map((copy) => (
                   <div
                     key={`row1-copy-${copy}`}
                     aria-hidden={copy > 0}
                     className="flex shrink-0 gap-4 pr-4"
                   >
-                    {clients.map((client) => (
+                    {marqueeClients.map((client, index) => (
                       <ClientCard
-                        key={`row1-${copy}-${client._id}`}
+                        key={`row1-${copy}-${client._id}-${index}`}
                         client={client}
                       />
                     ))}
@@ -54,17 +59,17 @@ export async function Clientes() {
           </Reveal>
 
           <Reveal delay={0.25}>
-            <div className="mt-4 overflow-hidden">
+            <div className="clients-marquee mt-4 overflow-hidden">
               <div className="animate-marquee-reverse flex w-max">
-                {[0, 1, 2, 3].map((copy) => (
+                {[0, 1].map((copy) => (
                   <div
                     key={`row2-copy-${copy}`}
                     aria-hidden={copy > 0}
                     className="flex shrink-0 gap-4 pr-4"
                   >
-                    {[...clients].reverse().map((client) => (
+                    {[...marqueeClients].reverse().map((client, index) => (
                       <ClientCard
-                        key={`row2-${copy}-${client._id}`}
+                        key={`row2-${copy}-${client._id}-${index}`}
                         client={client}
                       />
                     ))}

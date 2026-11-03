@@ -1,13 +1,13 @@
 import { SITE, CONTACT, SOCIAL } from "@/lib/constants";
 import { Container } from "@/components/ui/Container";
-import { RevealLines } from "@/components/ui/RevealLines";
+import { InteractiveMarquee } from "@/components/ui/InteractiveMarquee";
 import Link from "next/link";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-border mt-24 border-t">
+    <footer className="site-footer border-border mt-24 border-t">
       <Container className="py-16">
         <div className="grid gap-12 md:grid-cols-3">
           {/* Coluna 1 — Descrição */}
@@ -66,12 +66,9 @@ export function Footer() {
         </div>
 
         {/* Assinatura tipográfica */}
-        <RevealLines
-          as="p"
-          className="font-sans text-accent mt-16 leading-[0.78] font-medium tracking-[-0.035em] break-all select-none text-[clamp(4rem,22vw,18rem)]"
-          maskClassName="pt-[0.18em] -mt-[0.18em] pb-0!"
-          lines={["metro."]}
-        />
+        <div className="footer-wordmark-bleed">
+          <InteractiveMarquee />
+        </div>
 
         {/* Rodapé inferior */}
         <div className="border-border mt-10 border-t pt-8">

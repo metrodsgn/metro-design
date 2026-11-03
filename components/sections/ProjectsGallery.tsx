@@ -38,7 +38,6 @@ export function ProjectsGallery({
               title={project.title}
               slug={project.slug}
               services={project.services}
-              brandColor={project.brandColor}
               cover={project.cover}
               year={project.year}
               number={projects.indexOf(project) + 1}

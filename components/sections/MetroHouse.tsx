@@ -1,71 +1,54 @@
-import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/ui/Reveal";
-import { METRO_HOUSE_PHOTOS } from "@/data/metro-house";
+import { MetroHouseCarousel, type MetroHouseSlide } from "@/components/ui/MetroHouseCarousel";
+import { getMetroHousePhotos } from "@/sanity/lib/fetchers";
+import { urlFor } from "@/sanity/lib/image";
 
-export function MetroHouse() {
+export async function MetroHouse() {
+  let photos: MetroHouseSlide[] = [];
+
+  try {
+    const uploadedPhotos = await getMetroHousePhotos();
+    photos = uploadedPhotos
+      .filter((photo) => Boolean(photo.asset?._ref))
+      .map((photo) => ({
+        id: photo._key,
+        src: urlFor(photo).width(2000).fit("max").url(),
+        alt: photo.alt?.trim() ?? "",
+        caption: photo.caption?.trim() ?? "",
+        description: photo.description?.trim() ?? "",
+        lqip: photo.lqip,
+      }));
+  } catch {
+    // A falha do Sanity não deve impedir a página Sobre de renderizar.
+    return null;
+  }
+
+  if (photos.length === 0) return null;
+
   return (
     <section
       id="metro-house"
       aria-labelledby="metro-house-title"
-      className="py-section-md md:py-section-lg"
+      className="metro-house-section relative z-10 bg-background py-20 md:py-32"
     >
       <Container>
-        <Reveal>
+        <div className="metro-house-section__heading">
           <p className="section-eyebrow">NOSSO ESPAÇO</p>
-          <h2
-            id="metro-house-title"
-            className="font-editorial text-foreground mt-4 text-3xl leading-tight tracking-tight md:text-5xl"
-          >
-            Metro House
+          <h2 id="metro-house-title" className="metro-house-section__title">
+            metro hause<span aria-hidden="true">.</span>
           </h2>
-          <p className="text-muted mt-4 max-w-xl text-base leading-relaxed md:text-lg">
-            Um espaço onde ideias ganham forma, projetos se encontram e novas
-            possibilidades começam.
-          </p>
-        </Reveal>
+        </div>
 
-        <div className="metro-house-gallery mt-10">
-          {METRO_HOUSE_PHOTOS.map((photo, index) => (
-            <Reveal
-              key={photo.id}
-              delay={index * 0.08}
-              className={[
-                "metro-house-gallery__item",
-                index === 0 ? "metro-house-gallery__item--main" : "",
-              ].join(" ")}
-            >
-              <figure className="metro-house-gallery__figure">
-                <div className="metro-house-gallery__frame">
-                  {photo.src ? (
-                    <Image
-                      src={photo.src}
-                      alt={photo.alt}
-                      fill
-                      sizes={
-                        index === 0
-                          ? "(max-width: 767px) 100vw, 66vw"
-                          : "(max-width: 767px) 100vw, 33vw"
-                      }
-                      className="metro-house-gallery__image object-cover"
-                    />
-                  ) : (
-                    <div className="metro-house-gallery__placeholder">
-                      <span className="text-foreground text-sm">
-                        {photo.alt}
-                      </span>
-                      <span className="text-muted text-xs">
-                        Espaço reservado para fotografia real
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <figcaption className="text-muted mt-3 text-sm leading-relaxed">
-                  {photo.caption}
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
+        <div className="metro-house-section__body">
+          <div className="metro-house-section__intro">
+            <p>
+              Um espaço onde ideias ganham forma, projetos se encontram e novas
+              possibilidades começam.
+            </p>
+            <span>Fortaleza, Ceará</span>
+          </div>
+
+          <MetroHouseCarousel photos={photos} />
         </div>
       </Container>
     </section>

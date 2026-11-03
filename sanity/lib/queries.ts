@@ -8,7 +8,6 @@ export const allCasesQuery = groq`
     "slug": slug.current,
     client,
     services,
-    brandColor,
     year,
     cover,
     "coverDimensions": cover.asset->metadata.dimensions
@@ -22,7 +21,6 @@ export const featuredCasesQuery = groq`
     "slug": slug.current,
     client,
     services,
-    brandColor,
     year,
     cover,
     "coverDimensions": cover.asset->metadata.dimensions
@@ -36,7 +34,6 @@ export const caseBySlugQuery = groq`
     title,
     "slug": slug.current,
     client,
-    brandColor,
     year,
     cover,
     "coverDimensions": cover.asset->metadata.dimensions,
@@ -64,9 +61,22 @@ export const allTestimonialsQuery = groq`
 `;
 
 export const allClientsQuery = groq`
-  *[_type == "client" && defined(logo)] | order(order asc, name asc) {
+  *[_type == "client" && defined(logo.asset._ref)] | order(order asc, name asc) {
     _id,
     name,
     logo
+  }
+`;
+
+export const metroHousePhotosQuery = groq`
+  *[_type == "metroHouse" && _id == "metroHouse"][0].photos[defined(asset._ref)]{
+    _key,
+    asset,
+    hotspot,
+    alt,
+    caption,
+    description,
+    "dimensions": asset->metadata.dimensions,
+    "lqip": asset->metadata.lqip
   }
 `;

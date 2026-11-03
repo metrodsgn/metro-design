@@ -5,7 +5,12 @@ import { Fazemos } from "@/components/sections/Fazemos";
 import { MetroHouse } from "@/components/sections/MetroHouse";
 import { Clientes } from "@/components/sections/Clientes";
 import { CtaFinal } from "@/components/sections/CtaFinal";
+import { Metodologia } from "@/components/sections/Metodologia";
+import { SelectedProjects } from "@/components/sections/SelectedProjects";
+import { Faq } from "@/components/sections/Faq";
+import { ABOUT_HERO } from "@/lib/constants";
 import { createSiteMetadata } from "@/lib/metadata";
+import { getAllCases, getAllClients } from "@/sanity/lib/fetchers";
 
 export const metadata: Metadata = createSiteMetadata({
   title: "Sobre — Metro Design",
@@ -14,24 +19,46 @@ export const metadata: Metadata = createSiteMetadata({
   path: "/sobre",
 });
 
-export default function SobrePage() {
+async function loadClients() {
+  try {
+    const clients = await getAllClients();
+    return Array.isArray(clients) ? clients : [];
+  } catch {
+    return [];
+  }
+}
+
+async function loadProjects() {
+  try {
+    const projects = await getAllCases();
+    return Array.isArray(projects) ? projects.slice(0, 6) : [];
+  } catch {
+    return [];
+  }
+}
+
+export default async function SobrePage() {
+  const [clients, projects] = await Promise.all([
+    loadClients(),
+    loadProjects(),
+  ]);
+
   return (
     <>
       <ParallaxHero
-        eyebrow="Sobre a Metro"
-        title="Falamos alto com tipografia. Levamos a sério o trabalho."
-        subtitle="Somos uma agência de Fortaleza que constrói marcas com método e emoção — e não leva a si mesma tão a sério quanto leva cada projeto."
+        title={ABOUT_HERO.wordmark}
         backgroundSrc="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2400&q=80"
-        backgroundAlt="Equipe da Metro Design trabalhando junta no estúdio"
-        cardSrc="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&h=1000&q=80"
-        cardAlt="Ambiente de trabalho criativo com divisórias de vidro e iluminação natural"
-        cardCaption="Estúdio · Fortaleza"
+        backgroundAlt={ABOUT_HERO.backgroundAlt}
+        titleAriaLabel={ABOUT_HERO.accessibleTitle}
       />
 
       <Somos />
       <Fazemos />
+      <Metodologia />
       <MetroHouse />
-      <Clientes />
+      <Clientes clients={clients} />
+      <SelectedProjects projects={projects} />
+      <Faq />
       <CtaFinal />
     </>
   );

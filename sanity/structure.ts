@@ -9,4 +9,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("beforeAfter").title("Antes e Depois"),
       S.documentTypeListItem("client").title("Clientes"),
       S.documentTypeListItem("testimonial").title("Depoimentos"),
+      S.listItem()
+        .title("metro hause")
+        .child(S.document().schemaType("metroHouse").documentId("metroHouse")),
     ]);

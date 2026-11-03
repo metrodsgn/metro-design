@@ -5,6 +5,7 @@ import {
   caseBySlugQuery,
   allTestimonialsQuery,
   allClientsQuery,
+  metroHousePhotosQuery,
 } from "./queries";
 
 export type CaseListItem = {
@@ -12,7 +13,6 @@ export type CaseListItem = {
   title: string;
   slug: string;
   client: string;
-  brandColor?: string;
   year: number;
   cover?: {
     asset: { _ref: string; _type: string };
@@ -63,6 +63,17 @@ export type ClientLogo = {
   };
 };
 
+export type MetroHouseImage = {
+  _key: string;
+  asset: { _ref: string; _type: string };
+  hotspot?: { x: number; y: number };
+  alt?: string;
+  caption?: string;
+  description?: string;
+  dimensions?: { width: number; height: number; aspectRatio: number };
+  lqip?: string;
+};
+
 export async function getAllCases(): Promise<CaseListItem[]> {
   return client.fetch(allCasesQuery);
 }
@@ -95,4 +106,8 @@ export async function getAllTestimonials(): Promise<Testimonial[]> {
 
 export async function getAllClients(): Promise<ClientLogo[]> {
   return client.fetch(allClientsQuery);
+}
+
+export async function getMetroHousePhotos(): Promise<MetroHouseImage[]> {
+  return (await client.fetch<MetroHouseImage[]>(metroHousePhotosQuery, {}, { next: { revalidate: 60 } })) ?? [];
 }

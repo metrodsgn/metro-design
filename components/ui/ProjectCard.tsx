@@ -1,13 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import type { CSSProperties } from "react";
 import { urlFor } from "@/sanity/lib/image";
 
 type ProjectCardProps = {
   title: string;
   slug: string;
   services?: string[];
-  brandColor?: string;
   year: number;
   number: number;
   total?: number;
@@ -21,20 +19,14 @@ export function ProjectCard({
   title,
   slug,
   services,
-  brandColor,
   year,
   number,
   total,
   cover,
 }: ProjectCardProps) {
-  const accentStyle = /^#[\da-f]{6}$/i.test(brandColor ?? "")
-    ? ({ "--project-accent": brandColor } as CSSProperties)
-    : undefined;
-
   return (
     <Link
       href={`/projetos/${slug}`}
-      style={accentStyle}
       data-cursor="Ver projeto ↗"
       aria-label={`Ver projeto ${title}`}
       className="projects-card group focus-visible:outline-accent block focus-visible:outline-2 focus-visible:outline-offset-4"

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import {
+  Inter,
+  Instrument_Serif,
+  Sofia_Sans_Extra_Condensed,
+} from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
@@ -22,6 +26,13 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+const metroFont = Sofia_Sans_Extra_Condensed({
+  variable: "--font-metro",
+  weight: "variable",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = createSiteMetadata({
   title: "Metro Design — Branding e Comunicação Estratégica",
   description:
@@ -37,7 +48,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${inter.variable} ${instrumentSerif.variable}`}
+      className={`${inter.variable} ${instrumentSerif.variable} ${metroFont.variable}`}
     >
       <body className="antialiased">
         <SiteShell

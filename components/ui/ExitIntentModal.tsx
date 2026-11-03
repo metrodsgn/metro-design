@@ -13,7 +13,6 @@ import { WHATSAPP_NUMBER } from "@/lib/constants";
 import { getLenis } from "@/lib/smooth-scroll";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-const SESSION_KEY = "metro-exit-intent";
 const ACTIVATION_DELAY = 15_000;
 
 const SERVICES = [
@@ -91,12 +90,6 @@ export function ExitIntentModal() {
     if (shownRef.current || !readyRef.current) return;
     shownRef.current = true;
 
-    try {
-      sessionStorage.setItem(SESSION_KEY, "1");
-    } catch {
-      // Armazenamento indisponível (modo privado) — segue sem persistir.
-    }
-
     previousFocusRef.current =
       document.activeElement instanceof HTMLElement
         ? document.activeElement
@@ -107,15 +100,6 @@ export function ExitIntentModal() {
   // Gatilhos: saída pelo topo no desktop e scroll para cima no mobile.
   useEffect(() => {
     if (!mounted) return;
-
-    try {
-      if (sessionStorage.getItem(SESSION_KEY) === "1") {
-        shownRef.current = true;
-        return;
-      }
-    } catch {
-      // Sem sessionStorage, mantém o comportamento em memória.
-    }
 
     const timer = window.setTimeout(() => {
       readyRef.current = true;

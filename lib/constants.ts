@@ -43,8 +43,14 @@ export const ABOUT = {
   ],
 } as const;
 
+export const ABOUT_HERO = {
+  wordmark: "sobre",
+  accessibleTitle: "Sobre",
+  backgroundAlt: "Pessoas reunidas em uma mesa durante uma reunião.",
+} as const;
+
 export const SERVICES = {
-  label: "Fazemos",
+  label: "Serviços",
   title: "Branding, conteúdo audiovisual. Estratégia do início ao fim.",
   description:
     "Na Metro, cada projeto nasce de um olhar estratégico. Trabalhamos com consistência, agilidade e profundidade criativa para construir marcas fortes, alinhadas com seus mercados e com seus públicos.",
@@ -82,6 +88,43 @@ export const CLIENTS = {
   label: "Clientes",
   title: "Marcas que confiam na Metro.",
 } as const;
+
+export const METODOLOGIA = {
+  label: "metodologia metro.",
+  // TODO: escrever a frase de metodologia aprovada pela Metro.
+  statement: "",
+  steps: [
+    // TODO: preencher com texto real.
+    { title: "Pesquisa e diagnóstico", description: "" },
+    // TODO: preencher com texto real.
+    { title: "Estratégia", description: "" },
+    // TODO: preencher com texto real.
+    { title: "Planejamento e organização", description: "" },
+    // TODO: preencher com texto real.
+    { title: "Execução", description: "" },
+  ],
+} as const;
+
+export const FAQ = {
+  title: "Aqui você pode tirar suas principais dúvidas",
+  items: [
+    // TODO: preencher com texto real.
+    { question: "o que a Metro faz?", answer: "" },
+    // TODO: preencher com texto real.
+    { question: "quanto preciso investir?", answer: "" },
+    // TODO: preencher com texto real.
+    { question: "como funciona o atendimento?", answer: "" },
+    // TODO: preencher com texto real.
+    { question: "para quem é a Metro?", answer: "" },
+  ],
+} as const;
+
+export const ABOUT_CTA = {
+  titleLines: ["O SEU PRÓXIMO", "PASSO PODE SER", "FORA DO COMUM."],
+  supportStart: "Pronto para criar o seu próximo projeto com a gente? Vamos ",
+  supportEmphasis: "trabalhar juntos.",
+} as const;
+
 export const TAGLINE = {
   text: "Criatividade com método. Estratégia com emoção.",
 } as const;
