@@ -86,7 +86,7 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
             Nenhum projeto para exibir.
           </p>
         ) : (
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 md:[grid-auto-rows:clamp(18rem,26vw,24rem)]">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 xl:gap-8">
             {projects.map((project) => (
               <Link
                 key={project._id}
@@ -95,10 +95,10 @@ const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
               >
                 {project.cover?.asset?._ref ? (
                   <Image
-                    src={urlFor(project.cover).width(900).height(600).url()}
+                    src={urlFor(project.cover).width(1400).height(1050).url()}
                     alt={project.title}
                     fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
+                    sizes="(max-width: 640px) 100vw, 50vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                 ) : (
