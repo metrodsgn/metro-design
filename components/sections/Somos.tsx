@@ -18,7 +18,6 @@ export function Somos() {
     >
       <AboutGsapMotion>
         <Container className="relative z-10 py-20 md:py-32">
-          <p className="about-serif-label">sobre.</p>
           <h2 id="somos-title" className="about-somos__title">
             {ABOUT.title}
           </h2>
@@ -32,9 +31,11 @@ export function Somos() {
             <span className="about-somos__rule" data-scroll-draw aria-hidden="true" />
           </div>
 
-          <Link href="#fazemos" className="ui-button ui-button-accent mt-8">
-            MAIS SOBRE NÓS <span aria-hidden="true">↘</span>
-          </Link>
+          <div className="mt-8 flex justify-center">
+            <Link href="#fazemos" className="ui-button ui-button-accent">
+              MAIS SOBRE NÓS <span aria-hidden="true">↘</span>
+            </Link>
+          </div>
 
           {SOBRE_STORY_PHOTO.src ? (
             <figure className="about-somos__photo">
