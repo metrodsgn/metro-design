@@ -1,180 +1,141 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  MotionValue,
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { urlFor } from "@/sanity/lib/image";
 import type { CaseListItem } from "@/sanity/lib/fetchers";
-
-interface SectionProps {
-  scrollYProgress: MotionValue<number>;
-}
 
 interface HeroScrollAnimationProps {
   projects: CaseListItem[];
 }
 
-function useMediaQuery(query: string) {
-  const [matches, setMatches] = useState(false);
+const GRID_PATTERN =
+  "absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_100%)] bg-[size:54px_54px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]";
 
-  useEffect(() => {
-    const mq = window.matchMedia(query);
-    const update = () => setMatches(mq.matches);
+function IntroSection() {
+  const reduceMotion = useReducedMotion();
 
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, [query]);
-
-  return matches;
+  return (
+    <section className="bg-gradient-to-t to-[#dadada] from-[#ebebeb] relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden text-black">
+      <div className={GRID_PATTERN} aria-hidden="true" />
+      <motion.h1
+        initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="font-editorial relative z-10 px-6 text-center text-5xl leading-[110%] tracking-tight text-accent sm:text-6xl md:text-7xl 2xl:text-8xl 3xl:text-9xl"
+      >
+        Role para descobrir <br /> como pensamos
+      </motion.h1>
+    </section>
+  );
 }
 
-const GRID_PATTERN =
-  "absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:54px_54px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]";
-
-const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
+function ProjectsSection({ projects }: HeroScrollAnimationProps) {
   const reduceMotion = useReducedMotion();
-  const isMobile = useMediaQuery("(max-width: 767px)");
-  const scale = useTransform(scrollYProgress, [0, 1], [1, isMobile ? 0.92 : 0.8]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -2 : -5]);
 
   return (
-    <motion.section
-      style={reduceMotion ? undefined : { scale, rotate }}
-      className="bg-gradient-to-t to-[#dadada] from-[#ebebeb] sticky top-0 z-10 flex h-[100svh] flex-col items-center justify-center text-black"
-    >
+    <section className="bg-gradient-to-t to-[#1a1919] from-background relative min-h-[100svh] text-white">
       <div className={GRID_PATTERN} aria-hidden="true" />
 
-      <h1 className="font-editorial px-6 text-center text-5xl leading-[110%] tracking-tight text-accent sm:text-6xl md:text-7xl 2xl:text-8xl 3xl:text-9xl">
-        Role para descobrir <br /> como pensamos
-      </h1>
-    </motion.section>
-  );
-};
-
-const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
-  scrollYProgress,
-  projects,
-}) => {
-  const reduceMotion = useReducedMotion();
-  const isMobile = useMediaQuery("(max-width: 767px)");
-  const scale = useTransform(scrollYProgress, [0, 1], [isMobile ? 0.94 : 0.8, 1]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [isMobile ? 2 : 5, 0]);
-
-  return (
-    <motion.section
-      style={reduceMotion ? undefined : { scale, rotate }}
-      className="bg-gradient-to-t to-[#1a1919] from-background relative z-10 min-h-[100svh] text-white"
-    >
-      <div className={GRID_PATTERN} aria-hidden="true" />
-
-      <Container className="relative z-10 pt-16 md:pt-24 lg:pt-32 pb-12 md:pb-16">
+      <Container className="relative z-10 pb-12 pt-16 md:pb-16 md:pt-24 lg:pt-32">
         <h2 className="font-editorial pb-6 text-3xl leading-[100%] tracking-tight sm:pb-8 sm:text-5xl md:pb-12 md:text-6xl">
           Forma, estratégia e detalhe <br /> em cada projeto
         </h2>
 
         {projects.length === 0 ? (
-          <p className="text-muted text-center py-12 text-sm">
+          <p className="text-muted py-12 text-center text-sm">
             Nenhum projeto para exibir.
           </p>
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 xl:gap-8">
-            {projects.map((project) => (
-              <Link
+            {projects.map((project, index) => (
+              <motion.div
                 key={project._id}
-                href={`/projetos/${project.slug}`}
-                className="bg-surface group relative aspect-[4/3] w-full overflow-hidden rounded-md"
+                initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.18 }}
+                transition={{
+                  duration: 0.5,
+                  delay: reduceMotion ? 0 : (index % 2) * 0.08,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
               >
-                {project.cover?.asset?._ref ? (
-                  <Image
-                    src={urlFor(project.cover).width(1400).height(1050).url()}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center">
-                    <span className="font-editorial text-muted/60 group-hover:text-accent text-8xl transition-colors duration-200">
-                      {project.title.charAt(0)}
+                <Link
+                  href={`/projetos/${project.slug}`}
+                  className="bg-surface group relative block aspect-[4/3] w-full overflow-hidden rounded-md"
+                >
+                  {project.cover?.asset?._ref ? (
+                    <Image
+                      src={urlFor(project.cover).width(1400).height(1050).url()}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center">
+                      <span className="font-editorial text-muted/60 group-hover:text-accent text-8xl transition-colors duration-200">
+                        {project.title.charAt(0)}
+                      </span>
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-300 md:opacity-0 md:group-hover:opacity-100" />
+                  <div className="absolute bottom-3 left-3 right-3 text-left transition-all duration-300 md:bottom-4 md:left-4 md:right-4 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+                    {project.services?.find(Boolean) && (
+                      <span className="label-mono text-white/80">
+                        {project.services.find(Boolean)}
+                      </span>
+                    )}
+                    <h3 className="font-editorial mt-1 text-base leading-tight text-white sm:text-2xl">
+                      {project.title}
+                    </h3>
+                    <span className="label-mono mt-1.5 block text-white/60 md:mt-2">
+                      {project.year}
                     </span>
                   </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-300 md:opacity-0 md:group-hover:opacity-100" />
-                <div className="absolute bottom-3 left-3 right-3 text-left transition-all duration-300 md:bottom-4 md:left-4 md:right-4 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
-                  {project.services?.find(Boolean) && (
-                    <span className="label-mono text-white/80">
-                      {project.services.find(Boolean)}
-                    </span>
-                  )}
-                  <h3 className="font-editorial mt-1 text-base leading-tight text-white sm:text-2xl">
-                    {project.title}
-                  </h3>
-                  <span className="label-mono mt-1.5 block text-white/60 md:mt-2">{project.year}</span>
-                </div>
-              </Link>
+                </Link>
+              </motion.div>
             ))}
           </div>
         )}
-        <div className="mt-10 md:mt-14 flex justify-center">
+
+        <div className="mt-10 flex justify-center md:mt-14">
           <ViewAllProjectsButton reduceMotion={!!reduceMotion} />
         </div>
       </Container>
-    </motion.section>
+    </section>
   );
-};
+}
 
 function ViewAllProjectsButton({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <Link
       href="/projetos"
-      className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/20 bg-transparent px-4 py-4 text-sm font-semibold uppercase text-white whitespace-nowrap transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-transparent hover:text-white focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 sm:gap-4 sm:px-10"
-      style={
-        reduceMotion
-          ? { transitionDuration: "0ms" }
-          : undefined
-      }
+      className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/20 bg-transparent px-4 py-4 text-sm font-semibold uppercase whitespace-nowrap text-white transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-transparent hover:text-white focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 sm:gap-4 sm:px-10"
+      style={reduceMotion ? { transitionDuration: "0ms" } : undefined}
       aria-label="Ver todos os projetos"
     >
-      {/* Left arrow - slides in from left on hover */}
       <span
-        className="relative flex-shrink-0 w-5 h-5 stroke-white fill-none transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:translate-x-1"
+        className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:translate-x-1"
         aria-hidden="true"
-        style={reduceMotion ? { transform: "translateX(0)" } : undefined}
       >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </span>
-
-      {/* Button text */}
-      <span
-        className="relative z-10 transition-transform duration-500 ease-out group-hover:translate-x-0.5"
-        style={reduceMotion ? { transform: "translateX(0)" } : undefined}
-      >
+      <span className="relative z-10 transition-transform duration-500 ease-out group-hover:translate-x-0.5">
         Ver todos os projetos
       </span>
-
-      {/* Expanding circle background on hover */}
       <span
-        className="absolute inset-0 bg-accent rounded-full scale-0 origin-center transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-100"
+        className="absolute inset-0 origin-center scale-0 rounded-full bg-accent transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-100"
         aria-hidden="true"
-        style={reduceMotion ? { transform: "scale(1)" } : undefined}
       />
-
-      {/* Right arrow - slides out to right on hover */}
       <span
-        className="relative flex-shrink-0 w-5 h-5 stroke-white fill-none transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:translate-x-1 group-hover:opacity-0"
+        className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:translate-x-1 group-hover:opacity-0"
         aria-hidden="true"
-        style={reduceMotion ? { transform: "translateX(0)", opacity: 0 } : undefined}
       >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M5 12h14M12 5l7 7-7 7" />
@@ -185,16 +146,10 @@ function ViewAllProjectsButton({ reduceMotion }: { reduceMotion: boolean }) {
 }
 
 export default function HeroScrollAnimation({ projects }: HeroScrollAnimationProps) {
-  const container = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start start", "end end"],
-  });
-
   return (
-    <div ref={container} className="relative h-auto overflow-x-clip bg-background">
-      <Section1 scrollYProgress={scrollYProgress} />
-      <Section2 scrollYProgress={scrollYProgress} projects={projects} />
+    <div className="relative h-auto overflow-x-clip bg-background">
+      <IntroSection />
+      <ProjectsSection projects={projects} />
     </div>
   );
 }
