@@ -43,8 +43,8 @@ const GRID_PATTERN =
 const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
   const reduceMotion = useReducedMotion();
   const isMobile = useMediaQuery("(max-width: 767px)");
-  const scale = useTransform(scrollYProgress, [0, 1], [1, isMobile ? 0.92 : 0.8]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -2 : -5]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, isMobile ? 0.985 : 0.97]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -0.35 : -0.8]);
 
   return (
     <motion.section
@@ -60,18 +60,23 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
   );
 };
 
-const Section2: React.FC<SectionProps & { projects: CaseListItem[] }> = ({
+const Section2: React.FC<SectionProps & {
+  projects: CaseListItem[];
+  sectionRef: React.RefObject<HTMLElement | null>;
+}> = ({
   scrollYProgress,
   projects,
+  sectionRef,
 }) => {
   const reduceMotion = useReducedMotion();
   const isMobile = useMediaQuery("(max-width: 767px)");
-  const scale = useTransform(scrollYProgress, [0, 1], [isMobile ? 0.94 : 0.8, 1]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [isMobile ? 2 : 5, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [isMobile ? 0.975 : 0.92, 1]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [isMobile ? 0.35 : 2.2, 0]);
 
   return (
     <motion.section
-      style={reduceMotion ? undefined : { scale, rotate }}
+      ref={sectionRef}
+      style={reduceMotion ? undefined : { scale, rotate, transformOrigin: "top center" }}
       className="bg-gradient-to-t to-[#1a1919] from-background relative z-10 min-h-[100svh] text-white"
     >
       <div className={GRID_PATTERN} aria-hidden="true" />
@@ -185,16 +190,20 @@ function ViewAllProjectsButton({ reduceMotion }: { reduceMotion: boolean }) {
 }
 
 export default function HeroScrollAnimation({ projects }: HeroScrollAnimationProps) {
-  const container = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start start", "end end"],
+    target: projectsRef,
+    offset: ["start end", "start start"],
   });
 
   return (
-    <div ref={container} className="relative h-auto overflow-x-clip bg-background">
+    <div className="relative h-auto overflow-x-clip bg-background">
       <Section1 scrollYProgress={scrollYProgress} />
-      <Section2 scrollYProgress={scrollYProgress} projects={projects} />
+      <Section2
+        sectionRef={projectsRef}
+        scrollYProgress={scrollYProgress}
+        projects={projects}
+      />
     </div>
   );
 }
