@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { urlFor } from "@/sanity/lib/image";
 import type { CaseListItem } from "@/sanity/lib/fetchers";
@@ -16,28 +16,34 @@ const GRID_PATTERN =
   "absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_100%)] bg-[size:54px_54px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]";
 
 function IntroSection() {
-  const reduceMotion = useReducedMotion();
-
   return (
-    <section className="bg-gradient-to-t to-[#dadada] from-[#ebebeb] relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden text-black">
+    <section className="bg-gradient-to-t to-[#dadada] from-[#ebebeb] sticky top-0 z-0 flex h-svh flex-col items-center justify-center overflow-hidden text-black">
       <div className={GRID_PATTERN} aria-hidden="true" />
-      <motion.h1
-        initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="font-editorial relative z-10 px-6 text-center text-5xl leading-[110%] tracking-tight text-accent sm:text-6xl md:text-7xl 2xl:text-8xl 3xl:text-9xl"
-      >
+      <h1 className="font-editorial relative z-10 px-6 text-center text-5xl leading-[110%] tracking-tight text-accent sm:text-6xl md:text-7xl 2xl:text-8xl 3xl:text-9xl">
         Role para descobrir <br /> como pensamos
-      </motion.h1>
+      </h1>
     </section>
   );
 }
 
 function ProjectsSection({ projects }: HeroScrollAnimationProps) {
   const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "start start"],
+  });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.985, 1]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [1.2, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [24, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.92, 1]);
 
   return (
-    <section className="bg-gradient-to-t to-[#1a1919] from-background relative min-h-[100svh] text-white">
+    <motion.section
+      ref={sectionRef}
+      style={reduceMotion ? undefined : { scale, rotate, y, opacity, transformOrigin: "top center" }}
+      className="bg-gradient-to-t to-[#1a1919] from-background relative z-10 min-h-[100svh] text-white"
+    >
       <div className={GRID_PATTERN} aria-hidden="true" />
 
       <Container className="relative z-10 pb-12 pt-16 md:pb-16 md:pt-24 lg:pt-32">
@@ -51,18 +57,8 @@ function ProjectsSection({ projects }: HeroScrollAnimationProps) {
           </p>
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 xl:gap-8">
-            {projects.map((project, index) => (
-              <motion.div
-                key={project._id}
-                initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.18 }}
-                transition={{
-                  duration: 0.5,
-                  delay: reduceMotion ? 0 : (index % 2) * 0.08,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-              >
+            {projects.map((project) => (
+              <div key={project._id}>
                 <Link
                   href={`/projetos/${project.slug}`}
                   className="bg-surface group relative block aspect-[4/3] w-full overflow-hidden rounded-md"
@@ -97,7 +93,7 @@ function ProjectsSection({ projects }: HeroScrollAnimationProps) {
                     </span>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
         )}
@@ -106,7 +102,7 @@ function ProjectsSection({ projects }: HeroScrollAnimationProps) {
           <ViewAllProjectsButton reduceMotion={!!reduceMotion} />
         </div>
       </Container>
-    </section>
+    </motion.section>
   );
 }
 
