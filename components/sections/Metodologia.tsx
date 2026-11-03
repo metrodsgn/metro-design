@@ -10,7 +10,6 @@ export function Metodologia() {
     <section className="about-methodology bg-background">
       <MethodologyMotion>
           <Container>
-            <p className="about-serif-label">{METODOLOGIA.label}</p>
             {METODOLOGIA.statement.trim() ? (
               <h2 className="about-methodology__statement">
                 {METODOLOGIA.statement}

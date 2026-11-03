@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { CLIENTS } from "@/lib/constants";
 import type { ClientLogo } from "@/sanity/lib/fetchers";
@@ -16,7 +15,6 @@ export function Clientes({ clients }: { clients: ClientLogo[] }) {
     <section id="clientes" className="py-section-md md:py-section-lg">
       <Container>
         <Reveal>
-          <Eyebrow>{CLIENTS.label}</Eyebrow>
           <h2 className="font-editorial text-foreground max-w-2xl text-3xl leading-tight tracking-tight md:text-5xl">
             {CLIENTS.title}
           </h2>

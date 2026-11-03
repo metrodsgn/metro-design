@@ -1876,13 +1876,6 @@
 }
 
 .about-gsap-scope { display: block; width: 100%; min-width: 0; }
-.about-serif-label {
-  margin: 0 0 1rem;
-  color: currentColor;
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
-  font-style: italic;
-}
 .about-hero__content { max-width: 100rem; margin-inline: auto; }
 .about-hero__wordmark-center {
   position: absolute;

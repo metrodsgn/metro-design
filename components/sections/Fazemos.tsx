@@ -8,7 +8,6 @@ export function Fazemos() {
   return (
     <section id="fazemos" className="about-services bg-background py-20 md:py-32">
       <Container>
-        <p className="about-serif-label">{SERVICES.label.toLowerCase()}.</p>
         <div className="about-services__intro">
           <h2>{SERVICES.title}</h2>
           <div>
