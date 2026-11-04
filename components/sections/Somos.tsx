@@ -18,7 +18,7 @@ export function Somos() {
     >
       <AboutGsapMotion>
         <Container className="relative z-10 py-20 md:py-32">
-          <h2 id="somos-title" className="about-somos__title">
+          <h2 id="somos-title" className="about-somos__title type-h2">
             {ABOUT.title}
           </h2>
 

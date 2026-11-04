@@ -349,13 +349,13 @@ export function ExitIntentModal() {
               <p className="label-mono text-accent mb-2 sm:mb-3">Antes de ir</p>
               <h2
                 id="exit-intent-title"
-                className="font-editorial max-w-[18ch] text-[clamp(1.5rem,4.2vw,2.35rem)] leading-[1.05] tracking-tight"
+                className="type-h3 max-w-[18ch]"
               >
                 Seu próximo grande projeto começa aqui.
               </h2>
               <p
                 id="exit-intent-description"
-                className="text-muted mt-2.5 max-w-[42ch] text-sm leading-relaxed sm:mt-3"
+                className="type-body text-muted mt-2.5 max-w-[42ch] sm:mt-3"
               >
                 Antes de ir, que tal dar vida à sua próxima ideia? Conte um
                 pouco sobre o que você precisa e vamos conversar.

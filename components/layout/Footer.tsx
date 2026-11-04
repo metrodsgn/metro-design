@@ -74,7 +74,7 @@ export function Footer() {
         <div className="border-border mt-10 border-t pt-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
             <p className="text-muted text-xs">
-              © {currentYear} {SITE.name}. Todos os direitos reservados.
+              © {currentYear} {SITE.name.replace(/^M/, "m")}. Todos os direitos reservados.
             </p>
             <p className="label-mono normal-case">
               Feito em Fortaleza, com método e emoção.

@@ -14,16 +14,16 @@ export default function PrivacidadePage() {
     <section className="pt-section-lg pb-section-md">
       <Container className="max-w-4xl">
         <span className="section-eyebrow">Privacidade</span>
-        <h1 className="font-editorial text-foreground mt-4 text-4xl leading-[1.05] tracking-tight md:text-6xl">
+        <h1 className="type-h1 text-foreground mt-4">
           Aviso de Privacidade
         </h1>
-        <p className="text-muted mt-5 text-sm">
+        <p className="type-small text-muted mt-5">
           Última atualização: 26 de outubro de 2026
         </p>
 
-        <div className="text-muted mt-10 space-y-8 text-base leading-relaxed">
+        <div className="type-body text-muted mt-10 space-y-8">
           <section>
-            <h2 className="text-foreground text-lg">
+            <h2 className="type-h2 text-foreground">
               Quem trata seus dados
             </h2>
             <p className="mt-2">
@@ -41,7 +41,7 @@ export default function PrivacidadePage() {
           </section>
 
           <section>
-            <h2 className="text-foreground text-lg">
+            <h2 className="type-h2 text-foreground">
               Quais informações são recebidas
             </h2>
             <p className="mt-2">
@@ -59,7 +59,7 @@ export default function PrivacidadePage() {
           </section>
 
           <section>
-            <h2 className="text-foreground text-lg">
+            <h2 className="type-h2 text-foreground">
               Para que usamos essas informações
             </h2>
             <p className="mt-2">
@@ -71,7 +71,7 @@ export default function PrivacidadePage() {
           </section>
 
           <section>
-            <h2 className="text-foreground text-lg">
+            <h2 className="type-h2 text-foreground">
               Envio e armazenamento
             </h2>
             <p className="mt-2">
@@ -85,7 +85,7 @@ export default function PrivacidadePage() {
           </section>
 
           <section>
-            <h2 className="text-foreground text-lg">
+            <h2 className="type-h2 text-foreground">
               Serviços externos
             </h2>
             <p className="mt-2">
@@ -100,7 +100,7 @@ export default function PrivacidadePage() {
           </section>
 
           <section>
-            <h2 className="text-foreground text-lg">
+            <h2 className="type-h2 text-foreground">
               Seus direitos e contato
             </h2>
             <p className="mt-2">
@@ -111,7 +111,7 @@ export default function PrivacidadePage() {
           </section>
 
           <section>
-            <h2 className="text-foreground text-lg">
+            <h2 className="type-h2 text-foreground">
               Atualizações deste aviso
             </h2>
             <p className="mt-2">

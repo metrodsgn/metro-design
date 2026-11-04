@@ -17,7 +17,7 @@ export function SelectedProjects({ projects }: { projects: CaseListItem[] }) {
   return (
     <section className="about-projects bg-background py-20 text-foreground md:py-32">
       <Container>
-        <h2 className="about-projects__heading">Trabalhos selecionados.</h2>
+        <h2 className="about-projects__heading type-h2">Trabalhos selecionados.</h2>
         <SelectedProjectsList projects={selected} />
         <Link href="/projetos" className="ui-button ui-button-accent mt-10">
           VER TODOS OS PROJETOS <span aria-hidden="true">↗</span>

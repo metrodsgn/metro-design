@@ -322,7 +322,7 @@ export function Header() {
                         className="border-border group flex min-h-16 items-center justify-between gap-4 border-b py-3 transition-colors sm:min-h-20"
                       >
                         <span
-                          className={`font-editorial group-hover:text-accent text-4xl leading-none tracking-tight transition-colors sm:text-5xl md:text-6xl ${
+                          className={`type-h2 group-hover:text-accent transition-colors ${
                             isActive ? "text-accent" : "text-foreground"
                           }`}
                         >

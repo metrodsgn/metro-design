@@ -62,7 +62,7 @@ export function Hero() {
         >
           <h1
             id="hero-title"
-            className="font-editorial text-foreground text-display leading-[0.95] tracking-[-0.03em]"
+            className="type-h1 text-foreground"
           >
             <span className="block overflow-hidden pb-[0.08em]">
               <motion.span
@@ -87,7 +87,7 @@ export function Hero() {
           <motion.p
             variants={fadeVariants}
             transition={{ duration: 0.5, ease: EASE }}
-            className="text-foreground/75 mt-6 max-w-xl text-base leading-relaxed md:mt-7 md:text-lg"
+            className="type-body text-foreground/75 mt-6 max-w-xl md:mt-7"
           >
             Design estratégico para transformar percepção em valor.
           </motion.p>

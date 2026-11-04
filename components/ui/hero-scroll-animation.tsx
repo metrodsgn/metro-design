@@ -53,7 +53,7 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
     >
       <div className={GRID_PATTERN} aria-hidden="true" />
 
-      <h1 className="font-editorial px-6 text-center text-5xl leading-[110%] tracking-tight text-accent sm:text-6xl md:text-7xl 2xl:text-8xl 3xl:text-9xl">
+      <h1 className="type-h1 px-6 text-center text-accent">
         Role para descobrir <br /> como pensamos
       </h1>
     </motion.section>
@@ -82,21 +82,21 @@ const Section2: React.FC<SectionProps & {
       <div className={GRID_PATTERN} aria-hidden="true" />
 
       <Container className="relative z-10 pt-16 md:pt-24 lg:pt-32 pb-12 md:pb-16">
-        <h2 className="font-editorial pb-6 text-3xl leading-[100%] tracking-tight sm:pb-8 sm:text-5xl md:pb-12 md:text-6xl">
+        <h2 className="type-h2 pb-6 sm:pb-8 md:pb-12">
           Forma, estratégia e detalhe <br /> em cada projeto
         </h2>
 
         {projects.length === 0 ? (
-          <p className="text-muted text-center py-12 text-sm">
+          <p className="type-small text-muted text-center py-12">
             Nenhum projeto para exibir.
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 xl:gap-8">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:gap-8">
             {projects.map((project) => (
               <Link
                 key={project._id}
                 href={`/projetos/${project.slug}`}
-                className="bg-surface group relative aspect-[4/3] w-full overflow-hidden rounded-md"
+                className="bg-surface group relative aspect-[4/3] w-full overflow-hidden rounded-md sm:aspect-[3/2]"
               >
                 {project.cover?.asset?._ref ? (
                   <Image
@@ -108,22 +108,16 @@ const Section2: React.FC<SectionProps & {
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center">
-                    <span className="font-editorial text-muted/60 group-hover:text-accent text-8xl transition-colors duration-200">
+                    <span className="font-editorial text-muted/60 group-hover:text-accent text-[length:var(--type-display-glyph)] transition-colors duration-200">
                       {project.title.charAt(0)}
                     </span>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-300 md:opacity-0 md:group-hover:opacity-100" />
-                <div className="absolute bottom-3 left-3 right-3 text-left transition-all duration-300 md:bottom-4 md:left-4 md:right-4 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
-                  {project.services?.find(Boolean) && (
-                    <span className="label-mono text-white/80">
-                      {project.services.find(Boolean)}
-                    </span>
-                  )}
-                  <h3 className="font-editorial mt-1 text-base leading-tight text-white sm:text-2xl">
+                <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/45 group-focus-visible:bg-black/45" />
+                <div className="absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                  <h3 className="type-h3 text-white">
                     {project.title}
                   </h3>
-                  <span className="label-mono mt-1.5 block text-white/60 md:mt-2">{project.year}</span>
                 </div>
               </Link>
             ))}
@@ -141,7 +135,7 @@ function ViewAllProjectsButton({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <Link
       href="/projetos"
-      className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/20 bg-transparent px-4 py-4 text-sm font-semibold uppercase text-white whitespace-nowrap transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-transparent hover:text-white focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 sm:gap-4 sm:px-10"
+      className="type-button group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/20 bg-transparent px-4 py-4 font-semibold uppercase text-white whitespace-nowrap transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-transparent hover:text-white focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 sm:gap-4 sm:px-10"
       style={
         reduceMotion
           ? { transitionDuration: "0ms" }

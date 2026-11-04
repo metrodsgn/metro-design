@@ -9,7 +9,7 @@ export function Fazemos() {
     <section id="fazemos" className="about-services bg-background py-20 md:py-32">
       <Container>
         <div className="about-services__intro">
-          <h2>{SERVICES.title}</h2>
+          <h2 className="type-h2">{SERVICES.title}</h2>
           <div>
             <p>{SERVICES.description}</p>
             <Link href="/projetos" className="ui-button ui-button-accent mt-5">

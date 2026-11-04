@@ -314,10 +314,10 @@ export function Contato() {
         <Container className="max-w-2xl">
           <div className="text-center">
             <p className="label-mono text-accent mb-4">Sucesso</p>
-            <h1 className="font-editorial text-foreground text-4xl leading-[1.05] tracking-tight md:text-6xl">
+            <h1 className="type-h1 text-foreground">
               Recebemos o seu projeto.
             </h1>
-            <p className="text-muted mt-6 max-w-lg mx-auto text-base leading-relaxed md:text-lg">
+            <p className="type-body text-muted mt-6 max-w-lg mx-auto">
               A sua mensagem chegou até a gente com segurança. Vamos analisar
               com calma e retornar pelo e-mail ou WhatsApp que você informou.
             </p>
@@ -337,7 +337,7 @@ export function Contato() {
                 Falar pelo WhatsApp <span aria-hidden="true">↗</span>
               </Link>
             </div>
-            <p className="mt-8 text-muted text-xs leading-relaxed">
+            <p className="type-caption mt-8 text-muted">
               Consulte nosso{" "}
               <Link
                 href="/privacidade"
@@ -360,12 +360,10 @@ export function Contato() {
           {/* Coluna esquerda — título e texto (sticky no desktop) */}
           <div className="contact-intro">
             <div className="space-y-6">
-              <h1
-                className="font-editorial text-foreground leading-[0.88] tracking-[-0.045em]"
-              >
+              <h1 className="type-h1 text-foreground">
                 Vamos<span className="block"> conversar?</span>
               </h1>
-              <p className="text-muted text-[19px] leading-relaxed max-w-[400px]">
+              <p className="type-body text-muted max-w-[400px]">
                 Queremos entender os detalhes do seu próximo projeto. Será um
                 prazer co-criar com o seu time.
               </p>

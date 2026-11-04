@@ -43,7 +43,7 @@ export function ProjectCard({
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center">
-              <span className="font-editorial text-muted/60 group-hover:text-accent text-8xl transition-colors duration-200">
+              <span className="font-editorial text-muted/60 group-hover:text-accent text-[length:var(--type-display-glyph)] transition-colors duration-200">
                 {title.charAt(0)}
               </span>
             </div>
@@ -54,7 +54,7 @@ export function ProjectCard({
           <span className="projects-card__hover-title" aria-hidden="true">
             {title}
           </span>
-          <span className="projects-card__cta inline-flex items-center gap-2 text-sm font-medium text-white">
+          <span className="projects-card__cta type-button inline-flex items-center gap-2 text-white">
             Ver projeto{" "}
             <span className="projects-card__arrow" aria-hidden="true">
               ↗
@@ -68,12 +68,12 @@ export function ProjectCard({
 
       <div className="projects-card__details mt-4 flex min-w-0 items-start justify-between gap-3 sm:gap-4">
         <div className="min-w-0">
-          <h3 className="projects-card__title font-editorial text-foreground text-base tracking-tight break-words transition-colors sm:text-lg">
+          <h3 className="projects-card__title type-h5 text-foreground break-words transition-colors">
             <span className="projects-card__title-arrow" aria-hidden="true">→</span>
             <span>{title}</span>
           </h3>
           {services?.some(Boolean) && (
-            <p className="projects-card__tags text-muted mt-1 text-sm break-words">
+            <p className="projects-card__tags type-small text-muted mt-1 break-words">
               {services.filter(Boolean).map((service, index) => (
                 <span key={`${service}-${index}`}>
                   {index > 0 && <span aria-hidden="true"> • </span>}

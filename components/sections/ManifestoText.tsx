@@ -49,7 +49,7 @@ export function ManifestoText({ text }: { text: string }) {
   return (
     <h2
       ref={headingRef}
-      className="about-manifesto__title font-editorial text-foreground"
+      className="about-manifesto__title type-h2 text-foreground"
       aria-label={text}
     >
       <span aria-hidden="true">

@@ -154,7 +154,7 @@ export function DepoimentosCard({
       )}
 
       {total > 1 && (
-        <p className="text-muted mt-7 text-center font-sans text-xs" aria-live="polite">
+        <p className="type-caption text-muted mt-7 text-center" aria-live="polite">
           {String(activeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </p>
       )}
@@ -166,7 +166,7 @@ function TestimonialContent({ testimonial }: { testimonial: Testimonial }) {
   return (
     <>
       <div
-        className={`-mt-7 mb-5 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-background font-display text-xl font-semibold ${
+        className={`-mt-7 mb-5 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-background font-display text-[length:var(--type-avatar)] font-semibold ${
           testimonial.avatarUrl ? "bg-surface" : "bg-accent text-white"
         }`}
         aria-hidden="true"
@@ -183,12 +183,12 @@ function TestimonialContent({ testimonial }: { testimonial: Testimonial }) {
           testimonial.initial || testimonial.name.slice(0, 1)
         )}
       </div>
-      <blockquote className="font-editorial text-foreground max-w-full text-xl leading-snug break-words sm:text-2xl">
+      <blockquote className="type-quote text-foreground max-w-full break-words">
         “{testimonial.quote}”
       </blockquote>
       <div className="mt-auto pt-6">
-        <p className="text-foreground max-w-full text-sm font-semibold break-words">{testimonial.name}</p>
-        <p className="text-muted mt-1 max-w-full text-sm break-words">
+        <p className="type-label text-foreground max-w-full font-semibold break-words">{testimonial.name}</p>
+        <p className="type-small text-muted mt-1 max-w-full break-words">
           {[testimonial.role, testimonial.company].filter(Boolean).join(" · ")}
         </p>
       </div>

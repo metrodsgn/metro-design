@@ -55,7 +55,7 @@ export function ProjectDetail({ project }: { project: ProjectDetailData }) {
         <header className="pt-32 text-center md:pt-44">
           <h1
             data-project-reveal
-            className="project-detail-reveal text-foreground font-editorial text-[clamp(3.25rem,9vw,7rem)] leading-[1.05] font-normal tracking-normal text-balance break-words"
+            className="project-detail-reveal type-h1 text-foreground text-balance break-words"
           >
             {project.title}
           </h1>
@@ -66,7 +66,7 @@ export function ProjectDetail({ project }: { project: ProjectDetailData }) {
                 <p
                   key={index}
                   data-project-reveal
-                  className={`project-detail-reveal m-0 font-sans text-[15px] leading-[1.5] font-light text-pretty text-[#BDBDBD] md:text-base`}
+                  className="project-detail-reveal type-body m-0 text-pretty text-[#BDBDBD]"
                   style={{ transitionDelay: `${index * 70}ms` }}
                 >
                   {paragraph}

@@ -30,7 +30,7 @@ export default function NavigationMenuWithActiveItem({
               data-header-ink
               data-over-text={overText}
               className={cn(
-                "header-adaptive-ink inline-flex h-9 w-max items-center justify-center px-0.5 py-2 text-sm font-medium",
+                "header-adaptive-ink type-nav inline-flex h-9 w-max items-center justify-center px-0.5 py-2",
                 "focus:outline-hidden",
                 "disabled:pointer-events-none disabled:opacity-50",
                 "hover:bg-transparent focus:bg-transparent active:bg-transparent",

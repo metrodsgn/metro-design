@@ -11,6 +11,7 @@ import { Faq } from "@/components/sections/Faq";
 import { ABOUT_HERO } from "@/lib/constants";
 import { createSiteMetadata } from "@/lib/metadata";
 import { getAllCases, getAllClients } from "@/sanity/lib/fetchers";
+import { urlFor } from "@/sanity/lib/image";
 
 export const metadata: Metadata = createSiteMetadata({
   title: "Sobre — Metro Design",
@@ -54,7 +55,16 @@ export default async function SobrePage() {
 
       <Somos />
       <Fazemos />
-      <Metodologia />
+      <Metodologia
+        photos={projects
+          .filter((project) => project.cover)
+          .slice(0, 4)
+          .map((project) => ({
+            src: urlFor(project.cover!).width(520).fit("max").url(),
+            alt: project.title || "",
+            background: project.cover?.background,
+          }))}
+      />
       <MetroHouse />
       <Clientes clients={clients} />
       <SelectedProjects projects={projects} />

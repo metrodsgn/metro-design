@@ -33,7 +33,7 @@ export async function MetroHouse() {
     >
       <Container>
         <div className="metro-house-section__heading">
-          <h2 id="metro-house-title" className="metro-house-section__title">
+          <h2 id="metro-house-title" className="metro-house-section__title type-h2">
             metro hause<span aria-hidden="true">.</span>
           </h2>
         </div>

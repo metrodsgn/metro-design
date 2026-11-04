@@ -9,10 +9,10 @@ function ErrorContent({ retry }: { retry?: () => void }) {
   return (
     <main className="flex min-h-[70svh] flex-col items-center justify-center px-6 py-section-md text-center">
       <p className="section-eyebrow">Algo deu errado</p>
-      <h1 className="font-editorial text-foreground mt-5 text-4xl leading-[1.05] tracking-tight md:text-6xl">
+      <h1 className="type-h1 text-foreground mt-5">
         Não conseguimos carregar esta página.
       </h1>
-      <p className="text-muted mt-4 max-w-lg text-sm leading-relaxed md:text-base">
+      <p className="type-body text-muted mt-4 max-w-lg">
         Pode ter sido uma falha temporária de conexão. Tente novamente em alguns
         instantes.
       </p>

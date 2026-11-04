@@ -29,7 +29,7 @@ function resetLetterAppearance(active: Set<HTMLSpanElement>, letters: LetterPosi
 }
 
 export function InteractiveMarquee({
-  text = "METRO.",
+  text = "metro.",
   variant = "footer",
   ariaLabel,
 }: {
