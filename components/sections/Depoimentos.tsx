@@ -22,9 +22,11 @@ export async function Depoimentos() {
               </h2>
             </div>
           </Reveal>
-          <p className="type-body text-muted mx-auto mt-4 max-w-xl">
-            {TESTIMONIALS.description}
-          </p>
+          {TESTIMONIALS.description && (
+            <p className="type-body text-muted mx-auto mt-4 max-w-xl">
+              {TESTIMONIALS.description}
+            </p>
+          )}
         </div>
 
         <Reveal>

@@ -60,6 +60,13 @@ export function Hero() {
             },
           }}
         >
+          <motion.p
+            variants={fadeVariants}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="label-mono mb-5 text-foreground/85"
+          >
+            Building brands. Every day.
+          </motion.p>
           <h1
             id="hero-title"
             className="type-h1 text-foreground"
@@ -70,16 +77,7 @@ export function Hero() {
                 transition={{ duration: 0.8, ease: EASE }}
                 className="block"
               >
-                Não seguimos tendências.
-              </motion.span>
-            </span>
-            <span className="block overflow-hidden pb-[0.08em]">
-              <motion.span
-                variants={lineVariants}
-                transition={{ duration: 0.8, ease: EASE }}
-                className="text-accent block italic"
-              >
-                Criamos referências.
+                Marcas, conteúdos e produtos digitais
               </motion.span>
             </span>
           </h1>
@@ -89,7 +87,7 @@ export function Hero() {
             transition={{ duration: 0.5, ease: EASE }}
             className="type-body text-foreground/75 mt-6 max-w-xl md:mt-7"
           >
-            Design estratégico para transformar percepção em valor.
+            Design, comunicação e tecnologia para transformar percepção em valor.
           </motion.p>
 
           <motion.div
@@ -103,6 +101,13 @@ export function Hero() {
               data-cursor="Ver projetos ↗"
             >
               Ver projetos <span aria-hidden="true">↗</span>
+            </Link>
+            <Link
+              href="/contato"
+              className="ui-button ui-button-secondary"
+              data-cursor="Iniciar um projeto ↗"
+            >
+              Iniciar um projeto <span aria-hidden="true">↗</span>
             </Link>
           </motion.div>
         </motion.div>

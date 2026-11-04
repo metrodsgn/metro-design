@@ -18,7 +18,7 @@ export default function PrivacidadePage() {
           Aviso de Privacidade
         </h1>
         <p className="type-small text-muted mt-5">
-          Última atualização: 26 de outubro de 2026
+          Última atualização: 4 de novembro de 2026 · Versão 1.2
         </p>
 
         <div className="type-body text-muted mt-10 space-y-8">
@@ -45,16 +45,15 @@ export default function PrivacidadePage() {
               Quais informações são recebidas
             </h2>
             <p className="mt-2">
-              O formulário recebe seu nome, e-mail, WhatsApp, empresa, cargo,
-              quantidade de colaboradores, como conheceu a Metro, perfil
-              profissional, entregas de interesse, faixa de investimento e a
-              descrição do seu desafio. Site e rede social são opcionais.
+              O formulário recebe seu nome, e-mail, WhatsApp, como conheceu a
+              Metro, perfil, entregas de interesse, faixa de investimento e a
+              descrição do seu projeto.
             </p>
             <p className="mt-3">
               No envio, também registramos a data e a hora do consentimento e a
               versão deste aviso. Para reduzir envios automatizados, o site
               processa temporariamente o seu endereço IP, um token de tempo e um
-              campo de verificação.
+              campo de verificação e o Cloudflare Turnstile.
             </p>
           </section>
 
@@ -95,7 +94,8 @@ export default function PrivacidadePage() {
               só é carregado quando você abre a localização na página de
               contato; nesse momento, seu navegador pode se conectar aos
               serviços do Google, sujeitos às políticas próprias desse
-              fornecedor.
+              fornecedor. O Cloudflare Turnstile é usado para verificar e
+              reduzir envios automatizados no formulário.
             </p>
           </section>
 

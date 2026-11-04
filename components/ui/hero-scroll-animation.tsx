@@ -54,7 +54,7 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
       <div className={GRID_PATTERN} aria-hidden="true" />
 
       <h1 className="type-h1 px-6 text-center text-accent">
-        Role para descobrir <br /> como pensamos
+        Projetos
       </h1>
     </motion.section>
   );
@@ -83,7 +83,7 @@ const Section2: React.FC<SectionProps & {
 
       <Container className="relative z-10 pt-16 md:pt-24 lg:pt-32 pb-12 md:pb-16">
         <h2 className="type-h2 pb-6 sm:pb-8 md:pb-12">
-          Forma, estratégia e detalhe <br /> em cada projeto
+          Forma, estratégia e detalhe em cada projeto.
         </h2>
 
         {projects.length === 0 ? (
@@ -113,10 +113,10 @@ const Section2: React.FC<SectionProps & {
                     </span>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/45 group-focus-visible:bg-black/45" />
+                <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/30 group-focus-visible:bg-black/30" />
                 <div className="absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-                  <h3 className="type-h3 text-white">
-                    {project.title}
+                  <h3 className="type-h3 max-w-full text-white uppercase">
+                    {project.client || project.title}
                   </h3>
                 </div>
               </Link>

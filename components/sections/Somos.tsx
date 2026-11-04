@@ -8,7 +8,7 @@ import { SOBRE_STORY_PHOTO } from "@/data/sobre-fotos";
 const skylineHeights = ["36%", "58%", "42%", "74%", "48%", "88%", "56%", "70%", "40%", "62%", "82%", "46%", "68%", "52%", "94%", "60%", "43%", "77%", "55%", "84%", "48%", "72%", "39%", "64%", "91%", "53%", "75%", "45%", "67%", "83%", "50%", "71%"];
 
 export function Somos() {
-  const paragraphs = ABOUT.paragraphs.slice(0, 2);
+  const paragraphs = ABOUT.paragraphs;
 
   return (
     <section
@@ -21,6 +21,7 @@ export function Somos() {
           <h2 id="somos-title" className="about-somos__title type-h2">
             {ABOUT.title}
           </h2>
+          <p className="type-h4 text-muted mx-auto mt-5 max-w-4xl text-center">{ABOUT.subtitle}</p>
 
           <div className="about-somos__stories">
             {paragraphs.map((paragraph, index) => (
@@ -31,9 +32,14 @@ export function Somos() {
             <span className="about-somos__rule" data-scroll-draw aria-hidden="true" />
           </div>
 
+          <div className="mt-8 text-center">
+            <p className="type-small text-muted">{ABOUT.facts}</p>
+            <p className="label-mono mt-4">{ABOUT.signature}</p>
+          </div>
+
           <div className="mt-8 flex justify-center">
             <Link href="#fazemos" className="ui-button ui-button-accent">
-              MAIS SOBRE NÓS <span aria-hidden="true">↘</span>
+              Conheça as frentes <span aria-hidden="true">↘</span>
             </Link>
           </div>
 

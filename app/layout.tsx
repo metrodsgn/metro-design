@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import localFont from "next/font/local";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
@@ -8,24 +8,34 @@ import { createSiteMetadata } from "@/lib/metadata";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const halyard = localFont({
+  src: [
+    { path: "../public/fonts/halyard/HalyardText-ExtraLight.ttf", weight: "200", style: "normal" },
+    { path: "../public/fonts/halyard/HalyardText-Light.ttf", weight: "300", style: "normal" },
+    { path: "../public/fonts/halyard/HalyardText-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../public/fonts/halyard/HalyardText-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../public/fonts/halyard/HalyardText-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../public/fonts/halyard/HalyardText-Bold.ttf", weight: "700", style: "normal" },
+    { path: "../public/fonts/halyard/HalyardText-Black.ttf", weight: "900", style: "normal" },
+  ],
+  variable: "--font-halyard",
   display: "swap",
+  preload: false,
 });
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+const ivyPresto = localFont({
+  src: [
+    { path: "../public/fonts/ivy-presto/IvyPrestoDisplay-Regular.otf", weight: "400", style: "normal" },
+    { path: "../public/fonts/ivy-presto/IvyPrestoDisplay-Italic.otf", weight: "400", style: "italic" },
+  ],
+  variable: "--font-ivy-presto",
   display: "swap",
 });
 
 export const metadata: Metadata = createSiteMetadata({
-  title: "Metro Design — Branding e Comunicação Estratégica",
+  title: "Metro Design — Marcas, conteúdos e produtos digitais",
   description:
-    "Transformamos negócios com design e comunicação estratégica. Agência de branding e design em Fortaleza-CE.",
+    "Design, comunicação e tecnologia para transformar percepção em valor.",
   path: "/",
 });
 
@@ -37,7 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${inter.variable} ${instrumentSerif.variable}`}
+      className={`${halyard.variable} ${ivyPresto.variable}`}
     >
       <body className="antialiased">
         <SiteShell

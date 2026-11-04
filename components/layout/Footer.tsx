@@ -1,4 +1,4 @@
-import { SITE, CONTACT, SOCIAL } from "@/lib/constants";
+import { SITE, CONTACT, SOCIAL, FOOTER_LINKS } from "@/lib/constants";
 import { Container } from "@/components/ui/Container";
 import { InteractiveMarquee } from "@/components/ui/InteractiveMarquee";
 import Link from "next/link";
@@ -15,6 +15,13 @@ export function Footer() {
             <p className="text-muted max-w-xs text-sm leading-relaxed">
               {SITE.description}
             </p>
+            <nav aria-label="Links do rodapé" className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+              {FOOTER_LINKS.map((link) => (
+                <Link key={link.href} href={link.href} className="footer-link text-muted hover:text-foreground">
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
           </div>
 
           {/* Coluna 2 — Contato */}
@@ -33,7 +40,17 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}
+                  href="https://wa.me/5585991999229?text=Oi%2C%20Metro!%20Quero%20conversar%20sobre%20projetos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-link text-muted hover:text-accent"
+                >
+                  WhatsApp
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:+558520100883"
                   className="footer-link text-muted hover:text-accent break-words"
                 >
                   {CONTACT.phone}
@@ -67,17 +84,14 @@ export function Footer() {
 
         {/* Assinatura tipográfica */}
         <div className="footer-wordmark-bleed">
-          <InteractiveMarquee />
+          <InteractiveMarquee text="Building brands. Every day." ariaLabel="Building brands. Every day." />
         </div>
 
         {/* Rodapé inferior */}
         <div className="border-border mt-10 border-t pt-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
             <p className="text-muted text-xs">
-              © {currentYear} {SITE.name.replace(/^M/, "m")}. Todos os direitos reservados.
-            </p>
-            <p className="label-mono normal-case">
-              Feito em Fortaleza, com método e emoção.
+              © {currentYear} {SITE.name}. Todos os direitos reservados.
             </p>
             <Link
               href="/privacidade"

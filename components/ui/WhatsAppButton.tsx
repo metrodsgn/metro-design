@@ -2,7 +2,7 @@ import { CONTACT } from "@/lib/constants";
 
 export function WhatsAppButton() {
   const message = encodeURIComponent(
-    "Olá! Vim pelo site da Metro Design e gostaria de conversar sobre um projeto."
+    "Oi, Metro! Quero conversar sobre projetos"
   );
   const href = `https://wa.me/${CONTACT.whatsapp}?text=${message}`;
 

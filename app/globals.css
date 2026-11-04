@@ -8,8 +8,8 @@
 
 :root {
   /* Tipografia: escala responsiva e papéis reutilizáveis (1rem = 16px). */
-  --font-heading: var(--font-serif), "Instrument Serif", Georgia, serif;
-  --font-body: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-ivy-presto), Georgia, serif;
+  --font-body: var(--font-halyard), system-ui, -apple-system, sans-serif;
   --type-h1: clamp(3rem, 7vw, 7rem);
   --type-h2: clamp(2.25rem, 5vw, 5rem);
   --type-h3: clamp(1.75rem, 3.5vw, 3rem);
@@ -546,7 +546,6 @@
 
 .footer-wordmark__letter {
   color: #ff2e2e;
-  font-variation-settings: "wght" 900;
   transition: color 120ms linear;
 }
 
@@ -1523,6 +1522,9 @@
   padding-top: 0;
 }
 
+.contact-delivery-groups { display: grid; gap: 1.25rem; }
+.contact-delivery-group-title { margin-bottom: 0.4rem; color: var(--color-foreground); font-size: var(--type-label); font-weight: var(--weight-semibold); }
+
 @media (min-width: 480px) and (max-width: 1023px) {
   .contact-deliveries {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2055,7 +2057,7 @@
   gap: 1.5rem;
   margin: clamp(3rem, 7vw, 6rem) auto 0;
 }
-.about-somos__copy { margin: 0; color: var(--color-foreground-soft); font-size: var(--type-body); line-height: var(--leading-body); }
+.about-somos__copy { max-width: 48rem; margin: 0 auto; color: var(--color-foreground-soft); font-size: var(--type-body); line-height: var(--leading-body); text-align: center; }
 .about-somos__rule { position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1px; background: var(--color-border); transform-origin: left; }
 .about-somos__photo { position: relative; width: min(100%, 64rem); margin: 3.5rem auto 0; }
 .about-somos__photo-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: var(--color-surface); }
@@ -2119,6 +2121,8 @@
 .about-faq__icon { font-size: var(--type-h3); font-weight: var(--weight-light); }
 .about-faq__answer { max-width: 44rem; padding: 0.5rem 0 1rem; color: rgb(255 255 255 / 92%); font-size: var(--type-body); line-height: var(--leading-body); }
 .about-faq__answer[hidden] { display: none; }
+.about-faq--compact .about-faq__card { min-height: 0; aspect-ratio: auto; padding: 1rem 1.25rem; }
+.about-faq--compact .about-faq__card button { min-height: 3rem; height: auto; cursor: pointer; }
 
 .about-cta__main { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; align-items: end; }
 .about-cta__title { display: grid; margin: 0; color: var(--color-foreground); font-family: var(--font-body); font-size: var(--type-cta); font-variation-settings: "wght" 900; font-weight: var(--weight-display); letter-spacing: var(--tracking-cta); line-height: var(--leading-display-title); }
@@ -2156,7 +2160,7 @@
   .about-services__intro { grid-template-columns: minmax(0, 1.1fr) minmax(15rem, 0.9fr); gap: 3rem; }
   .about-hero__lower { grid-template-columns: minmax(0, 1fr) minmax(13rem, 21rem); gap: 2.5rem; }
   .about-hero__image { width: 100%; height: clamp(19rem, 46vh, 34rem); }
-  .about-somos__stories { grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .about-somos__stories { gap: 2rem; }
   .about-somos__rule { top: -2rem; }
   .about-faq__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
   .about-faq__card { min-height: 22rem; }

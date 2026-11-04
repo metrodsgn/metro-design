@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { ABOUT_CTA, CONTACT } from "@/lib/constants";
-
-const phoneHref = `tel:${CONTACT.phone.replace(/[^+\d]/g, "")}`;
+import { ABOUT_CTA } from "@/lib/constants";
 
 export function CtaFinal() {
   return (
@@ -21,11 +19,7 @@ export function CtaFinal() {
           </div>
           <div className="about-cta__footer">
             <p>{ABOUT_CTA.supportStart}<span>{ABOUT_CTA.supportEmphasis}</span></p>
-            <address>
-              <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-              <a href={phoneHref}>{CONTACT.phone}</a>
-              <a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noreferrer">WhatsApp</a>
-            </address>
+            <p className="label-mono mt-4">{ABOUT_CTA.signature}</p>
           </div>
         </Reveal>
       </Container>

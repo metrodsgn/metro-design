@@ -10,6 +10,7 @@ export async function MetroHouse() {
     const uploadedPhotos = await getMetroHousePhotos();
     photos = uploadedPhotos
       .filter((photo) => Boolean(photo.asset?._ref))
+      .slice(0, 10)
       .map((photo) => ({
         id: photo._key,
         src: urlFor(photo).width(2000).fit("max").url(),
@@ -33,17 +34,15 @@ export async function MetroHouse() {
     >
       <Container>
         <div className="metro-house-section__heading">
+          <p className="label-mono mb-4">Fotos da agência</p>
           <h2 id="metro-house-title" className="metro-house-section__title type-h2">
-            metro hause<span aria-hidden="true">.</span>
+            Onde as marcas ganham forma.
           </h2>
         </div>
 
         <div className="metro-house-section__body">
           <div className="metro-house-section__intro">
-            <p>
-              Um espaço onde ideias ganham forma, projetos se encontram e novas
-              possibilidades começam.
-            </p>
+            <p>Nosso escritório em Fortaleza é onde estratégia, design, estúdio e tecnologia trabalham lado a lado, todos os dias.</p>
             <span>Fortaleza, Ceará</span>
           </div>
 

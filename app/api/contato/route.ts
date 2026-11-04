@@ -3,6 +3,7 @@ import { Resend } from "resend";
 import { verifyToken, escapeHtml } from "@/lib/anti-spam";
 import { rateLimit } from "@/lib/rate-limit";
 import { qualifyContact } from "@/lib/contact-qualification";
+import { verifyTurnstileToken } from "@/lib/turnstile";
 import {
   EMAIL_ERROR_MESSAGE,
   SITE_URL_ERROR_MESSAGE,
@@ -34,6 +35,7 @@ type Body = {
   challenge?: unknown;
   consent?: unknown;
   formToken?: unknown;
+  turnstileToken?: unknown;
 };
 
 function getIp(request: Request): string {
@@ -62,6 +64,13 @@ export async function POST(request: Request) {
 
     const body = (await request.json()) as Body;
 
+    if (!process.env.TURNSTILE_SECRET_KEY) {
+      return NextResponse.json(
+        { error: "A verificação de segurança ainda não foi configurada." },
+        { status: 503 },
+      );
+    }
+
     // 1. Honeypot
     if (typeof body.website === "string" && body.website.length > 0) {
       return NextResponse.json({ ok: true });
@@ -72,7 +81,20 @@ export async function POST(request: Request) {
       typeof body.formToken !== "string" ||
       !verifyToken(body.formToken)
     ) {
-      return NextResponse.json({ ok: true });
+      return NextResponse.json(
+        { error: "A verificação expirou ou o envio foi muito rápido. Aguarde alguns segundos e tente novamente; se necessário, recarregue a página." },
+        { status: 400 },
+      );
+    }
+
+    if (
+      typeof body.turnstileToken !== "string" ||
+      !(await verifyTurnstileToken(body.turnstileToken, ip))
+    ) {
+      return NextResponse.json(
+        { error: "A verificação expirou. Conclua-a novamente e tente enviar." },
+        { status: 403 },
+      );
     }
 
     const name = typeof body.name === "string" ? body.name.trim() : "";
@@ -109,7 +131,7 @@ export async function POST(request: Request) {
       : [];
 
     // 3. Campos obrigatórios — 400 (usuário legítimo)
-    if (!name || !email || !challenge || !consent) {
+    if (!name || !email || !challenge || !consent || !phrase || !howHeard || !investmentRange) {
       return NextResponse.json(
         { error: "Preencha os campos obrigatórios." },
         { status: 400 },
@@ -191,7 +213,7 @@ export async function POST(request: Request) {
 
     // 11. Registro de consentimento LGPD (data/hora + versão da política)
     const consentRecordedAt = new Date().toISOString();
-    const privacyPolicyVersion = "1.1";
+    const privacyPolicyVersion = "1.2";
 
     // 12. Escape HTML para e-mail
     const safeName = escapeHtml(name);
@@ -212,7 +234,7 @@ export async function POST(request: Request) {
     // 13. Envio por e-mail
     const { error } = await resend.emails.send({
       from: "Metro Design <onboarding@resend.dev>",
-      to: process.env.CONTACT_EMAIL_TO || "contato@metrodesign.com.br",
+      to: process.env.CONTACT_EMAIL_TO || "oi@metrodesign.com.br",
       replyTo: email,
       subject: `Novo contato: ${safeName}${safeCompany ? ` (${safeCompany})` : ""}`,
       html: `

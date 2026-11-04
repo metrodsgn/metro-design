@@ -4,41 +4,31 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { CONTACT } from "@/lib/constants";
+import { TurnstileWidget } from "@/components/ui/TurnstileWidget";
 import {
   EMAIL_ERROR_MESSAGE,
-  SITE_URL_ERROR_MESSAGE,
   isValidEmail,
-  isValidSiteUrl,
-  normalizeSiteUrl,
 } from "@/lib/validation";
 
-const DELIVERIES = [
-  "Naming e criação de marcas",
-  "Identidade visual",
-  "Brand book",
-  "Redesign de marcas",
-  "Planejamento estratégico",
-  "Gestão de redes sociais",
-  "Campanhas digitais",
-  "Fotografia publicitária",
-  "Produção de vídeos",
-  "Direção de arte para campanhas",
-  "Sinalização e materiais gráficos",
-  "Outro",
+const DELIVERY_GROUPS = [
+  { title: "Branding & Design", items: ["Naming e criação de marcas", "Identidade visual", "Brand book", "Redesign de marcas", "Sinalização e materiais gráficos"] },
+  { title: "Comunicação & Conteúdo", items: ["Planejamento estratégico", "Gestão de redes sociais", "Campanhas digitais"] },
+  { title: "Audiovisual & Direção Criativa", items: ["Fotografia publicitária", "Produção de vídeos", "Direção de arte para campanhas"] },
+  { title: "Produtos Digitais", items: ["Sites", "E-commerces", "Plataformas e sistemas"] },
+  { title: "Outras opções", items: ["Ainda não sei, quero orientação", "Outro"] },
 ];
+const DELIVERIES = DELIVERY_GROUPS.flatMap((group) => group.items);
 
 const INVESTMENT_RANGES = [
-  "Até R$ 2.000",
-  "R$ 2.000 a R$ 5.000",
+  "Até R$ 5.000",
   "R$ 5.000 a R$ 10.000",
   "R$ 10.000 a R$ 20.000",
-  "Acima de R$ 20.000",
-  "Ainda estou definindo o investimento",
+  "R$ 20.000 a R$ 50.000",
+  "Acima de R$ 50.000",
+  "Ainda estou definindo",
 ];
 
-const COMPANY_SIZES = ["Apenas eu", "2 a 10", "11 a 50", "51 a 200", "Mais de 200"];
-
-const HOW_HEARD_OPTIONS = ["Instagram", "Indicação", "Busca no Google", "Behance", "Outro"];
+const HOW_HEARD_OPTIONS = ["Instagram", "Indicação", "Google", "IA", "LinkedIn", "Campanha patrocinada", "Outro"];
 
 const PHRASE_OPTIONS = [
   "Sou fundador(a) ou proprietário(a) de uma empresa",
@@ -47,6 +37,7 @@ const PHRASE_OPTIONS = [
   "Tenho uma startup ou negócio em fase de lançamento",
   "Tenho uma empresa consolidada e busco reposicionamento",
   "Sou de uma agência e busco colaboração",
+  "Preciso de um site, sistema ou produto digital para minha empresa",
 ];
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -77,11 +68,16 @@ export function Contato() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [formToken, setFormToken] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
   const [tokenError, setTokenError] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [mapOpen, setMapOpen] = useState(false);
   const firstErrorRef = useRef<HTMLElement | null>(null);
+  const handleTurnstileToken = useCallback((token: string) => {
+    setTurnstileToken(token);
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -115,12 +111,10 @@ export function Contato() {
     const required: Record<string, string> = {
       name: "Preencha o nome.",
       email: "Preencha o e-mail.",
-      company: "Preencha o nome da empresa.",
-      profession: "Preencha o cargo.",
-      companySize: "Informe o nº de colaboradores.",
       howHeard: "Informe como conheceu a Metro.",
       phrase: "Selecione uma frase.",
       challenge: "Conte sobre o seu desafio.",
+      investmentRange: "Informe quanto pretende investir.",
       whatsapp: "Informe seu WhatsApp.",
     };
 
@@ -134,11 +128,6 @@ export function Contato() {
     const emailValue = (formData.email || "").trim();
     if (emailValue && !isValidEmail(emailValue)) {
       nextErrors.email = EMAIL_ERROR_MESSAGE;
-    }
-
-    const siteUrlValue = normalizeSiteUrl(formData.siteUrl || "");
-    if (siteUrlValue && !isValidSiteUrl(siteUrlValue)) {
-      nextErrors.siteUrl = SITE_URL_ERROR_MESSAGE;
     }
 
     const whatsappValue = (formData.whatsapp || "").trim();
@@ -194,23 +183,6 @@ export function Contato() {
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
-    if (name === "siteUrl") {
-      const normalized = normalizeSiteUrl(value);
-      if (normalized !== value) {
-        setFormData((prev) => ({ ...prev, siteUrl: normalized }));
-      }
-      setFieldErrors((prev) => {
-        const next = { ...prev };
-        if (!normalized || isValidSiteUrl(normalized)) {
-          delete next.siteUrl;
-        } else {
-          next.siteUrl = SITE_URL_ERROR_MESSAGE;
-        }
-        return next;
-      });
-      return;
-    }
-
     if (name === "email") {
       const trimmed = value.trim();
       if (trimmed !== value) {
@@ -260,21 +232,19 @@ export function Contato() {
       return;
     }
 
+    if (!turnstileToken) {
+      setStatus("error");
+      setErrorMessage("Conclua a verificação de segurança antes de enviar.");
+      return;
+    }
+
     const deliveries = DELIVERIES.filter((d) => formData[`delivery_${d}`] === "on");
     const email = (formData.email || "").trim();
-    const siteUrl = normalizeSiteUrl(formData.siteUrl || "");
-
     const payload = {
       name: formData.name,
       email,
-      phone: formData.phone,
       whatsapp: formData.whatsapp,
-      company: formData.company,
-      website: "",
-      siteUrl,
-      socialMedia: formData.socialMedia,
-      profession: formData.profession,
-      companySize: formData.companySize,
+      website: formData.website || "",
       howHeard: formData.howHeard,
       phrase: formData.phrase,
       deliveries,
@@ -282,6 +252,7 @@ export function Contato() {
       challenge: formData.challenge,
       consent: formData.consent,
       formToken,
+      turnstileToken,
     };
 
     try {
@@ -292,6 +263,8 @@ export function Contato() {
       });
 
       const result = await response.json();
+      setTurnstileToken("");
+      setTurnstileResetKey((key) => key + 1);
 
       if (!response.ok) {
         setStatus("error");
@@ -301,12 +274,14 @@ export function Contato() {
 
       setStatus("success");
     } catch {
+      setTurnstileToken("");
+      setTurnstileResetKey((key) => key + 1);
       setStatus("error");
       setErrorMessage(
         "Nosso sinal caiu entre a Aldeota e o servidor. Tente de novo ou chame no WhatsApp.",
       );
     }
-  }, [formToken, formData, validate]);
+  }, [formToken, formData, turnstileToken, validate]);
 
   if (status === "success") {
     return (
@@ -361,11 +336,10 @@ export function Contato() {
           <div className="contact-intro">
             <div className="space-y-6">
               <h1 className="type-h1 text-foreground">
-                Vamos<span className="block"> conversar?</span>
+                Conta sobre o seu projeto.
               </h1>
               <p className="type-body text-muted max-w-[400px]">
-                Queremos entender os detalhes do seu próximo projeto. Será um
-                prazer co-criar com o seu time.
+                Respondemos em até 1 dia útil.
               </p>
             </div>
           </div>
@@ -381,6 +355,8 @@ export function Contato() {
             <input
               type="text"
               name="website"
+              value={formData.website || ""}
+              onChange={handleChange}
               tabIndex={-1}
               autoComplete="off"
               style={{ position: "absolute", left: "-9999px" }}
@@ -420,7 +396,8 @@ export function Contato() {
                 value={formData.phrase || ""}
                 onChange={handleChange}
                 error={fieldErrors.phrase}
-                ariaLabel="Qual frase melhor te representa"
+                ariaLabel="Qual frase descreve você?"
+                placeholder="Qual frase descreve você?*"
                 options={PHRASE_OPTIONS}
               />
             </div>
@@ -435,16 +412,17 @@ export function Contato() {
                 value={formData.challenge || ""}
                 onChange={handleChange}
                 className="contact-textarea"
-                placeholder="Nos conte sobre o seu desafio*"
-                aria-label="Nos conte sobre o seu desafio"
+                placeholder="Conta sobre o seu projeto.*"
+                aria-label="Conta sobre o seu projeto"
+                aria-describedby="challenge-hint"
               />
               {fieldErrors.challenge && (
                 <span className="contact-error" role="alert">
                   {fieldErrors.challenge}
                 </span>
               )}
-              <p className="contact-hint">
-                {formData.challenge?.length || 0}/800 caracteres
+              <p id="challenge-hint" className="contact-hint">
+                O que você quer construir, para quem e por quê. Pode ser breve. {formData.challenge?.length || 0}/800 caracteres
               </p>
             </div>
 
@@ -458,19 +436,26 @@ export function Contato() {
                 aria-labelledby="deliveries-label"
               >
                 <legend id="deliveries-label" className="contact-legend">
-                  Selecione as entregas que você acredita que o projeto necessita
+                  O que o seu projeto precisa?
                   <span className="text-accent">*</span>
                 </legend>
-                <div className="contact-deliveries">
-                  {DELIVERIES.map((delivery) => (
-                    <ServiceToggle
-                      key={delivery}
-                      id={`delivery_${delivery}`}
-                      name={`delivery_${delivery}`}
-                      label={delivery}
-                      checked={formData[`delivery_${delivery}`] === "on"}
-                      onChange={(event) => handleDeliveryChange(event, delivery)}
-                    />
+                <div className="contact-delivery-groups">
+                  {DELIVERY_GROUPS.map((group) => (
+                    <fieldset key={group.title} className="contact-fieldset">
+                      <legend className="contact-delivery-group-title">{group.title}</legend>
+                      <div className="contact-deliveries">
+                        {group.items.map((delivery) => (
+                          <ServiceToggle
+                            key={delivery}
+                            id={`delivery_${delivery}`}
+                            name={`delivery_${delivery}`}
+                            label={delivery}
+                            checked={formData[`delivery_${delivery}`] === "on"}
+                            onChange={(event) => handleDeliveryChange(event, delivery)}
+                          />
+                        ))}
+                      </div>
+                    </fieldset>
                   ))}
                   {fieldErrors.deliveries && (
                     <span className="contact-error contact-error-block" role="alert">
@@ -489,59 +474,15 @@ export function Contato() {
                 value={formData.investmentRange || ""}
                 onChange={handleChange}
                 error={fieldErrors.investmentRange}
-                ariaLabel="Qual a disponibilidade de investimento em design do seu projeto"
+                ariaLabel="Quanto pretende investir?"
+                placeholder="Quanto pretende investir?*"
                 options={INVESTMENT_RANGES}
               />
             </div>
 
             </div>
 
-            {/* Linha: Nome da empresa e Site */}
             <div className="contact-area">
-            <ContactInput
-              id="company"
-              type="text"
-              required
-              placeholder="Nome da empresa*"
-              value={formData.company || ""}
-              onChange={handleChange}
-              error={fieldErrors.company}
-              ariaLabel="Nome da empresa"
-            />
-            <ContactInput
-              id="siteUrl"
-              type="url"
-              inputMode="url"
-              autoComplete="url"
-              placeholder="Site (opcional)"
-              value={formData.siteUrl || ""}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={fieldErrors.siteUrl}
-              ariaLabel="Site"
-            />
-
-            {/* Linha: Seu cargo e Nº de colaboradores */}
-            <ContactInput
-              id="profession"
-              type="text"
-              required
-              placeholder="Seu cargo*"
-              value={formData.profession || ""}
-              onChange={handleChange}
-              error={fieldErrors.profession}
-              ariaLabel="Seu cargo"
-            />
-            <ContactSelect
-              id="companySize"
-              required
-              value={formData.companySize || ""}
-              onChange={handleChange}
-              error={fieldErrors.companySize}
-              ariaLabel="Nº de colaboradores"
-              options={COMPANY_SIZES}
-            />
-
             {/* Select: como conheceu (largura total) */}
             <div className="md:col-span-2">
               <ContactSelect
@@ -551,32 +492,25 @@ export function Contato() {
                 onChange={handleChange}
                 error={fieldErrors.howHeard}
                 ariaLabel="Como conheceu a Metro"
+                placeholder="Como conheceu a Metro?*"
                 options={HOW_HEARD_OPTIONS}
               />
             </div>
 
-            {/* Linha: WhatsApp e rede social */}
-            <ContactInput
-              id="whatsapp"
-              type="tel"
-              required
-              inputMode="tel"
-              autoComplete="tel"
-              placeholder="WhatsApp com DDD*"
-              value={formData.whatsapp || ""}
-              onChange={handleChange}
-              error={fieldErrors.whatsapp}
-              ariaLabel="Seu WhatsApp com DDD"
-            />
-            <ContactInput
-              id="socialMedia"
-              type="url"
-              placeholder="Sua rede social"
-              value={formData.socialMedia || ""}
-              onChange={handleChange}
-              error={fieldErrors.socialMedia}
-              ariaLabel="Sua rede social"
-            />
+            <div className="md:col-span-2">
+              <ContactInput
+                id="whatsapp"
+                type="tel"
+                required
+                inputMode="tel"
+                autoComplete="tel"
+                placeholder="WhatsApp com DDD*"
+                value={formData.whatsapp || ""}
+                onChange={handleChange}
+                error={fieldErrors.whatsapp}
+                ariaLabel="Seu WhatsApp com DDD"
+              />
+            </div>
 
             {/* Consentimento (largura total) */}
             <div className="md:col-span-2">
@@ -606,6 +540,13 @@ export function Contato() {
                   {fieldErrors.consent}
                 </span>
               )}
+            </div>
+
+            <div className="md:col-span-2">
+              <TurnstileWidget
+                onToken={handleTurnstileToken}
+                resetKey={turnstileResetKey}
+              />
             </div>
 
             {/* Botão (largura total) */}
@@ -669,6 +610,15 @@ function ContactMapWidget({
 
   return (
     <div className="contact-map">
+      <div className="mb-6 max-w-3xl space-y-4">
+        <h2 className="type-h2">Onde estamos.</h2>
+        <p className="type-body text-muted">Sede em Fortaleza, atendimento em todo o Brasil. Venha tomar um café com a gente, com hora marcada.</p>
+        <p className="type-body">{CONTACT.address}</p>
+        <p className="type-body text-muted">Segunda a sexta, 8h às 18h</p>
+        <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="ui-button ui-button-secondary">
+          Abrir no Google Maps <span aria-hidden="true">↗</span>
+        </a>
+      </div>
       <div
         id="contact-map-panel"
         className="contact-map__panel"
@@ -783,6 +733,7 @@ function ContactSelect({
   onChange,
   error,
   ariaLabel,
+  placeholder = "Selecione uma opção",
   options,
 }: {
   id: string;
@@ -791,6 +742,7 @@ function ContactSelect({
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   error?: string;
   ariaLabel: string;
+  placeholder?: string;
   options: string[];
 }) {
   return (
@@ -802,10 +754,12 @@ function ContactSelect({
         value={value}
         onChange={(event) => onChange(event as React.ChangeEvent<HTMLSelectElement>)}
         aria-label={ariaLabel}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${id}-error` : undefined}
         className="contact-select"
       >
         <option value="" disabled>
-          Selecione uma opção
+          {placeholder}
         </option>
         {options.map((option) => (
           <option key={option} value={option}>
@@ -814,7 +768,7 @@ function ContactSelect({
         ))}
       </select>
       {error && (
-        <span className="contact-error" role="alert">
+        <span id={`${id}-error`} className="contact-error" role="alert">
           {error}
         </span>
       )}

@@ -52,7 +52,7 @@ export function MetroHouseCarousel({ photos }: { photos: MetroHouseSlide[] }) {
       className="metro-house-carousel"
       role="region"
       aria-roledescription="carrossel"
-      aria-label="Fotos da metro hause"
+      aria-label="Fotos da agência Metro Design"
     >
       <div className="metro-house-carousel__media">
         <div

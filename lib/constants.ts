@@ -1,14 +1,14 @@
 export const SITE = {
   name: "Metro Design",
-  description: "Transformamos negócios com design e comunicação estratégica.",
+  description: "Transformamos negócios com design, comunicação e tecnologia. Desde 2017.",
   url: "https://metrodesign.com.br",
 } as const;
 
 export const CONTACT = {
-  email: "contato@metrodesign.com.br",
-  phone: "+55 85 99999-9999",
-  whatsapp: "5585999999999",
-  address: "Av. Santos Dumont, 2088 - Sl 310 - Aldeota, Fortaleza - CE, 60150-161",
+  email: "oi@metrodesign.com.br",
+  phone: "(85) 2010-0883",
+  whatsapp: "5585991999229",
+  address: "Av. Santos Dumont, 2088, sala 310, Aldeota, Fortaleza – CE, 60150-161",
 } as const;
 
 /**
@@ -21,9 +21,17 @@ export const WHATSAPP_NUMBER =
   CONTACT.whatsapp;
 
 export const SOCIAL = [
-  { name: "Instagram", url: "https://instagram.com/metrodesign" },
-  { name: "TikTok", url: "https://tiktok.com/@metrodesign" },
-  { name: "Behance", url: "https://behance.net/metrodesign" },
+  { name: "Instagram (@metrodsgn)", url: "https://instagram.com/metrodsgn" },
+  { name: "TikTok (@metrodsgn)", url: "https://tiktok.com/@metrodsgn" },
+  { name: "Behance (@metrodsgn)", url: "https://behance.net/metrodsgn" },
+] as const;
+
+export const FOOTER_LINKS = [
+  { label: "Início", href: "/" },
+  { label: "A Metro", href: "/sobre" },
+  { label: "Fazemos", href: "/sobre#fazemos" },
+  { label: "Projetos", href: "/projetos" },
+  { label: "Fale", href: "/contato" },
 ] as const;
 
 export const NAV_LINKS = [
@@ -35,12 +43,16 @@ export const NAV_LINKS = [
 
 export const ABOUT = {
   label: "Somos",
-  title: "Transformamos negócios com design e comunicação estratégica.",
+  title: "Somos a Metro Design.",
+  subtitle:
+    "Há quase uma década transformando marcas em negócios mais fortes. Do conceito à execução, sob medida.",
   paragraphs: [
-    "Desde 2017, a Metro é uma agência sediada em Fortaleza com uma missão clara: impulsionar marcas e negócios através de estratégias criativas, planejamento estruturado e design com identidade.",
-    "Com um time multidisciplinar, atuamos em todas as frentes da gestão de marca unindo branding, conteúdo e performance para gerar impacto real.",
-    "Acreditamos em ideias com propósito, design com intenção e comunicação que conecta marcas e pessoas.",
+    "Fundada em Fortaleza em 2017, a Metro é uma agência de design, comunicação e tecnologia com uma missão clara: impulsionar negócios por meio de estratégias criativas e eficientes.",
+    "Atuamos em todas as etapas da vida de uma marca, do conceito à execução, unindo design autoral, comunicação estratégica, produtos digitais e visão de resultado.",
+    "Para nós, fazer branding é criar conexões duradouras entre marcas e pessoas.",
   ],
+  facts: "Desde 2017 · Time multidisciplinar · Sede em Fortaleza, atendimento nacional",
+  signature: "Building brands. Every day.",
 } as const;
 
 export const ABOUT_HERO = {
@@ -50,37 +62,26 @@ export const ABOUT_HERO = {
 } as const;
 
 export const SERVICES = {
-  label: "Serviços",
-  title: "Branding, conteúdo audiovisual. Estratégia do início ao fim.",
+  label: "O que fazemos",
+  title: "Quatro frentes, um pensamento integrado.",
   description:
-    "Na Metro, cada projeto nasce de um olhar estratégico. Trabalhamos com consistência, agilidade e profundidade criativa para construir marcas fortes, alinhadas com seus mercados e com seus públicos.",
+    "Branding, conteúdo, audiovisual e tecnologia sob o mesmo time. Assim, a marca chega inteira a cada ponto de contato, do feed ao sistema que seu cliente usa.",
   areas: [
     {
       title: "Branding & Design",
-      items: [
-        "Naming e criação de marcas",
-        "Identidade visual",
-        "Brand book",
-        "Redesign de marcas",
-      ],
+      items: ["Criamos marcas do zero ou evoluímos as que já existem."],
     },
     {
-      title: "Comunicação e Conteúdo",
-      items: [
-        "Planejamento estratégico",
-        "Gestão de redes sociais",
-        "Campanhas digitais",
-        "Treinamento de equipes em branding",
-      ],
+      title: "Comunicação & Conteúdo",
+      items: ["Planejamento, redes sociais e campanhas com objetivo claro."],
     },
     {
       title: "Audiovisual & Direção Criativa",
-      items: [
-        "Fotografia publicitária e institucional",
-        "Produção de vídeos",
-        "Direção de arte para campanhas",
-        "Sinalização e materiais gráficos",
-      ],
+      items: ["Foto, vídeo e direção de arte com estrutura própria."],
+    },
+    {
+      title: "Produtos Digitais",
+      items: ["Sites, e-commerces, plataformas e sistemas com cara de marca."],
     },
   ],
 } as const;
@@ -119,18 +120,34 @@ export const FAQ = {
   ],
 } as const;
 
+export const CONTACT_FAQ = {
+  title: "Perguntas frequentes",
+  items: [
+    { question: "Vocês atendem fora de Fortaleza?", answer: "Sim. Nossa sede é em Fortaleza e atendemos clientes em todo o Brasil. Reuniões e aprovações acontecem online; produções presenciais são combinadas caso a caso." },
+    { question: "Preciso contratar todas as frentes?", answer: "Não. Você pode começar por uma frente só. Quando faz sentido, integramos as outras para a marca falar a mesma língua em todos os pontos de contato." },
+    { question: "Quanto custa um projeto?", answer: "Depende do escopo. Uma identidade visual, uma gestão mensal de redes e uma plataforma sob medida são projetos muito diferentes. Depois do diagnóstico, você recebe uma proposta com escopo, prazo e investimento." },
+    { question: "Quanto tempo leva?", answer: "Depende da entrega. O cronograma sai do diagnóstico e fica definido antes de começar." },
+    { question: "Como acompanho o andamento?", answer: "Cada projeto tem etapas, prazos e pontos de aprovação definidos. Você sabe o que está sendo feito e o que depende de você." },
+    { question: "Trabalham por projeto ou por mês?", answer: "Os dois. Marcas, produções e sites costumam ser projetos fechados; comunicação e conteúdo costumam ser mensais." },
+    { question: "Vocês fazem só a fotografia ou o vídeo, sem a gestão de redes?", answer: "Sim, a frente de audiovisual pode ser contratada sozinha, para campanhas, ações ou materiais institucionais." },
+    { question: "Vocês cuidam do tráfego pago?", answer: "Sim. Planejamos e criamos campanhas como parte da frente de Comunicação & Conteúdo." },
+    { question: "Preciso ter uma marca pronta para fazer o site?", answer: "Não. Se a marca ainda não existe ou precisa evoluir, criamos marca e site juntos, no mesmo projeto." },
+    { question: "Vocês fazem o design e também desenvolvem?", answer: "Sim, cuidamos da estratégia, do UX/UI e do desenvolvimento. Se você já tem um time de tecnologia, entregamos só o design. Depois que o produto vai ao ar, oferecemos suporte e evolução." },
+  ],
+} as const;
+
 export const ABOUT_CTA = {
-  titleLines: ["O SEU PRÓXIMO", "PASSO PODE SER", "FORA DO COMUM."],
-  supportStart: "Pronto para criar o seu próximo projeto com a gente? Vamos ",
-  supportEmphasis: "trabalhar juntos.",
+  titleLines: ["Vamos transformar", "sua marca juntos?"],
+  supportStart: "Conta o que você precisa. A gente desenha um caminho — ",
+  supportEmphasis: "do diagnóstico à entrega — sob medida para o momento da sua marca.",
+  signature: "Building brands. Every day.",
 } as const;
 
 export const TAGLINE = {
-  text: "Criatividade com método. Estratégia com emoção.",
+  text: "Building brands. Every day · Criatividade com método · Estratégia com emoção · Resultado com identidade",
 } as const;
 export const TESTIMONIALS = {
   label: "Clientes",
   title: "O que dizem sobre trabalhar com a Metro.",
-  description:
-    "Parcerias construídas com estratégia, confiança e bons resultados.",
+  description: "",
 } as const;

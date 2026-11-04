@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { generateToken, verifyToken, escapeHtml } from "@/lib/anti-spam";
 import { rateLimit } from "@/lib/rate-limit";
+import { verifyTurnstileToken } from "@/lib/turnstile";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -15,6 +16,7 @@ type Body = {
   message?: unknown;
   website?: unknown; // honeypot
   formToken?: unknown;
+  turnstileToken?: unknown;
 };
 
 function getIp(request: Request): string {
@@ -50,7 +52,23 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    const ip = getIp(request);
+    const limit = rateLimit({ key: `legacy-submit:${ip}`, limit: 5, windowMs: TOKEN_WINDOW_MS });
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { error: "Muitas solicitações. Tente novamente mais tarde." },
+        { status: 429 },
+      );
+    }
+
     const body = (await request.json()) as Body;
+
+    if (!process.env.TURNSTILE_SECRET_KEY) {
+      return NextResponse.json(
+        { error: "A verificação de segurança ainda não foi configurada." },
+        { status: 503 },
+      );
+    }
 
     // 1. Honeypot
     if (typeof body.website === "string" && body.website.length > 0) {
@@ -63,6 +81,16 @@ export async function POST(request: Request) {
       !verifyToken(body.formToken)
     ) {
       return NextResponse.json({ ok: true });
+    }
+
+    if (
+      typeof body.turnstileToken !== "string" ||
+      !(await verifyTurnstileToken(body.turnstileToken, ip))
+    ) {
+      return NextResponse.json(
+        { error: "A verificação expirou. Conclua-a novamente e tente enviar." },
+        { status: 403 },
+      );
     }
 
     const name = typeof body.name === "string" ? body.name.trim() : "";
@@ -105,7 +133,7 @@ export async function POST(request: Request) {
     // 7. Envio
     const { error } = await resend.emails.send({
       from: "Metro Design <onboarding@resend.dev>",
-      to: process.env.CONTACT_EMAIL_TO || "contato@metrodesign.com.br",
+      to: process.env.CONTACT_EMAIL_TO || "oi@metrodesign.com.br",
       replyTo: email,
       subject: `Novo contato: ${safeName}${safeCompany ? ` (${safeCompany})` : ""}`,
       html: `

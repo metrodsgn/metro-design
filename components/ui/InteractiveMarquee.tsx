@@ -16,7 +16,8 @@ type LetterPosition = {
 };
 
 function applyLetterAppearance(letter: LetterPosition, weight: number, color: string) {
-  letter.element.style.fontVariationSettings = `"wght" ${weight}`;
+  letter.element.style.fontWeight = String(Math.max(200, weight));
+  letter.element.style.transform = `scaleX(${0.8 + (weight - 100) / 4000})`;
   letter.element.style.color = color;
   letter.weight = weight;
 }
