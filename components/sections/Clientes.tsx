@@ -30,6 +30,8 @@ const clientLogos = [
   ["Yozenn", "/logo/yozenn.png"],
 ] as const;
 
+const thirdRowLogos = [...clientLogos.slice(8), ...clientLogos.slice(0, 8)];
+
 export function Clientes() {
   return (
     <section id="clientes" className="py-section-md md:py-section-lg">
@@ -62,15 +64,27 @@ export function Clientes() {
           </div>
         </div>
       </Reveal>
+
+      <Reveal delay={0.35}>
+        <div className="clients-marquee mt-4 overflow-hidden">
+          <div className="animate-marquee flex w-max">
+            {[0, 1].map((copy) => (
+              <div key={`row3-copy-${copy}`} aria-hidden={copy > 0} className="flex shrink-0 gap-4 pr-4">
+                {thirdRowLogos.map(([name, src], index) => <ClientLogo key={`row3-${copy}-${index}`} name={name} src={src} />)}
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
     </section>
   );
 }
 
 function ClientLogo({ name, src }: { name: string; src: string }) {
   return (
-    <div className="flex h-24 w-44 shrink-0 items-center justify-center sm:h-28 sm:w-52">
-      <div className="relative h-16 w-40 sm:h-[4.5rem] sm:w-44">
-        <Image src={src} alt={`Logo de ${name}`} fill sizes="176px" className="object-contain" />
+    <div className="flex h-20 w-36 shrink-0 items-center justify-center sm:h-24 sm:w-44">
+      <div className="relative h-12 w-32 sm:h-14 sm:w-36">
+        <Image src={src} alt={`Logo de ${name}`} fill sizes="144px" className="object-contain" />
       </div>
     </div>
   );

@@ -1,8 +1,13 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 
 export const alt = "Metro Design — Branding e comunicação estratégica";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+
+const halyardDisplayBold = await readFile(join(process.cwd(), "app/fonts/halyard/HalyardDisplay-Bold.ttf"));
+const ivyPrestoHeadline = await readFile(join(process.cwd(), "app/fonts/ivy-presto/IvyPrestoHeadline-Regular.otf"));
 
 export default function OpenGraphImage() {
   return new ImageResponse(
@@ -17,7 +22,7 @@ export default function OpenGraphImage() {
           padding: "88px",
           backgroundColor: "#0a0a0a",
           color: "#f5f5f5",
-          fontFamily: "Arial, sans-serif",
+          fontFamily: "Halyard Display",
         }}
       >
         <div
@@ -39,7 +44,7 @@ export default function OpenGraphImage() {
             backgroundColor: "#ff2e2e",
           }}
         />
-        <div style={{ fontSize: 42, lineHeight: 1.25, maxWidth: 900 }}>
+        <div style={{ fontFamily: "IvyPresto Headline", fontSize: 42, lineHeight: 1.25, maxWidth: 900 }}>
           Branding e comunicação estratégica.
         </div>
         <div
@@ -55,6 +60,12 @@ export default function OpenGraphImage() {
         </div>
       </div>
     ),
-    size,
+    {
+      ...size,
+      fonts: [
+        { name: "Halyard Display", data: halyardDisplayBold, weight: 700, style: "normal" },
+        { name: "IvyPresto Headline", data: ivyPrestoHeadline, weight: 400, style: "normal" },
+      ],
+    },
   );
 }

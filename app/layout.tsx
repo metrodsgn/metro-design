@@ -8,28 +8,46 @@ import { createSiteMetadata } from "@/lib/metadata";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 
-const halyard = localFont({
+const halyardText = localFont({
   src: [
-    { path: "../public/fonts/halyard/HalyardText-ExtraLight.ttf", weight: "200", style: "normal" },
-    { path: "../public/fonts/halyard/HalyardText-Light.ttf", weight: "300", style: "normal" },
-    { path: "../public/fonts/halyard/HalyardText-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../public/fonts/halyard/HalyardText-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../public/fonts/halyard/HalyardText-SemiBold.ttf", weight: "600", style: "normal" },
-    { path: "../public/fonts/halyard/HalyardText-Bold.ttf", weight: "700", style: "normal" },
-    { path: "../public/fonts/halyard/HalyardText-Black.ttf", weight: "900", style: "normal" },
+    { path: "./fonts/halyard/HalyardText-ExtraLight.ttf", weight: "200", style: "normal" },
+    { path: "./fonts/halyard/HalyardText-Light.ttf", weight: "300", style: "normal" },
+    { path: "./fonts/halyard/HalyardText-Regular.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/halyard/HalyardText-Medium.ttf", weight: "500", style: "normal" },
+    { path: "./fonts/halyard/HalyardText-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "./fonts/halyard/HalyardText-Bold.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/halyard/HalyardText-Black.ttf", weight: "900", style: "normal" },
   ],
-  variable: "--font-halyard",
+  variable: "--font-halyard-text",
   display: "swap",
   preload: false,
 });
 
-const ivyPresto = localFont({
+const halyardDisplay = localFont({
   src: [
-    { path: "../public/fonts/ivy-presto/IvyPrestoDisplay-Regular.otf", weight: "400", style: "normal" },
-    { path: "../public/fonts/ivy-presto/IvyPrestoDisplay-Italic.otf", weight: "400", style: "italic" },
+    { path: "./fonts/halyard/HalyardDisplay-Regular.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/halyard/HalyardDisplay-SemiBold.ttf", weight: "600", style: "normal" },
   ],
-  variable: "--font-ivy-presto",
+  variable: "--font-halyard-display",
   display: "swap",
+  preload: false,
+});
+
+const ivyPrestoDisplay = localFont({
+  src: "./fonts/ivy-presto/IvyPrestoDisplay-Regular.otf",
+  variable: "--font-ivy-display",
+  display: "swap",
+  preload: false,
+});
+
+const ivyPrestoHeadline = localFont({
+  src: [
+    { path: "./fonts/ivy-presto/IvyPrestoHeadline-Regular.otf", weight: "400", style: "normal" },
+    { path: "./fonts/ivy-presto/IvyPrestoHeadline-Italic.otf", weight: "400", style: "italic" },
+  ],
+  variable: "--font-ivy-headline",
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = createSiteMetadata({
@@ -47,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${halyard.variable} ${ivyPresto.variable}`}
+      className={`${halyardText.variable} ${halyardDisplay.variable} ${ivyPrestoDisplay.variable} ${ivyPrestoHeadline.variable}`}
     >
       <body className="antialiased">
         <SiteShell

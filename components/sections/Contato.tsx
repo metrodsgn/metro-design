@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { CONTACT, CONTACT_FAQ } from "@/lib/constants";
@@ -75,7 +75,6 @@ export function Contato() {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [mapOpen, setMapOpen] = useState(true);
-  const firstErrorRef = useRef<HTMLElement | null>(null);
   const handleTurnstileToken = useCallback((token: string) => {
     setTurnstileToken(token);
   }, []);
@@ -152,11 +151,7 @@ export function Contato() {
     }
 
     const firstKey = Object.keys(nextErrors)[0];
-    const firstField = firstKey === "deliveries"
-      ? document.querySelector<HTMLElement>('[name^="delivery_"]')
-      : firstKey ? document.getElementById(firstKey) : null;
     setFieldErrors(nextErrors);
-    firstErrorRef.current = firstField;
     return !firstKey;
   }, [formData]);
 
@@ -216,7 +211,6 @@ export function Contato() {
   const handleSubmit = useCallback(async (event: React.FormEvent) => {
     event.preventDefault();
     if (!validate()) {
-      requestAnimationFrame(() => firstErrorRef.current?.focus());
       setStatus("error");
       setErrorMessage("Por favor, revise os campos destacados.");
       return;
@@ -333,7 +327,7 @@ export function Contato() {
     <section className="contact-page">
       <Container>
         <div className="contact-grid">
-          {/* Coluna esquerda — título e texto (sticky no desktop) */}
+          {/* Coluna esquerda — título e texto */}
           <div className="contact-intro">
             <div className="space-y-6">
               <h1 className="type-h1 text-foreground">
@@ -342,10 +336,6 @@ export function Contato() {
               <p className="type-body text-muted max-w-[400px]">
                 Respondemos em até 1 dia útil.
               </p>
-              <section className="contact-faq" aria-labelledby="contact-faq-title">
-                <h2 id="contact-faq-title">{CONTACT_FAQ.title}</h2>
-                <FaqAccordion items={CONTACT_FAQ.items} splitColumns />
-              </section>
             </div>
           </div>
 
@@ -371,6 +361,7 @@ export function Contato() {
             {/* Linha 1: Nome e E-mail */}
             <ContactInput
               id="name"
+              wrapperClassName="contact-area__half"
               type="text"
               required
               placeholder="Nome*"
@@ -381,6 +372,7 @@ export function Contato() {
             />
             <ContactInput
               id="email"
+              wrapperClassName="contact-area__half"
               type="email"
               required
               inputMode="email"
@@ -394,7 +386,7 @@ export function Contato() {
             />
 
             {/* Select: frase (largura total) */}
-            <div className="md:col-span-2">
+            <div className="contact-area__full">
               <ContactSelect
                 id="phrase"
                 required
@@ -408,7 +400,7 @@ export function Contato() {
             </div>
 
             {/* Textarea: desafio (largura total) */}
-            <div className="md:col-span-2">
+            <div className="contact-area__full">
               <textarea
                 id="challenge"
                 name="challenge"
@@ -435,7 +427,7 @@ export function Contato() {
 
             {/* Fieldset: Entregas (largura total) */}
             <div className="contact-area">
-            <div className="md:col-span-2">
+            <div className="contact-area__full">
               <fieldset
                 className="contact-fieldset"
                 aria-labelledby="deliveries-label"
@@ -444,23 +436,16 @@ export function Contato() {
                   O que o seu projeto precisa?
                   <span className="text-accent">*</span>
                 </legend>
-                <div className="contact-delivery-groups">
-                  {DELIVERY_GROUPS.map((group) => (
-                    <fieldset key={group.title} className="contact-fieldset">
-                      <legend className="contact-delivery-group-title">{group.title}</legend>
-                      <div className="contact-deliveries">
-                        {group.items.map((delivery) => (
-                          <ServiceToggle
-                            key={delivery}
-                            id={`delivery_${delivery}`}
-                            name={`delivery_${delivery}`}
-                            label={delivery}
-                            checked={formData[`delivery_${delivery}`] === "on"}
-                            onChange={(event) => handleDeliveryChange(event, delivery)}
-                          />
-                        ))}
-                      </div>
-                    </fieldset>
+                <div className="contact-deliveries">
+                  {DELIVERIES.map((delivery) => (
+                    <ServiceToggle
+                      key={delivery}
+                      id={`delivery_${delivery}`}
+                      name={`delivery_${delivery}`}
+                      label={delivery}
+                      checked={formData[`delivery_${delivery}`] === "on"}
+                      onChange={(event) => handleDeliveryChange(event, delivery)}
+                    />
                   ))}
                   {fieldErrors.deliveries && (
                     <span className="contact-error contact-error-block" role="alert">
@@ -472,7 +457,7 @@ export function Contato() {
             </div>
 
             {/* Select: investimento (largura total) */}
-            <div className="md:col-span-2">
+            <div className="contact-area__full">
               <ContactSelect
                 id="investmentRange"
                 required
@@ -488,23 +473,23 @@ export function Contato() {
             </div>
 
             <div className="contact-area">
-            {/* Select: como conheceu (largura total) */}
-            <div className="md:col-span-2">
-              <ContactSelect
-                id="howHeard"
-                required
-                value={formData.howHeard || ""}
-                onChange={handleChange}
-                error={fieldErrors.howHeard}
-                ariaLabel="Como conheceu a Metro"
-                placeholder="Como conheceu a Metro?*"
-                options={HOW_HEARD_OPTIONS}
-              />
-            </div>
+              {/* Select: como conheceu e WhatsApp */}
+              <div className="contact-area__half">
+                <ContactSelect
+                  id="howHeard"
+                  required
+                  value={formData.howHeard || ""}
+                  onChange={handleChange}
+                  error={fieldErrors.howHeard}
+                  ariaLabel="Como conheceu a Metro"
+                  placeholder="Como conheceu a Metro?*"
+                  options={HOW_HEARD_OPTIONS}
+                />
+              </div>
 
-            <div className="md:col-span-2">
               <ContactInput
                 id="whatsapp"
+                wrapperClassName="contact-area__half"
                 type="tel"
                 required
                 inputMode="tel"
@@ -515,11 +500,10 @@ export function Contato() {
                 error={fieldErrors.whatsapp}
                 ariaLabel="Seu WhatsApp com DDD"
               />
-            </div>
 
-            {/* Consentimento (largura total) */}
-            <div className="md:col-span-2">
-              <label className="contact-checkbox-label cursor-pointer">
+              {/* Consentimento (largura total) */}
+              <div className="contact-area__full">
+                <label className="contact-checkbox-label cursor-pointer">
                 <input
                   type="checkbox"
                   id="consent"
@@ -539,35 +523,35 @@ export function Contato() {
                   </Link>
                   <span className="text-accent">*</span>
                 </span>
-              </label>
-              {fieldErrors.consent && (
-                <span className="contact-error contact-error-block" role="alert">
-                  {fieldErrors.consent}
-                </span>
-              )}
-            </div>
+                </label>
+                {fieldErrors.consent && (
+                  <span className="contact-error contact-error-block" role="alert">
+                    {fieldErrors.consent}
+                  </span>
+                )}
+              </div>
 
-            <div className="md:col-span-2">
-              <TurnstileWidget
-                onToken={handleTurnstileToken}
-                resetKey={turnstileResetKey}
-              />
-            </div>
+              <div className="contact-area__full">
+                <TurnstileWidget
+                  onToken={handleTurnstileToken}
+                  resetKey={turnstileResetKey}
+                />
+              </div>
 
-            {/* Botão (largura total) */}
-            <div className="md:col-span-2">
-              <button
-                type="submit"
-                disabled={status === "loading"}
-                className="contact-button"
-              >
-                {status === "loading" ? "Enviando…" : "Enviar proposta de projeto"}
-              </button>
-            </div>
+              {/* Botão (largura total) */}
+              <div className="contact-area__full">
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="contact-button"
+                >
+                  {status === "loading" ? "Enviando…" : "Enviar proposta de projeto"}
+                </button>
+              </div>
             </div>
 
             {tokenError && (
-              <div className="md:col-span-2">
+              <div>
                 <p className="contact-error" role="status">
                   O formulário não preparou direito. Tenta recarregar a página
                   ou, se preferir,{" "}
@@ -585,7 +569,7 @@ export function Contato() {
             )}
 
             {status === "error" && (
-              <div className="md:col-span-2">
+              <div>
                 <p className="contact-error contact-error-block" role="alert">
                   {errorMessage}
                 </p>
@@ -593,6 +577,11 @@ export function Contato() {
             )}
           </form>
         </div>
+
+        <section className="contact-faq" aria-labelledby="contact-faq-title">
+          <h2 id="contact-faq-title">{CONTACT_FAQ.title}</h2>
+          <FaqAccordion items={CONTACT_FAQ.items} splitColumns />
+        </section>
 
         <ContactMapWidget
           open={mapOpen}
@@ -681,6 +670,7 @@ function ContactMapWidget({
 
 function ContactInput({
   id,
+  wrapperClassName,
   type = "text",
   required = false,
   placeholder,
@@ -693,6 +683,7 @@ function ContactInput({
   autoComplete,
 }: {
   id: string;
+  wrapperClassName?: string;
   type?: string;
   required?: boolean;
   placeholder: string;
@@ -705,7 +696,7 @@ function ContactInput({
   autoComplete?: string;
 }) {
   return (
-    <div>
+    <div className={wrapperClassName}>
       <input
         id={id}
         name={id}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { CSSProperties } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -68,7 +67,6 @@ export function ParallaxHero({
               <span
                 key={`${character}-${index}`}
                 className="about-hero__letter"
-                style={{ "--letter-index": index } as CSSProperties}
                 aria-hidden="true"
               >
                 {character}
@@ -77,7 +75,6 @@ export function ParallaxHero({
             {title.endsWith(".") && (
               <span
                 className="about-hero__letter text-accent"
-                style={{ "--letter-index": title.length - 1 } as CSSProperties}
                 aria-hidden="true"
               >
                 .

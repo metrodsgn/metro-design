@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
 import { ParallaxHero } from "@/components/ui/parallax-scrolling";
 import { Somos } from "@/components/sections/Somos";
-import { Fazemos } from "@/components/sections/Fazemos";
 import { MetroHouse } from "@/components/sections/MetroHouse";
 import { Clientes } from "@/components/sections/Clientes";
 import { CtaFinal } from "@/components/sections/CtaFinal";
-import { Metodologia } from "@/components/sections/Metodologia";
 import { SelectedProjects } from "@/components/sections/SelectedProjects";
 import { Faq } from "@/components/sections/Faq";
 import { ABOUT_HERO } from "@/lib/constants";
 import { createSiteMetadata } from "@/lib/metadata";
 import { getAllCases } from "@/sanity/lib/fetchers";
-import { urlFor } from "@/sanity/lib/image";
 
 export const metadata: Metadata = createSiteMetadata({
   title: "Sobre — Metro Design",
@@ -42,17 +39,6 @@ export default async function SobrePage() {
       />
 
       <Somos />
-      <Fazemos />
-      <Metodologia
-        photos={projects
-          .filter((project) => project.cover)
-          .slice(0, 4)
-          .map((project) => ({
-            src: urlFor(project.cover!).width(520).fit("max").url(),
-            alt: project.title || "",
-            background: project.cover?.background,
-          }))}
-      />
       <MetroHouse />
       <Clientes />
       <SelectedProjects projects={projects} />
