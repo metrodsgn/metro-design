@@ -10,7 +10,7 @@ import { SelectedProjects } from "@/components/sections/SelectedProjects";
 import { Faq } from "@/components/sections/Faq";
 import { ABOUT_HERO } from "@/lib/constants";
 import { createSiteMetadata } from "@/lib/metadata";
-import { getAllCases, getAllClients } from "@/sanity/lib/fetchers";
+import { getAllCases } from "@/sanity/lib/fetchers";
 import { urlFor } from "@/sanity/lib/image";
 
 export const metadata: Metadata = createSiteMetadata({
@@ -19,15 +19,6 @@ export const metadata: Metadata = createSiteMetadata({
     "Agência de branding e comunicação em Fortaleza. Falamos alto com tipografia, movemos para dizer algo e levamos a sério o trabalho.",
   path: "/sobre",
 });
-
-async function loadClients() {
-  try {
-    const clients = await getAllClients();
-    return Array.isArray(clients) ? clients : [];
-  } catch {
-    return [];
-  }
-}
 
 async function loadProjects() {
   try {
@@ -39,10 +30,7 @@ async function loadProjects() {
 }
 
 export default async function SobrePage() {
-  const [clients, projects] = await Promise.all([
-    loadClients(),
-    loadProjects(),
-  ]);
+  const projects = await loadProjects();
 
   return (
     <>
@@ -66,7 +54,7 @@ export default async function SobrePage() {
           }))}
       />
       <MetroHouse />
-      <Clientes clients={clients} />
+      <Clientes />
       <SelectedProjects projects={projects} />
       <Faq />
       <CtaFinal />

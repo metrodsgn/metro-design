@@ -24,8 +24,6 @@ export async function MetroHouse() {
     return null;
   }
 
-  if (photos.length === 0) return null;
-
   return (
     <section
       id="metro-house"
@@ -46,7 +44,13 @@ export async function MetroHouse() {
             <span>Fortaleza, Ceará</span>
           </div>
 
-          <MetroHouseCarousel photos={photos} />
+          {photos.length > 0 ? (
+            <MetroHouseCarousel photos={photos} />
+          ) : (
+            <p className="metro-house-section__empty">
+              Em breve, um olhar por dentro da Metro House.
+            </p>
+          )}
         </div>
       </Container>
     </section>

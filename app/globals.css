@@ -672,6 +672,7 @@
 .metro-house-section__intro p { max-width: 28rem; margin: 0; color: var(--color-foreground); font-family: var(--font-heading); font-size: var(--type-h3); line-height: var(--leading-heading); text-wrap: balance; }
 .metro-house-section__intro > span { color: var(--color-muted); font-size: var(--type-small); }
 .metro-house-carousel { min-width: 0; }
+.metro-house-section__empty { display: grid; min-height: 16rem; place-items: center; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); color: var(--color-muted); font-size: var(--type-body); text-align: center; }
 .metro-house-carousel__media { position: relative; }
 .metro-house-carousel__viewport { display: flex; width: 100%; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .metro-house-carousel__viewport::-webkit-scrollbar { display: none; }
@@ -2091,8 +2092,8 @@
 .about-methodology__step--left .about-methodology__copy { left: 4cqw; text-align: left; }
 .about-methodology__step--right .about-methodology__copy { right: 4cqw; text-align: right; }
 .about-methodology__step[data-has-photo="false"] .about-methodology__copy { z-index: 2; left: 50%; width: 36cqw; padding: 0.5em 0.8em; background: var(--color-background); text-align: center; transform: translate(-50%, -50%); }
-.about-methodology__photo { position: absolute; top: 0; width: 38cqw; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 6px; background: var(--color-surface); opacity: 1; transform: translateY(-50%); transition: opacity 600ms ease 100ms, transform 600ms ease 100ms; }
-.about-methodology__photo img { object-fit: contain; }
+.about-methodology__photo { position: absolute; top: 0; width: 38cqw; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 2.5rem; background: var(--color-surface); opacity: 1; transform: translateY(-50%); transition: opacity 600ms ease 100ms, transform 600ms ease 100ms; }
+.about-methodology__photo img { object-fit: cover; }
 .about-methodology__step--left .about-methodology__photo { right: 4cqw; }
 .about-methodology__step--right .about-methodology__photo { left: 4cqw; }
 .about-methodology__step.is-active .about-methodology__node { background: var(--color-accent); box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-accent) 18%, transparent); }
@@ -2231,20 +2232,26 @@
   font-weight: 600;
 }
 .contact-faq .about-faq__grid {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: start;
+  gap: 1rem;
+}
+.contact-faq .about-faq__column {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
 }
 .contact-faq .about-faq__card {
+  display: block;
+  width: 100%;
   min-height: 0;
   aspect-ratio: auto;
+  margin: 0;
   padding: 0;
   border-bottom: 1px solid #333;
   background: transparent;
   color: inherit;
-}
-.contact-faq .about-faq__card.is-open {
-  grid-column: 1 / -1;
 }
 .contact-faq .about-faq__card button {
   min-height: 3rem;
@@ -2272,10 +2279,8 @@
   font-size: 0.9375rem;
   line-height: 1.5;
 }
-@media (min-width: 640px) {
-  .contact-faq .about-faq__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+@media (max-width: 639px) {
+  .contact-faq .about-faq__grid { grid-template-columns: minmax(0, 1fr); }
 }
 @media (min-width: 1024px) {
   .contact-page .contact-grid {
@@ -2306,7 +2311,7 @@
   }
   .contact-page .contact-delivery-group-title {
     margin-bottom: 0.25rem;
-    font-size: 0.8125rem;
+    font-size: 1rem;
     line-height: 1.25;
   }
   .contact-page .service-toggle {
@@ -2314,7 +2319,7 @@
     padding-block: 0.2rem;
   }
   .contact-page .service-toggle-text {
-    font-size: 0.8125rem;
+    font-size: 1rem;
     line-height: 1.25;
   }
   .contact-page .contact-legend {
@@ -2327,18 +2332,24 @@
   .contact-page .contact-select {
     height: 2.5rem;
     min-height: 2.5rem;
-    font-size: 0.9375rem;
+    font-size: 1.0625rem;
   }
   .contact-page .contact-textarea {
     padding-block: 0.5rem;
-    font-size: 0.9375rem;
+    font-size: 1.0625rem;
   }
   .contact-page .contact-hint {
     margin-top: 0.25rem;
-    font-size: 0.75rem;
+    font-size: 0.9375rem;
   }
   .contact-page .contact-checkbox-label {
-    font-size: 0.8125rem;
+    font-size: 1rem;
+  }
+  .contact-page .contact-error {
+    font-size: 0.9375rem;
+  }
+  .contact-page .contact-button {
+    font-size: 0.9375rem;
   }
 }
 

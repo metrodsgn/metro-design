@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { ServicesProcess } from "@/components/sections/ServicesProcess";
+import { ReasonsAccordion } from "@/components/sections/ReasonsAccordion";
 import { createSiteMetadata } from "@/lib/metadata";
 import styles from "./page.module.css";
 
@@ -12,7 +13,7 @@ const fronts = [
   { title: "Audiovisual & Direção Criativa", intro: "Conteúdo visual constrói marca. Com estrutura própria, produzimos fotos e vídeos exclusivos que humanizam a marca e funcionam em campanhas, ações e materiais institucionais.", items: ["Fotografia publicitária", "Vídeos curtos e institucionais", "Direção de arte para campanhas", "Sinalização e materiais gráficos"] },
   { title: "Produtos Digitais & Tecnologia", intro: "Sites, plataformas e sistemas que nascem com a identidade da marca e resolvem problemas reais do negócio, do primeiro protótipo ao produto no ar. Quem desenhou a sua marca desenha a sua interface, e nada se perde entre agência e desenvolvedor.", items: ["Sites institucionais e landing pages", "E-commerces e canais de venda", "Portais e plataformas", "Sistemas web e aplicações internas", "MVPs e produtos sob demanda", "UX/UI", "Integrações e automações"] },
 ];
-const reasons = [
+const reasons: (readonly [string, string])[] = [
   ["Estratégia como ponto de partida.", "Investigamos antes de criar. Negócio, público e objetivo definem a entrega, não o contrário."],
   ["Operação multidisciplinar.", "Branding, conteúdo, audiovisual e tecnologia com o mesmo time. Coerência sem ruído."],
   ["Capacidade de entrega complexa.", "Da marca à campanha, do feed ao site, do on-line ao off-line, com o mesmo padrão estético e conceitual."],
@@ -43,7 +44,7 @@ export default function FazemosPage() {
       </section>
       <section className={styles.reasons}>
         <h2>Por que escolher a Metro.</h2>
-        <ol>{reasons.map(([title, text]) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}</ol>
+        <ReasonsAccordion items={reasons} />
       </section>
       <section className={styles.process} aria-labelledby="process-title">
         <h2 id="process-title">Como funciona.</h2>

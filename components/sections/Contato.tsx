@@ -74,7 +74,7 @@ export function Contato() {
   const [tokenError, setTokenError] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [mapOpen, setMapOpen] = useState(false);
+  const [mapOpen, setMapOpen] = useState(true);
   const firstErrorRef = useRef<HTMLElement | null>(null);
   const handleTurnstileToken = useCallback((token: string) => {
     setTurnstileToken(token);
@@ -344,7 +344,7 @@ export function Contato() {
               </p>
               <section className="contact-faq" aria-labelledby="contact-faq-title">
                 <h2 id="contact-faq-title">{CONTACT_FAQ.title}</h2>
-                <FaqAccordion items={CONTACT_FAQ.items} />
+                <FaqAccordion items={CONTACT_FAQ.items} splitColumns />
               </section>
             </div>
           </div>

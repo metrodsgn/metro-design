@@ -4,12 +4,23 @@ import { useState } from "react";
 
 type FaqItem = { question: string; answer: string };
 
-export function FaqAccordion({ items }: { items: readonly FaqItem[] }) {
+export function FaqAccordion({
+  items,
+  splitColumns = false,
+}: {
+  items: readonly FaqItem[];
+  splitColumns?: boolean;
+}) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const columns = splitColumns
+    ? [items.slice(0, Math.ceil(items.length / 2)), items.slice(Math.ceil(items.length / 2))]
+    : [items];
 
   return (
     <div className="about-faq__grid">
-      {items.map((item, index) => {
+      {columns.map((columnItems, columnIndex) => <div className="about-faq__column" key={columnIndex}>
+      {columnItems.map((item) => {
+        const index = items.indexOf(item);
         const isOpen = openIndex === index;
         const panelId = `about-faq-answer-${index}`;
         return (
@@ -29,6 +40,7 @@ export function FaqAccordion({ items }: { items: readonly FaqItem[] }) {
           </article>
         );
       })}
+      </div>)}
     </div>
   );
 }
