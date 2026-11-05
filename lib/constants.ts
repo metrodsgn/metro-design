@@ -29,7 +29,7 @@ export const SOCIAL = [
 export const FOOTER_LINKS = [
   { label: "Início", href: "/" },
   { label: "A Metro", href: "/sobre" },
-  { label: "Fazemos", href: "/sobre#fazemos" },
+  { label: "Fazemos", href: "/fazemos" },
   { label: "Projetos", href: "/projetos" },
   { label: "Fale", href: "/contato" },
 ] as const;
@@ -37,6 +37,7 @@ export const FOOTER_LINKS = [
 export const NAV_LINKS = [
   { label: "Início", href: "/" },
   { label: "Sobre", href: "/sobre" },
+  { label: "Fazemos", href: "/fazemos" },
   { label: "Projetos", href: "/projetos" },
   { label: "Fale Conosco", href: "/contato" },
 ] as const;

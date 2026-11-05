@@ -84,7 +84,7 @@ export function Footer() {
 
         {/* Assinatura tipográfica */}
         <div className="footer-wordmark-bleed">
-          <InteractiveMarquee text="Building brands. Every day." ariaLabel="Building brands. Every day." />
+          <InteractiveMarquee />
         </div>
 
         {/* Rodapé inferior */}

@@ -231,8 +231,6 @@
 .header-adaptive-ink {
   color: #fff;
   transition: color 180ms ease;
-  -webkit-text-stroke: 0.35px rgb(0 0 0 / 75%);
-  text-shadow: 0 1px 3px rgb(0 0 0 / 95%), 0 0 10px rgb(0 0 0 / 80%);
 }
 
 .header-adaptive-ink[data-over-text="true"] {
@@ -1336,7 +1334,7 @@
   }
 
   .contact-area .contact-textarea {
-    min-height: 5.5rem;
+    min-height: 3.5rem;
   }
 
   .contact-deliveries {
@@ -1418,7 +1416,7 @@
 
 .contact-textarea {
   width: 100%;
-  min-height: 5.5rem;
+  min-height: 3.5rem;
   padding: 0.875rem 1.125rem;
   background: transparent;
   border: 1px solid #3a3a3a;
@@ -1698,12 +1696,12 @@
   flex-direction: column;
   align-items: stretch;
   gap: 0.75rem;
-  width: 100vw;
-  max-width: none;
-  margin-left: calc(50% - 50vw);
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
   margin-top: 2.5rem;
   padding-top: 1.5rem;
-  padding-inline: clamp(1rem, 3vw, 3rem);
+  padding-inline: 0;
   border-top: 1px solid var(--color-border);
 }
 
@@ -2205,4 +2203,151 @@
   .about-methodology__step .about-methodology__node, .about-methodology__node--end { background: var(--color-accent); box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-accent) 18%, transparent); }
   .clients-marquee .animate-marquee, .clients-marquee .animate-marquee-reverse { animation: none; transform: none; will-change: auto; }
 }
+}
+
+/* Compact FAQ within the contact introduction. */
+.contact-page .contact-grid {
+  min-height: 0;
+  align-items: start;
+}
+.contact-page .contact-intro h1 {
+  max-width: 10ch;
+  font-size: clamp(2.75rem, 4.5vw, 4.75rem);
+  line-height: 0.98;
+}
+.contact-intro > .space-y-6 {
+  row-gap: 0;
+}
+.contact-faq {
+  width: 100%;
+  margin-top: 1.5rem;
+  color: #f5f5f5;
+  background: transparent;
+}
+.contact-faq h2 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.contact-faq .about-faq__grid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 1rem;
+  align-items: start;
+}
+.contact-faq .about-faq__card {
+  min-height: 0;
+  aspect-ratio: auto;
+  padding: 0;
+  border-bottom: 1px solid #333;
+  background: transparent;
+  color: inherit;
+}
+.contact-faq .about-faq__card.is-open {
+  grid-column: 1 / -1;
+}
+.contact-faq .about-faq__card button {
+  min-height: 3rem;
+  height: auto;
+  padding: 0.65rem 0;
+  gap: 0.6rem;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  font-weight: 500;
+  cursor: pointer;
+}
+.contact-faq .about-faq__card button:hover,
+.contact-faq .about-faq__card.is-open button {
+  color: #ff353b;
+}
+.contact-faq .about-faq__icon {
+  flex: none;
+  color: #ff353b;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.contact-faq .about-faq__answer {
+  padding: 0 0 0.85rem;
+  color: #b8b8b8;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+@media (min-width: 640px) {
+  .contact-faq .about-faq__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .contact-page .contact-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+}
+
+/* Keep the full contact form compact without hiding any fields. */
+@media (min-width: 1024px) {
+  .contact-page {
+    padding-top: clamp(6rem, 12vh, 7.5rem);
+  }
+  .contact-page .contact-form {
+    max-width: none;
+    gap: 0.6rem;
+  }
+  .contact-page .contact-area {
+    gap: 0.5rem 0.75rem;
+  }
+  .contact-page .contact-delivery-groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem 1rem;
+  }
+  .contact-page .contact-deliveries {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .contact-page .contact-delivery-group-title {
+    margin-bottom: 0.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.25;
+  }
+  .contact-page .service-toggle {
+    min-height: 1.5rem;
+    padding-block: 0.2rem;
+  }
+  .contact-page .service-toggle-text {
+    font-size: 0.8125rem;
+    line-height: 1.25;
+  }
+  .contact-page .contact-legend {
+    margin-bottom: 0.4rem;
+  }
+  .contact-page .contact-form > .contact-area:nth-of-type(3) > div:nth-child(-n + 2) {
+    grid-column: auto;
+  }
+  .contact-page .contact-input,
+  .contact-page .contact-select {
+    height: 2.5rem;
+    min-height: 2.5rem;
+    font-size: 0.9375rem;
+  }
+  .contact-page .contact-textarea {
+    padding-block: 0.5rem;
+    font-size: 0.9375rem;
+  }
+  .contact-page .contact-hint {
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+  }
+  .contact-page .contact-checkbox-label {
+    font-size: 0.8125rem;
+  }
+}
+
+/* Start the location section after the initial desktop contact view. */
+@media (min-width: 1024px) {
+  .contact-page .contact-grid {
+    min-height: calc(100svh - clamp(6rem, 12vh, 7.5rem) - 1rem);
+  }
+}
+.contact-map__toggle {
+  align-self: flex-start;
 }

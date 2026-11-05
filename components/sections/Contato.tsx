@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { CONTACT } from "@/lib/constants";
+import { CONTACT, CONTACT_FAQ } from "@/lib/constants";
+import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { TurnstileWidget } from "@/components/ui/TurnstileWidget";
 import {
   EMAIL_ERROR_MESSAGE,
@@ -341,6 +342,10 @@ export function Contato() {
               <p className="type-body text-muted max-w-[400px]">
                 Respondemos em até 1 dia útil.
               </p>
+              <section className="contact-faq" aria-labelledby="contact-faq-title">
+                <h2 id="contact-faq-title">{CONTACT_FAQ.title}</h2>
+                <FaqAccordion items={CONTACT_FAQ.items} />
+              </section>
             </div>
           </div>
 
