@@ -238,8 +238,10 @@
 .type-footer-meta { font-family: var(--font-body); font-size: var(--type-footer-meta); font-weight: var(--weight-regular); line-height: var(--leading-caption); }
 }
 
+.hero-section #hero-title { font-size: clamp(2.75rem, 2rem + 3.8vw, 5.8rem); }
+
 @media (max-width: 639px) {
-  .hero-section #hero-title { font-size: clamp(1.5rem, 7vw, 3rem); }
+  .hero-section #hero-title { font-size: clamp(1.5rem, 6.5vw, 2.75rem); }
 }
 
 .hero-title__marcas {
