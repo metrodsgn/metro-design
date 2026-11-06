@@ -115,7 +115,7 @@ const Section2: React.FC<SectionProps & {
                 )}
                 <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/30 group-focus-visible:bg-black/30" />
                 <div className="absolute inset-0 flex items-center justify-center p-4 text-center opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-                  <h3 className="type-h3 max-w-full text-white uppercase">
+                  <h3 className="project-home-card__title type-h3 max-w-full text-white uppercase">
                     {project.client || project.title}
                   </h3>
                 </div>
