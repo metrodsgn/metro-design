@@ -240,6 +240,16 @@
 
 .hero-section #hero-title { font-size: clamp(2.75rem, 2rem + 3.8vw, 5.8rem); }
 
+@media (min-width: 640px) and (max-width: 1439px) {
+  .hero-section .hero-text-exit {
+    padding-inline: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .hero-section #hero-title {
+    font-size: clamp(2.75rem, 1.5rem + 4.3vw, 5.1rem);
+  }
+}
+
 @media (max-width: 639px) {
   .hero-section #hero-title { font-size: clamp(1.5rem, 6.5vw, 2.75rem); }
 }

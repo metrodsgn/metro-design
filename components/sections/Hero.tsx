@@ -43,7 +43,7 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      <Container className="hero-text-exit py-section-md md:py-section-lg">
+      <Container variant="wide" className="hero-text-exit py-section-md md:py-section-lg">
         <motion.div
           className="max-w-none"
           initial={reduceMotion ? false : "hidden"}
