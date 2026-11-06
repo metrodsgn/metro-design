@@ -4,8 +4,6 @@ import { AboutGsapMotion } from "@/components/ui/AboutGsapMotion";
 import { ABOUT } from "@/lib/constants";
 import { SOBRE_STORY_PHOTO } from "@/data/sobre-fotos";
 
-const skylineHeights = ["36%", "58%", "42%", "74%", "48%", "88%", "56%", "70%", "40%", "62%", "82%", "46%", "68%", "52%", "94%", "60%", "43%", "77%", "55%", "84%", "48%", "72%", "39%", "64%", "91%", "53%", "75%", "45%", "67%", "83%", "50%", "71%"];
-
 export function Somos() {
   const paragraphs = ABOUT.paragraphs;
 
@@ -53,15 +51,6 @@ export function Somos() {
           ) : null}
         </Container>
 
-        <div className="about-somos__skyline" aria-hidden="true">
-          {skylineHeights.map((height, index) => (
-            <span
-              key={index}
-              data-skyline-bar
-              style={{ height }}
-            />
-          ))}
-        </div>
       </AboutGsapMotion>
     </section>
   );

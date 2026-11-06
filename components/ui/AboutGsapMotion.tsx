@@ -25,18 +25,6 @@ export function AboutGsapMotion({ children }: { children: ReactNode }) {
       );
 
       gsap.fromTo(
-        "[data-skyline-bar]",
-        { scaleY: 0, transformOrigin: "bottom" },
-        {
-          scaleY: 1,
-          duration: 0.7,
-          stagger: 0.025,
-          ease: "power2.out",
-          scrollTrigger: { trigger: "[data-skyline-bar]", start: "top 95%" },
-        },
-      );
-
-      gsap.fromTo(
         "[data-photo-frame]",
         {
           clipPath: "inset(34% 30% round 2px)",

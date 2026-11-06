@@ -2229,8 +2229,6 @@
 .about-somos__photo { position: relative; width: min(100%, 64rem); margin: 3.5rem auto 0; }
 .about-somos__photo-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: var(--color-surface); }
 .about-somos__photo figcaption { position: absolute; right: 0; bottom: -1.75rem; color: var(--color-foreground-soft); font-size: var(--type-caption); }
-.about-somos__skyline { position: absolute; z-index: 0; right: 0; bottom: 0; left: 0; display: grid; height: clamp(3rem, 7vw, 6rem); grid-template-columns: repeat(32, minmax(0, 1fr)); align-items: end; }
-.about-somos__skyline span { display: block; background: #171717; transform-origin: bottom; }
 
 @media (max-width: 767px) {
   .about-somos__photo-frame { aspect-ratio: 4 / 3; }
@@ -2364,7 +2362,6 @@
 @media (prefers-reduced-motion: reduce) {
   .about-projects__row, .about-projects__arrow, .about-service-card { transition: none; }
   .about-service-card:hover, .about-service-card:focus-visible { transform: none; }
-  .about-somos__skyline span { transform: none; }
   .about-methodology__progress { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }
   .about-methodology__mobile-track span { transform: scaleY(1) !important; }
   .about-methodology__stage.is-motion-ready .about-methodology__step .about-methodology__copy, .about-methodology__step .about-methodology__copy, .about-methodology__photo { opacity: 1 !important; transform: none !important; }
