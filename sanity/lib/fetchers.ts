@@ -74,23 +74,42 @@ export type MetroHouseImage = {
   lqip?: string;
 };
 
+function correctProjectAccent(value: string | undefined): string | undefined {
+  return value?.replace(/\bflavio\b/gi, (name) =>
+    name === name.toUpperCase() ? "FLÁVIO" : "Flávio",
+  );
+}
+
+function correctProjectNames<T extends CaseListItem>(project: T): T {
+  return {
+    ...project,
+    title: correctProjectAccent(project.title) ?? project.title,
+    client: correctProjectAccent(project.client) ?? project.client,
+  };
+}
+
 export async function getAllCases(): Promise<CaseListItem[]> {
-  return client.fetch(allCasesQuery);
+  const projects = await client.fetch<CaseListItem[]>(allCasesQuery);
+  return projects.map(correctProjectNames);
 }
 
 export async function getFeaturedCases(): Promise<CaseListItem[]> {
-  return client.fetch(featuredCasesQuery);
+  const projects = await client.fetch<CaseListItem[]>(featuredCasesQuery);
+  return projects.map(correctProjectNames);
 }
 
 export async function getCaseBySlug(slug: string): Promise<CaseFull | null> {
   const project = await client.fetch<CaseFull | null>(caseBySlugQuery, {
     slug,
   });
-  if (!project?.description) return project;
+  if (!project) return null;
+
+  const correctedProject = correctProjectNames(project);
+  if (!correctedProject.description) return correctedProject;
 
   return {
-    ...project,
-    description: project.description.map((block) => ({
+    ...correctedProject,
+    description: correctedProject.description.map((block) => ({
       ...block,
       children: block.children.map((child) => ({
         ...child,
