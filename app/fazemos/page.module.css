@@ -70,6 +70,9 @@
   .front:nth-child(even) .frontContent, .front:nth-child(even) .frontPhoto { grid-column: auto; grid-row: auto; }
   .frontPhoto { max-width: 32rem; }
   .audiences > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .audiences article { grid-template-columns: minmax(0, 1fr); }
+  .audiences article::before { content: none; }
+  .audiences article h3, .audiences article p { grid-column: 1; }
   .timeline { width: 100%; min-width: 0; overflow: clip; }
   .timeline svg { left: 0; width: 2rem; pointer-events: none; }
   .timeline ol { width: 100%; min-width: 0; margin: 0; padding: 0; }
