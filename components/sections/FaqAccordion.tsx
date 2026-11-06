@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 type FaqItem = { question: string; answer: string };
 
@@ -12,6 +13,10 @@ export function FaqAccordion({
   splitColumns?: boolean;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const reduceMotion = useReducedMotion();
+  const panelTransition = reduceMotion
+    ? { duration: 0 }
+    : { height: { type: "spring" as const, stiffness: 300, damping: 30 }, opacity: { duration: 0.18 } };
   const columns = splitColumns
     ? [items.slice(0, Math.ceil(items.length / 2)), items.slice(Math.ceil(items.length / 2))]
     : [items];
@@ -22,21 +27,44 @@ export function FaqAccordion({
       {columnItems.map((item) => {
         const index = items.indexOf(item);
         const isOpen = openIndex === index;
+        const buttonId = `about-faq-question-${index}`;
         const panelId = `about-faq-answer-${index}`;
         return (
           <article key={item.question} className={`about-faq__card${isOpen ? " is-open" : ""}`}>
             <button
               type="button"
+              id={buttonId}
               aria-expanded={isOpen}
               aria-controls={panelId}
               onClick={() => setOpenIndex(isOpen ? null : index)}
             >
               <span>{item.question}</span>
-              <span className="about-faq__icon" aria-hidden="true">{isOpen ? "×" : "+"}</span>
+              <motion.span
+                className="about-faq__icon"
+                aria-hidden="true"
+                animate={{ rotate: isOpen ? 45 : 0 }}
+                transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 20 }}
+              >
+                +
+              </motion.span>
             </button>
-            <div id={panelId} className="about-faq__answer" hidden={!isOpen}>
+            <motion.div
+              id={panelId}
+              className="about-faq__answer"
+              aria-labelledby={buttonId}
+              aria-hidden={!isOpen}
+              inert={!isOpen}
+              initial={false}
+              animate={{
+                height: isOpen ? "auto" : 0,
+                opacity: isOpen ? 1 : 0,
+                paddingTop: isOpen && !splitColumns ? "0.5rem" : "0rem",
+                paddingBottom: isOpen ? (splitColumns ? "0.85rem" : "1rem") : "0rem",
+              }}
+              transition={panelTransition}
+            >
               {item.answer}
-            </div>
+            </motion.div>
           </article>
         );
       })}

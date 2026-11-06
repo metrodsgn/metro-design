@@ -26,8 +26,8 @@
 .reasonButton h3, .reasonItem h3 { margin: 0; }
 .reasonButton span:first-child { font-size: var(--type-h5); font-weight: var(--weight-semibold); line-height: var(--leading-label); }
 .reasonIcon { flex: none; color: var(--color-accent); font-size: 1.5rem; line-height: 1; }
-.reasonPanel { padding-top: 0.9rem; }
-.reasonPanel p { font-size: var(--type-body); line-height: var(--leading-body); color: #aaa; }
+.reasonPanel { overflow: hidden; }
+.reasonPanel p { margin: 0; padding-top: 0.9rem; font-size: var(--type-body); line-height: var(--leading-body); color: #aaa; }
 .reasonButton:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 5px; }
 .reasons h3, .audiences h3 { font-size: var(--type-h5); line-height: var(--leading-label); font-weight: var(--weight-semibold); margin-bottom: 0.75rem; }
 .process { border-top: 1px solid #333; padding-top: clamp(3rem, 6vw, 6rem); }
