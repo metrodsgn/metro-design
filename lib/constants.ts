@@ -9,7 +9,6 @@ export const CONTACT = {
   phone: "(85) 2010-0883",
   whatsapp: "5585991999229",
   address: "Av. Santos Dumont, 2088, sala 310, Aldeota, Fortaleza – CE, 60150-161",
-  mapsUrl: "https://www.google.com/maps/place/Metro+Design+e+Comunica%C3%A7%C3%A3o/@-3.734214,-38.5054419,17z/data=!4m6!3m5!1s0x7c74894bc356ad5:0x8d3e5bc4012e50ed!8m2!3d-3.734214!4d-38.5054419!16s%2Fg%2F11f15m6y1b",
 } as const;
 
 /**

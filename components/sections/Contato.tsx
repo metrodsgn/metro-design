@@ -74,7 +74,6 @@ export function Contato() {
   const [tokenError, setTokenError] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [mapOpen, setMapOpen] = useState(true);
   const handleTurnstileToken = useCallback((token: string) => {
     setTurnstileToken(token);
   }, []);
@@ -583,97 +582,28 @@ export function Contato() {
           <FaqAccordion items={CONTACT_FAQ.items} splitColumns />
         </section>
 
-        <ContactMapWidget
-          open={mapOpen}
-          onToggle={() => setMapOpen((value) => !value)}
-        />
+        <ContactMapWidget />
       </Container>
     </section>
   );
 }
 
-function ContactMapWidget({
-  open,
-  onToggle,
-}: {
-  open: boolean;
-  onToggle: () => void;
-}) {
+function ContactMapWidget() {
   const mapQuery = "Metro Design e Comunicação, Fortaleza";
-  const directionsUrl = CONTACT.mapsUrl;
   const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=17&output=embed`;
-  const [addressBeforeCity, addressAfterCity] = CONTACT.address.split("Fortaleza – CE");
 
   return (
     <div className="contact-map">
-      <div className="mb-6 max-w-3xl space-y-4">
-        <h2 className="type-h2">Onde estamos.</h2>
-        <p className="type-body text-muted">Sede em Fortaleza, atendimento em todo o Brasil. Venha tomar um café com a gente, com hora marcada.</p>
-        <p className="type-body">
-          {addressBeforeCity}
-          <br />
-          Fortaleza – CE{addressAfterCity}
-        </p>
-        <p className="type-body text-muted">Segunda a sexta, 8h às 18h</p>
-        <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="ui-button ui-button-secondary">
-          Abrir no Google Maps <span aria-hidden="true">↗</span>
-        </a>
+      <div className="contact-map__panel">
+        <iframe
+          title={`Mapa de localização: ${CONTACT.address}`}
+          src={embedUrl}
+          className="contact-map__frame"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
       </div>
-      <div
-        id="contact-map-panel"
-        className="contact-map__panel"
-        hidden={!open}
-      >
-        <div className="contact-map__top">
-          <p className="contact-map__address">
-            {addressBeforeCity}
-            <br />
-            Fortaleza – CE{addressAfterCity}
-          </p>
-          <a
-            href={directionsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="contact-map__link"
-          >
-            Como chegar <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-        {open && (
-          <iframe
-            title={`Mapa de localização: ${CONTACT.address}`}
-            src={embedUrl}
-            className="contact-map__frame"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
-        )}
-      </div>
-
-      <button
-        type="button"
-        onClick={onToggle}
-        className="contact-map__toggle"
-        aria-expanded={open}
-        aria-controls="contact-map-panel"
-      >
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11Z" />
-          <circle cx="12" cy="10" r="2.5" />
-        </svg>
-        {open ? "Fechar mapa" : "Abrir mapa"}
-      </button>
     </div>
   );
 }
