@@ -27,7 +27,6 @@ export function MetroHouse() {
           </div>
           <div className="metro-house-section__intro">
             <p>Nosso escritório em Fortaleza é onde estratégia, design, estúdio e tecnologia trabalham lado a lado, todos os dias.</p>
-            <span>Fortaleza, Ceará</span>
           </div>
         </div>
       </Container>
