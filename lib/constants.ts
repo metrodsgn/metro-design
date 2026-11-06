@@ -10,6 +10,7 @@ export const CONTACT = {
   whatsapp: "5585991999229",
   address: "Av. Santos Dumont, 2088, sala 310, Aldeota, Fortaleza – CE, 60150-161",
   coordinates: "-3.734214,-38.5054419",
+  mapsUrl: "https://maps.app.goo.gl/VtEddVaDkknYxcf1A",
 } as const;
 
 /**
