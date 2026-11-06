@@ -8,9 +8,7 @@ export const CONTACT = {
   email: "oi@metrodesign.com.br",
   phone: "(85) 2010-0883",
   whatsapp: "5585991999229",
-  address: "Av. Santos Dumont, 2088, sala 310, Aldeota, Fortaleza – CE, 60150-161",
-  coordinates: "-3.734214,-38.5054419",
-  mapsUrl: "https://maps.app.goo.gl/VtEddVaDkknYxcf1A",
+  address: "Rua Monsenhor Bruno, 1153, sala 609, Scopa Platinum Corporate, Aldeota, Fortaleza – CE, 60115-191",
 } as const;
 
 /**
