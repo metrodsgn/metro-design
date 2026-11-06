@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { AboutGsapMotion } from "@/components/ui/AboutGsapMotion";
 import { ABOUT } from "@/lib/constants";
@@ -35,12 +34,6 @@ export function Somos() {
           <div className="mt-8 text-center">
             <p className="type-small text-muted">{ABOUT.facts}</p>
             <p className="label-mono mt-4">{ABOUT.signature}</p>
-          </div>
-
-          <div className="mt-8 flex justify-center">
-            <Link href="#fazemos" className="ui-button ui-button-accent">
-              Conheça as frentes <span aria-hidden="true">↘</span>
-            </Link>
           </div>
 
           {SOBRE_STORY_PHOTO.src ? (
