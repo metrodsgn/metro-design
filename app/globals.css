@@ -1028,13 +1028,17 @@
 
 .projects-gallery__grid .projects-card__hover-title {
   display: block;
+  width: 100%;
+  min-width: 0;
   max-width: 100%;
+  padding-inline: 1rem;
   color: white;
   font-family: var(--font-ui-display);
-  font-size: var(--type-h3);
+  font-size: clamp(1.25rem, 1.65vw, 1.75rem);
   line-height: var(--leading-heading);
   text-align: center;
   text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .projects-gallery__grid .projects-card__cta {
