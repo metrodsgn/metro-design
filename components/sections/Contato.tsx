@@ -599,8 +599,8 @@ function ContactMapWidget({
   open: boolean;
   onToggle: () => void;
 }) {
-  const mapQuery = CONTACT.address;
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery)}`;
+  const mapQuery = "Metro Design e Comunicação, Fortaleza";
+  const directionsUrl = CONTACT.mapsUrl;
   const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=17&output=embed`;
   const [addressBeforeCity, addressAfterCity] = CONTACT.address.split("Fortaleza – CE");
 
