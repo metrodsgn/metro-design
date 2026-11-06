@@ -91,15 +91,6 @@ export function Hero() {
         </motion.div>
       </Container>
 
-      <motion.p
-        aria-hidden="true"
-        initial={reduceMotion ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, ease: EASE, delay: 0.9 }}
-        className="label-mono absolute bottom-6 left-5 z-10 hidden md:block sm:left-6 md:left-8 lg:left-12"
-      >
-        (Scroll)
-      </motion.p>
     </section>
   );
 }
