@@ -70,7 +70,7 @@ export default function FazemosPage() {
         <ServicesProcess />
       </section>
       <section className={styles.audiences}>
-        <h2>Pra quem é.</h2><p className={styles.lead}>Negócios de todos os portes, em momentos diferentes.</p>
+        <h2>Pra quem é</h2><p className={styles.lead}>Negócios de todos os portes, em momentos diferentes.</p>
         <div>{audiences.map(([title, text]) => <article key={title}><h3>{title}</h3><p>{text}</p></article>)}</div>
       </section>
     </Container>
