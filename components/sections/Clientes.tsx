@@ -39,7 +39,7 @@ export function Clientes() {
         <Reveal>
           <h2 className="clients-section__title type-h2 text-foreground">
             <span>{CLIENTS.titleFirstLine}</span>
-            <span>na <span className="text-accent">Metro</span>.</span>
+            <span>na <span className="text-accent">Metro.</span></span>
           </h2>
         </Reveal>
       </Container>
