@@ -267,7 +267,7 @@
 }
 
 .project-scroll-heading {
-  font-size: clamp(1.9rem, 1.25rem + 3vw, 4.2rem);
+  font-size: clamp(1.6rem, 1rem + 2.4vw, 3.2rem);
 }
 
 .header-adaptive-ink {
