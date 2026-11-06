@@ -250,7 +250,7 @@
   }
 }
 
-@media (min-width: 900px) and (max-width: 1439px) {
+@media (min-width: 900px) {
   .hero-section .hero-text-exit {
     padding-inline: 12vw;
   }
