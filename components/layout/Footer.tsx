@@ -61,13 +61,11 @@ export function Footer() {
                 {addressBeforeCity}
                 <br />
                 Fortaleza – CE{addressAfterCity}
-              </li>
-              <li>
                 <a
                   href={CONTACT.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-link text-muted hover:text-accent"
+                  className="footer-link mt-1 inline-block text-xs text-muted hover:text-accent"
                 >
                   Ver no Google Maps ↗
                 </a>
