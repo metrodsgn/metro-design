@@ -9,7 +9,7 @@ export const CONTACT = {
   phone: "(85) 2010-0883",
   whatsapp: "5585991999229",
   address: "Rua Monsenhor Bruno, 1153, sala 609, Scopa Platinum Corporate, Fortaleza – CE",
-  coordinates: "-3.734214,-38.5054419",
+  coordinates: "-3.7332312,-38.5095056",
 } as const;
 
 /**
