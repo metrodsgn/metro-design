@@ -88,7 +88,7 @@ const Section2: React.FC<SectionProps & {
       <div className={GRID_PATTERN} aria-hidden="true" />
 
       <Container className="relative z-10 pt-16 md:pt-24 lg:pt-32 pb-12 md:pb-16">
-        <h2 className="type-h2 pb-6 sm:pb-8 md:pb-12">
+        <h2 className="project-scroll-heading type-h2 pb-6 sm:pb-8 md:pb-12">
           Forma, estratégia e detalhe em cada projeto.
         </h2>
 

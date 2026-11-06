@@ -266,6 +266,10 @@
   font-weight: 400;
 }
 
+.project-scroll-heading {
+  font-size: clamp(1.9rem, 1.25rem + 3vw, 4.2rem);
+}
+
 .header-adaptive-ink {
   color: #fff;
   transition: color 180ms ease;
