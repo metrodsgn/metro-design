@@ -61,14 +61,16 @@ export function Footer() {
                 {addressBeforeCity}
                 <br />
                 Fortaleza – CE{addressAfterCity}
-                <a
-                  href={CONTACT.mapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-link mt-1 block w-fit text-xs text-muted hover:text-accent"
-                >
-                  Ver no Google Maps ↗
-                </a>
+                <div className="mt-1">
+                  <a
+                    href={CONTACT.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-link text-xs text-muted hover:text-accent"
+                  >
+                    Ver no Google Maps ↗
+                  </a>
+                </div>
               </li>
             </ul>
           </div>
