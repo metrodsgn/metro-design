@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 type FaqItem = { question: string; answer: string };
+const FAQ_EASE = [0.22, 1, 0.36, 1] as const;
 
 export function FaqAccordion({
   items,
@@ -16,7 +17,12 @@ export function FaqAccordion({
   const reduceMotion = useReducedMotion();
   const panelTransition = reduceMotion
     ? { duration: 0 }
-    : { height: { type: "spring" as const, stiffness: 300, damping: 30 }, opacity: { duration: 0.18 } };
+    : {
+        height: { type: "spring" as const, stiffness: 180, damping: 30, mass: 1.1 },
+        opacity: { duration: 0.28, ease: FAQ_EASE },
+        paddingTop: { duration: 0.34, ease: FAQ_EASE },
+        paddingBottom: { duration: 0.34, ease: FAQ_EASE },
+      };
   const columns = splitColumns
     ? [items.slice(0, Math.ceil(items.length / 2)), items.slice(Math.ceil(items.length / 2))]
     : [items];
@@ -43,7 +49,7 @@ export function FaqAccordion({
                 className="about-faq__icon"
                 aria-hidden="true"
                 animate={{ rotate: isOpen ? 45 : 0 }}
-                transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 20 }}
+                transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 180, damping: 26 }}
               >
                 +
               </motion.span>
