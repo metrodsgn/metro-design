@@ -45,7 +45,7 @@ export function Hero() {
 
       <Container className="hero-text-exit py-section-md md:py-section-lg">
         <motion.div
-          className="max-w-4xl"
+          className="max-w-none"
           initial={reduceMotion ? false : "hidden"}
           animate="visible"
           variants={{
@@ -60,7 +60,7 @@ export function Hero() {
               <motion.span variants={lineVariants} transition={{ duration: 0.8, ease: EASE }} className="block">
                 <span className="block"><span className="hero-title__marcas">Marcas</span>,</span>
                 <span className="block">conteúdos e</span>
-                <span className="block">produtos <span className="text-accent">digitais</span></span>
+                <span className="block whitespace-nowrap">produtos <span className="text-accent">digitais</span></span>
               </motion.span>
             </span>
           </h1>

@@ -239,7 +239,7 @@
 }
 
 @media (max-width: 639px) {
-  .hero-section #hero-title { font-size: clamp(2.75rem, 11.5vw, 3rem); }
+  .hero-section #hero-title { font-size: clamp(1.5rem, 7vw, 3rem); }
 }
 
 .hero-title__marcas {
