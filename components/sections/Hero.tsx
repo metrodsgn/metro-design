@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 
@@ -80,14 +79,6 @@ export function Hero() {
             Design, comunicação e tecnologia para transformar percepção em valor.
           </motion.p>
 
-          <motion.div variants={fadeVariants} transition={{ duration: 0.5, ease: EASE }} className="mt-8 flex flex-wrap items-center gap-4 md:mt-10">
-            <Link href="/projetos" className="ui-button ui-button-accent" data-cursor="Ver projetos ↗">
-              Ver projetos <span aria-hidden="true">↗</span>
-            </Link>
-            <Link href="/contato" className="ui-button ui-button-secondary" data-cursor="Iniciar um projeto ↗">
-              Iniciar um projeto
-            </Link>
-          </motion.div>
         </motion.div>
       </Container>
 
