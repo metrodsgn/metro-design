@@ -75,7 +75,7 @@ export type MetroHouseImage = {
 };
 
 function correctProjectAccent(value: string | undefined): string | undefined {
-  return value?.replace(/\bflavio\b/gi, (name) =>
+  return value?.replace(/\bfl[aàá]vio\b/gi, (name) =>
     name === name.toUpperCase() ? "FLÁVIO" : "Flávio",
   );
 }
