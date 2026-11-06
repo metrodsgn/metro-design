@@ -217,21 +217,8 @@ export function Header() {
           </Link>
         </div>
 
-        <nav
-          aria-label="Navegação principal"
-          className="absolute left-1/2 hidden -translate-x-1/2 items-center xl:flex"
-        >
+        <div className="hidden items-center xl:flex">
           <NavigationMenuWithActiveItem overText={overText} />
-        </nav>
-
-        <div className="hidden items-center gap-3 xl:flex">
-          <Link href="/projetos" className="ui-button ui-button-accent">
-            Ver projetos
-            <span aria-hidden="true">↗</span>
-          </Link>
-          <Link href="/contato" className="ui-button ui-button-secondary">
-            Fale conosco
-          </Link>
         </div>
 
         <button

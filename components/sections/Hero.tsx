@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
-import { NAV_LINKS } from "@/lib/constants";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -81,25 +80,14 @@ export function Hero() {
             Design, comunicação e tecnologia para transformar percepção em valor.
           </motion.p>
 
-          <motion.nav
-            variants={fadeVariants}
-            transition={{ duration: 0.5, ease: EASE }}
-            className="mt-8 md:mt-10"
-            aria-label="Navegação principal"
-          >
-            <ul className="flex flex-wrap gap-x-6 gap-y-3">
-              {NAV_LINKS.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="type-nav text-foreground/90 transition-colors hover:text-accent focus-visible:text-accent"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </motion.nav>
+          <motion.div variants={fadeVariants} transition={{ duration: 0.5, ease: EASE }} className="mt-8 flex flex-wrap items-center gap-4 md:mt-10">
+            <Link href="/projetos" className="ui-button ui-button-accent" data-cursor="Ver projetos ↗">
+              Ver projetos <span aria-hidden="true">↗</span>
+            </Link>
+            <Link href="/contato" className="ui-button ui-button-secondary" data-cursor="Iniciar um projeto ↗">
+              Iniciar um projeto
+            </Link>
+          </motion.div>
         </motion.div>
       </Container>
 
