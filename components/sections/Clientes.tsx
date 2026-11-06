@@ -38,7 +38,8 @@ export function Clientes() {
       <Container>
         <Reveal>
           <h2 className="clients-section__title type-h2 text-foreground">
-            {CLIENTS.titleLines.map((line) => <span key={line}>{line}</span>)}
+            <span>{CLIENTS.titleFirstLine}</span>
+            <span>na <span className="text-accent">Metro</span>.</span>
           </h2>
         </Reveal>
       </Container>

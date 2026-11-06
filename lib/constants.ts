@@ -89,7 +89,7 @@ export const SERVICES = {
 } as const;
 export const CLIENTS = {
   label: "Clientes",
-  titleLines: ["Marcas que confiam", "na Metro."],
+  titleFirstLine: "Marcas que confiam",
 } as const;
 
 export const METODOLOGIA = {
