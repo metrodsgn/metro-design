@@ -69,7 +69,6 @@ export function ProjectCard({
       <div className="projects-card__details mt-4 flex min-w-0 items-start justify-between gap-3 sm:gap-4">
         <div className="min-w-0">
           <h3 className="projects-card__title type-h5 text-foreground break-words transition-colors">
-            <span className="projects-card__title-arrow" aria-hidden="true">→</span>
             <span>{title}</span>
           </h3>
           {services?.some(Boolean) && (
