@@ -2228,7 +2228,6 @@
 .about-somos__rule { position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1px; background: var(--color-border); transform-origin: left; }
 .about-somos__photo { position: relative; width: min(100%, 64rem); margin: 3.5rem auto 0; }
 .about-somos__photo-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: var(--color-surface); }
-.about-somos__photo figcaption { position: absolute; right: 0; bottom: -1.75rem; color: var(--color-foreground-soft); font-size: var(--type-caption); }
 
 @media (max-width: 767px) {
   .about-somos__photo-frame { aspect-ratio: 4 / 3; }

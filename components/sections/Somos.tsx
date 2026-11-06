@@ -46,7 +46,6 @@ export function Somos() {
                   data-photo-image
                 />
               </div>
-              <figcaption>{SOBRE_STORY_PHOTO.caption}</figcaption>
             </figure>
           ) : null}
         </Container>
