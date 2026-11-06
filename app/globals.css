@@ -250,6 +250,12 @@
   }
 }
 
+@media (min-width: 900px) and (max-width: 1439px) {
+  .hero-section .hero-text-exit {
+    padding-inline: clamp(4rem, 8vw, 7rem);
+  }
+}
+
 @media (max-width: 639px) {
   .hero-section #hero-title { font-size: clamp(1.5rem, 6.5vw, 2.75rem); }
 }
