@@ -474,6 +474,11 @@
   will-change: transform;
 }
 
+.clients-marquee .animate-marquee,
+.clients-marquee .animate-marquee-reverse {
+  animation-duration: 180s;
+}
+
 /* Faixa de texto — marquee editorial */
 .faixa-texto {
   overflow: hidden;
