@@ -60,8 +60,7 @@ export function Hero() {
               <motion.span variants={lineVariants} transition={{ duration: 0.8, ease: EASE }} className="block">
                 <span className="block"><span className="hero-title__marcas">Marcas</span>,</span>
                 <span className="block">conteúdos</span>
-                <span className="block">e produtos</span>
-                <span className="block text-accent">digitais</span>
+                <span className="block"><span>e produtos </span><span className="text-accent">digitais</span></span>
               </motion.span>
             </span>
           </h1>
