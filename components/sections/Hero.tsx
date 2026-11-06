@@ -13,11 +13,6 @@ export function Hero() {
     visible: { y: "0%" },
   };
 
-  const fadeVariants = {
-    hidden: { opacity: 0, y: 8 },
-    visible: { opacity: 1, y: 0 },
-  };
-
   return (
     <section
       className="hero-section bg-background relative isolate flex min-h-svh items-center overflow-hidden"
@@ -60,10 +55,6 @@ export function Hero() {
             },
           }}
         >
-          <motion.p variants={fadeVariants} transition={{ duration: 0.5, ease: EASE }} className="label-mono mb-5 text-foreground/85">
-            Building brands. Every day.
-          </motion.p>
-
           <h1 id="hero-title" className="type-h1 text-foreground leading-[1.08]">
             <span className="block overflow-hidden pb-[0.35em]">
               <motion.span variants={lineVariants} transition={{ duration: 0.8, ease: EASE }} className="block">
@@ -74,10 +65,6 @@ export function Hero() {
               </motion.span>
             </span>
           </h1>
-
-          <motion.p variants={fadeVariants} transition={{ duration: 0.5, ease: EASE }} className="type-body text-foreground/75 mt-6 max-w-xl md:mt-7">
-            Design, comunicação e tecnologia para transformar percepção em valor.
-          </motion.p>
 
         </motion.div>
       </Container>
