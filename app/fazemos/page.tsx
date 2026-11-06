@@ -62,7 +62,10 @@ export default function FazemosPage() {
         ))}
       </section>
       <section className={styles.reasons}>
-        <h2>Por que escolher a Metro.</h2>
+        <h2 className={styles.reasonsTitle}>
+          <span>Por que escolher</span>
+          <span>a Metro.</span>
+        </h2>
         <ReasonsAccordion items={reasons} />
       </section>
       <section className={styles.process} aria-labelledby="process-title">
