@@ -5,17 +5,18 @@ import Link from "next/link";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [addressBeforeCity, addressAfterCity] = CONTACT.address.split("Fortaleza – CE");
 
   return (
     <footer className="site-footer border-border mt-24 border-t">
-      <Container className="py-16">
-        <div className="grid gap-12 md:grid-cols-3">
+      <Container className="py-18 md:py-20">
+        <div className="grid gap-12 md:grid-cols-3 md:gap-16">
           {/* Coluna 1 — Descrição */}
           <div className="footer-reveal">
-            <p className="text-muted max-w-xs text-sm leading-relaxed">
+            <p className="text-muted max-w-sm text-base leading-relaxed">
               {SITE.description}
             </p>
-            <nav aria-label="Links do rodapé" className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+            <nav aria-label="Links do rodapé" className="mt-6 flex flex-wrap gap-x-5 gap-y-3 text-base">
               {FOOTER_LINKS.map((link) => (
                 <Link key={link.href} href={link.href} className="footer-link text-muted hover:text-foreground">
                   {link.label}
@@ -26,10 +27,10 @@ export function Footer() {
 
           {/* Coluna 2 — Contato */}
           <div className="footer-reveal">
-            <h3 className="font-sans text-foreground text-sm font-semibold tracking-wide uppercase">
+            <h3 className="font-display text-foreground text-base font-semibold tracking-wide uppercase">
               Contato
             </h3>
-            <ul className="mt-4 space-y-2 text-sm">
+            <ul className="mt-5 space-y-3 text-base">
               <li>
                 <a
                   href={`mailto:${CONTACT.email}`}
@@ -56,16 +57,20 @@ export function Footer() {
                   {CONTACT.phone}
                 </a>
               </li>
-              <li className="text-muted break-words">{CONTACT.address}</li>
+              <li className="text-muted break-words">
+                {addressBeforeCity}
+                <br />
+                Fortaleza – CE{addressAfterCity}
+              </li>
             </ul>
           </div>
 
           {/* Coluna 3 — Redes Sociais */}
           <div className="footer-reveal">
-            <h3 className="font-sans text-foreground text-sm font-semibold tracking-wide uppercase">
+            <h3 className="font-display text-foreground text-base font-semibold tracking-wide uppercase">
               Redes
             </h3>
-            <ul className="mt-4 space-y-2 text-sm">
+            <ul className="mt-5 space-y-3 text-base">
               {SOCIAL.map((social) => (
                 <li key={social.name}>
                   <a
@@ -90,12 +95,12 @@ export function Footer() {
         {/* Rodapé inferior */}
         <div className="border-border mt-10 border-t pt-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-            <p className="text-muted text-xs">
+            <p className="text-muted text-sm">
               © {currentYear} {SITE.name}. Todos os direitos reservados.
             </p>
             <Link
               href="/privacidade"
-              className="footer-link text-muted hover:text-foreground text-xs"
+              className="footer-link text-muted hover:text-foreground text-sm"
             >
               Aviso de Privacidade
             </Link>

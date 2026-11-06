@@ -4,11 +4,19 @@ type TurnstileVerification = {
   action?: string;
 };
 
+// Chave de teste oficial da Cloudflare, restrita ao servidor de desenvolvimento.
+const DEVELOPMENT_TEST_SECRET = "1x0000000000000000000000000000000AA";
+
+function getTurnstileSecret() {
+  return process.env.TURNSTILE_SECRET_KEY ||
+    (process.env.NODE_ENV === "development" ? DEVELOPMENT_TEST_SECRET : "");
+}
+
 export async function verifyTurnstileToken(
   token: string,
   remoteIp?: string,
 ): Promise<boolean> {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
+  const secret = getTurnstileSecret();
   if (!secret || !token) return false;
 
   const body = new URLSearchParams({ secret, response: token });

@@ -14,6 +14,7 @@ export type ProjectLink = {
   slug: string;
   title: string;
   client?: string;
+  coverSrc?: string;
 };
 
 export type ProjectDetailData = {
@@ -21,6 +22,7 @@ export type ProjectDetailData = {
   title: string;
   description: string[];
   media: ProjectMedia[];
+  previousProject?: ProjectLink;
   nextProject?: ProjectLink;
 };
 
@@ -99,6 +101,7 @@ export function buildProjectDetail(
   });
 
   const projectIndex = allCases.findIndex((item) => item.slug === project.slug);
+  const previous = projectIndex > 0 ? allCases[projectIndex - 1] : undefined;
   const next = projectIndex >= 0 ? allCases[projectIndex + 1] : undefined;
 
   return {
@@ -106,11 +109,24 @@ export function buildProjectDetail(
     title,
     description,
     media,
+    previousProject: previous
+      ? {
+          slug: previous.slug,
+          title: clean(previous.title),
+          client: clean(previous.client),
+          coverSrc: previous.cover?.asset?._ref
+            ? urlFor(previous.cover).width(480).height(360).fit("crop").url()
+            : undefined,
+        }
+      : undefined,
     nextProject: next
       ? {
           slug: next.slug,
           title: clean(next.title),
           client: clean(next.client),
+          coverSrc: next.cover?.asset?._ref
+            ? urlFor(next.cover).width(480).height(360).fit("crop").url()
+            : undefined,
         }
       : undefined,
   };

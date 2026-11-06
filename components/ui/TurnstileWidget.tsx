@@ -28,7 +28,13 @@ export function TurnstileWidget({
   resetKey: number;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  // A chave de teste só é usada no desenvolvimento local.
+  const configuredSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const siteKey = process.env.NODE_ENV === "production" &&
+    configuredSiteKey === "1x00000000000000000000AA"
+      ? ""
+      : configuredSiteKey ||
+        (process.env.NODE_ENV === "development" ? "1x00000000000000000000AA" : "");
 
   useEffect(() => {
     if (!siteKey || !containerRef.current) return;

@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from "react";
+import Image from "next/image";
 
 export function BrandWordmark({
   className = "",
@@ -7,9 +8,16 @@ export function BrandWordmark({
   return (
     <span
       {...props}
-      className={`font-sans text-accent text-[length:var(--type-brand)] leading-none font-medium tracking-[var(--tracking-brand)] ${className}`}
+      className={`inline-flex items-center ${className}`}
     >
-      metro.
+      <Image
+        src="/brand/metro-wordmark.png"
+        alt=""
+        width={856}
+        height={225}
+        priority
+        className="header-logo-image h-auto w-36 sm:w-40"
+      />
     </span>
   );
 }

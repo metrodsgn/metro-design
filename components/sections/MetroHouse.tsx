@@ -21,7 +21,6 @@ export function MetroHouse() {
       <Container>
         <div className="metro-house-section__body">
           <div className="metro-house-section__heading">
-            <p className="label-mono mb-4">Fotos da agência</p>
             <h2 id="metro-house-title" className="metro-house-section__title type-h2">
               Onde as marcas ganham forma.
             </h2>

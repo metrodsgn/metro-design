@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { ServicesProcess } from "@/components/sections/ServicesProcess";
 import { ReasonsAccordion } from "@/components/sections/ReasonsAccordion";
@@ -8,10 +9,10 @@ import styles from "./page.module.css";
 export const metadata = createSiteMetadata({ title: "Fazemos — Metro Design", description: "Branding, conteúdo, audiovisual e tecnologia em uma operação única, para que a marca chegue inteira a cada ponto de contato.", path: "/fazemos" });
 
 const fronts = [
-  { title: "Branding & Design", intro: "O ponto de partida para quem quer se posicionar de forma consistente e memorável. Criamos marcas do zero ou evoluímos as que já existem, traduzindo propósito em sistema visual.", items: ["Naming e criação de marcas", "Identidade visual", "Brand book", "Redesign de marcas"] },
-  { title: "Comunicação & Conteúdo", intro: "A comunicação é o elo entre a marca e o mercado. Planejamos, produzimos e gerimos a presença digital com um objetivo claro: engajamento real e resultado consistente.", items: ["Planejamento estratégico", "Gestão de redes sociais", "Campanhas e tráfego pago", "Treinamento de equipes em branding"] },
-  { title: "Audiovisual & Direção Criativa", intro: "Conteúdo visual constrói marca. Com estrutura própria, produzimos fotos e vídeos exclusivos que humanizam a marca e funcionam em campanhas, ações e materiais institucionais.", items: ["Fotografia publicitária", "Vídeos curtos e institucionais", "Direção de arte para campanhas", "Sinalização e materiais gráficos"] },
-  { title: "Produtos Digitais & Tecnologia", intro: "Sites, plataformas e sistemas que nascem com a identidade da marca e resolvem problemas reais do negócio, do primeiro protótipo ao produto no ar. Quem desenhou a sua marca desenha a sua interface, e nada se perde entre agência e desenvolvedor.", items: ["Sites institucionais e landing pages", "E-commerces e canais de venda", "Portais e plataformas", "Sistemas web e aplicações internas", "MVPs e produtos sob demanda", "UX/UI", "Integrações e automações"] },
+  { title: "Branding & Design", intro: "O ponto de partida para quem quer se posicionar de forma consistente e memorável. Criamos marcas do zero ou evoluímos as que já existem, traduzindo propósito em sistema visual.", items: ["Naming e criação de marcas", "Identidade visual", "Brand book", "Redesign de marcas"], image: "/fotos/DSC03252.JPG", imageAlt: "Profissional da Metro trabalhando em um computador no estúdio" },
+  { title: "Comunicação & Conteúdo", intro: "A comunicação é o elo entre a marca e o mercado. Planejamos, produzimos e gerimos a presença digital com um objetivo claro: engajamento real e resultado consistente.", items: ["Planejamento estratégico", "Gestão de redes sociais", "Campanhas e tráfego pago", "Treinamento de equipes em branding"], image: "/fotos/DSC03249.JPG", imageAlt: "Integrante da equipe Metro conversando no estúdio" },
+  { title: "Audiovisual & Direção Criativa", intro: "Conteúdo visual constrói marca. Com estrutura própria, produzimos fotos e vídeos exclusivos que humanizam a marca e funcionam em campanhas, ações e materiais institucionais.", items: ["Fotografia publicitária", "Vídeos curtos e institucionais", "Direção de arte para campanhas", "Sinalização e materiais gráficos"], image: "/fotos/DSC03248.JPG", imageAlt: "Profissional da Metro em conversa criativa no estúdio" },
+  { title: "Produtos Digitais & Tecnologia", intro: "Sites, plataformas e sistemas que nascem com a identidade da marca e resolvem problemas reais do negócio, do primeiro protótipo ao produto no ar. Quem desenhou a sua marca desenha a sua interface, e nada se perde entre agência e desenvolvedor.", items: ["Sites institucionais e landing pages", "E-commerces e canais de venda", "Portais e plataformas", "Sistemas web e aplicações internas", "MVPs e produtos sob demanda", "UX/UI", "Integrações e automações"], image: "/fotos/DSC03245.JPG", imageAlt: "Integrante da equipe Metro ao lado de uma estação de trabalho" },
 ];
 const reasons: (readonly [string, string])[] = [
   ["Estratégia como ponto de partida.", "Investigamos antes de criar. Negócio, público e objetivo definem a entrega, não o contrário."],
@@ -36,11 +37,29 @@ export default function FazemosPage() {
         <p className={styles.lead}>Branding, conteúdo, audiovisual e tecnologia em uma operação única, para que a marca chegue inteira a cada ponto de contato.</p>
       </header>
       <section aria-label="Frentes de atuação" className={styles.fronts}>
-        {fronts.map((front) => <article className={styles.card} key={front.title}>
-          <h2>{front.title}</h2><p>{front.intro}</p>
-          <ul>{front.items.map(item => <li key={item}>{item}</li>)}</ul>
-          <Link href="/fale" className="ui-button ui-button-accent">Quero essa frente <span aria-hidden="true">↗</span></Link>
-        </article>)}
+        {fronts.map((front) => (
+          <article className={styles.front} key={front.title}>
+            <div className={styles.frontContent}>
+              <h2>{front.title}</h2>
+              <p>{front.intro}</p>
+              <ul>
+                {front.items.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+              <Link href="/fale" className="ui-button ui-button-accent">
+                Quero essa frente <span aria-hidden="true">↗</span>
+              </Link>
+            </div>
+            <figure className={styles.frontPhoto}>
+              <Image
+                src={front.image}
+                alt={front.imageAlt}
+                fill
+                sizes="(max-width: 767px) 100vw, (max-width: 1280px) 40vw, 560px"
+                className={styles.frontImage}
+              />
+            </figure>
+          </article>
+        ))}
       </section>
       <section className={styles.reasons}>
         <h2>Por que escolher a Metro.</h2>

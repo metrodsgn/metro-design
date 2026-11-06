@@ -34,6 +34,7 @@ export function Hero() {
           preload="metadata"
           className="h-full w-full object-cover object-center"
         >
+          <source src="/videos/video-mobile.mp4" type="video/mp4" media="(max-width: 767px)" />
           <source src="/videos/video.mp4" type="video/mp4" />
         </video>
       </div>
@@ -60,53 +61,30 @@ export function Hero() {
             },
           }}
         >
-          <motion.p
-            variants={fadeVariants}
-            transition={{ duration: 0.5, ease: EASE }}
-            className="label-mono mb-5 text-foreground/85"
-          >
+          <motion.p variants={fadeVariants} transition={{ duration: 0.5, ease: EASE }} className="label-mono mb-5 text-foreground/85">
             Building brands. Every day.
           </motion.p>
-          <h1
-            id="hero-title"
-            className="type-h1 text-foreground"
-          >
-            <span className="block overflow-hidden pb-[0.08em]">
-              <motion.span
-                variants={lineVariants}
-                transition={{ duration: 0.8, ease: EASE }}
-                className="block"
-              >
-                Marcas, conteúdos e produtos digitais
+
+          <h1 id="hero-title" className="type-h1 text-foreground leading-[1.08]">
+            <span className="block overflow-hidden pb-[0.35em]">
+              <motion.span variants={lineVariants} transition={{ duration: 0.8, ease: EASE }} className="block">
+                <span className="block"><span className="hero-title__marcas">Marcas</span>,</span>
+                <span className="block">conteúdos</span>
+                <span className="block">e produtos</span>
+                <span className="block text-accent">digitais</span>
               </motion.span>
             </span>
           </h1>
 
-          <motion.p
-            variants={fadeVariants}
-            transition={{ duration: 0.5, ease: EASE }}
-            className="type-body text-foreground/75 mt-6 max-w-xl md:mt-7"
-          >
+          <motion.p variants={fadeVariants} transition={{ duration: 0.5, ease: EASE }} className="type-body text-foreground/75 mt-6 max-w-xl md:mt-7">
             Design, comunicação e tecnologia para transformar percepção em valor.
           </motion.p>
 
-          <motion.div
-            variants={fadeVariants}
-            transition={{ duration: 0.5, ease: EASE }}
-            className="mt-8 flex flex-wrap items-center gap-4 md:mt-10"
-          >
-            <Link
-              href="/projetos"
-              className="ui-button ui-button-accent"
-              data-cursor="Ver projetos ↗"
-            >
+          <motion.div variants={fadeVariants} transition={{ duration: 0.5, ease: EASE }} className="mt-8 flex flex-wrap items-center gap-4 md:mt-10">
+            <Link href="/projetos" className="ui-button ui-button-accent" data-cursor="Ver projetos ↗">
               Ver projetos <span aria-hidden="true">↗</span>
             </Link>
-            <Link
-              href="/contato"
-              className="ui-button ui-button-secondary"
-              data-cursor="Iniciar um projeto ↗"
-            >
+            <Link href="/contato" className="ui-button ui-button-secondary" data-cursor="Iniciar um projeto ↗">
               Iniciar um projeto <span aria-hidden="true">↗</span>
             </Link>
           </motion.div>

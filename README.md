@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Metro Design
 
-## Getting Started
+Site em Next.js com conteúdo de projetos no Sanity e formulário de contato com Resend e Cloudflare Turnstile.
 
-First, run the development server:
+## Desenvolvimento
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Configure em `.env.local` o projeto e o dataset do Sanity (`NEXT_PUBLIC_SANITY_PROJECT_ID` e `NEXT_PUBLIC_SANITY_DATASET`), além de `CONTACT_FORM_SECRET` e `RESEND_API_KEY` para testar o formulário. Se não houver chaves de Turnstile no ambiente de desenvolvimento, o site usa as chaves públicas de teste da Cloudflare. Elas não são usadas no build de produção.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Publicação
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to self-host and optimize Inter for interface text and Instrument Serif for editorial headings.
+Configure no ambiente de produção:
 
-## Learn More
+- `NEXT_PUBLIC_SANITY_PROJECT_ID` e `NEXT_PUBLIC_SANITY_DATASET`;
+- `CONTACT_FORM_SECRET` (segredo longo e aleatório);
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY` e `TURNSTILE_SECRET_KEY` da mesma configuração real do Cloudflare Turnstile;
+- `RESEND_API_KEY`, `CONTACT_EMAIL_TO` e `CONTACT_EMAIL_FROM` (por exemplo, `Metro Design <contato@metrodesign.com.br>`).
 
-To learn more about Next.js, take a look at the following resources:
+Antes da publicação, verifique `metrodesign.com.br` no Resend e configure `CONTACT_EMAIL_FROM` com um remetente do domínio. Sem as chaves reais de Turnstile, o formulário de produção permanece indisponível por segurança.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+O limite de requisições atual fica em memória e só vale por instância do servidor. Em uma implantação com múltiplas instâncias, conecte um armazenamento compartilhado para aplicar o limite globalmente.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Verificações
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+```

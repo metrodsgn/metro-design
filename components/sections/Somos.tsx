@@ -21,7 +21,7 @@ export function Somos() {
           <h2 id="somos-title" className="about-somos__title type-h2">
             {ABOUT.title}
           </h2>
-          <p className="type-h4 text-muted mx-auto mt-5 max-w-4xl text-center">{ABOUT.subtitle}</p>
+          <p className="type-h4 font-sans text-muted mx-auto mt-5 max-w-4xl text-center">{ABOUT.subtitle}</p>
 
           <div className="about-somos__stories">
             {paragraphs.map((paragraph, index) => (

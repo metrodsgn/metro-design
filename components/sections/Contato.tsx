@@ -601,13 +601,18 @@ function ContactMapWidget({
 }) {
   const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.address)}`;
   const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(CONTACT.address)}&output=embed`;
+  const [addressBeforeCity, addressAfterCity] = CONTACT.address.split("Fortaleza – CE");
 
   return (
     <div className="contact-map">
       <div className="mb-6 max-w-3xl space-y-4">
         <h2 className="type-h2">Onde estamos.</h2>
         <p className="type-body text-muted">Sede em Fortaleza, atendimento em todo o Brasil. Venha tomar um café com a gente, com hora marcada.</p>
-        <p className="type-body">{CONTACT.address}</p>
+        <p className="type-body">
+          {addressBeforeCity}
+          <br />
+          Fortaleza – CE{addressAfterCity}
+        </p>
         <p className="type-body text-muted">Segunda a sexta, 8h às 18h</p>
         <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="ui-button ui-button-secondary">
           Abrir no Google Maps <span aria-hidden="true">↗</span>
@@ -619,7 +624,11 @@ function ContactMapWidget({
         hidden={!open}
       >
         <div className="contact-map__top">
-          <p className="contact-map__address">{CONTACT.address}</p>
+          <p className="contact-map__address">
+            {addressBeforeCity}
+            <br />
+            Fortaleza – CE{addressAfterCity}
+          </p>
           <a
             href={directionsUrl}
             target="_blank"

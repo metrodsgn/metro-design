@@ -64,7 +64,11 @@ export async function POST(request: Request) {
 
     const body = (await request.json()) as Body;
 
-    if (!process.env.TURNSTILE_SECRET_KEY) {
+    if (
+      process.env.NODE_ENV !== "development" &&
+      (!process.env.TURNSTILE_SECRET_KEY ||
+        process.env.TURNSTILE_SECRET_KEY === "1x0000000000000000000000000000000AA")
+    ) {
       return NextResponse.json(
         { error: "A verificação de segurança ainda não foi configurada." },
         { status: 503 },
@@ -206,7 +210,7 @@ export async function POST(request: Request) {
       deliveriesCount: deliveries.length,
       investmentRange: investmentRange || undefined,
       challengeLength: challenge.length,
-      hasWebsite: !!company && /^https?:\/\//i.test(company),
+      hasWebsite: Boolean(siteUrl),
       hasSocial: !!socialMedia,
       isDecisionMaker: decisionMaker,
     });
@@ -233,7 +237,7 @@ export async function POST(request: Request) {
 
     // 13. Envio por e-mail
     const { error } = await resend.emails.send({
-      from: "Metro Design <onboarding@resend.dev>",
+      from: process.env.CONTACT_EMAIL_FROM || "Metro Design <onboarding@resend.dev>",
       to: process.env.CONTACT_EMAIL_TO || "oi@metrodesign.com.br",
       replyTo: email,
       subject: `Novo contato: ${safeName}${safeCompany ? ` (${safeCompany})` : ""}`,

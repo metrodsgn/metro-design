@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { Container } from "@/components/ui/Container";
 import type { ProjectDetailData } from "@/lib/project-detail";
@@ -121,33 +120,24 @@ export function ProjectDetail({ project }: { project: ProjectDetailData }) {
           </section>
         )}
 
-        {project.nextProject && (
+        {(project.previousProject || project.nextProject) && (
           <nav
             aria-label="Navegação entre projetos"
             className="border-border mt-[7.5rem] border-t"
           >
             <div className="project-navigation__links">
-              <ProjectTransitionCard project={project.nextProject} />
+              {project.previousProject && (
+                <ProjectTransitionCard
+                  project={project.previousProject}
+                  direction="previous"
+                />
+              )}
+              {project.nextProject && (
+                <ProjectTransitionCard project={project.nextProject} />
+              )}
             </div>
           </nav>
         )}
-
-        <div className="mx-auto mt-8 flex max-w-6xl justify-center sm:justify-start">
-          <Link href="/projetos" className="project-back-button">
-            <span className="project-back-button__circle" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M5 12h14m-6-6 6 6-6 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-            <span className="project-back-button__text">Todos os projetos</span>
-          </Link>
-        </div>
       </Container>
     </article>
   );

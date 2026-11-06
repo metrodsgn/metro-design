@@ -2,12 +2,14 @@
 
 import { useRef, useState } from "react";
 import { Button, Flex, Text } from "@sanity/ui";
-import { type InputProps, insert, setIfMissing, useClient } from "sanity";
+import { type InputProps, insert, set, setIfMissing, useClient } from "sanity";
+import { urlFor } from "@/sanity/lib/image";
 
 type GalleryImage = {
   _key: string;
   _type: "image";
   asset: { _type: "reference"; _ref: string };
+  [key: string]: unknown;
 };
 
 export function GalleryBulkInput(props: InputProps) {
@@ -16,6 +18,25 @@ export function GalleryBulkInput(props: InputProps) {
   const [progress, setProgress] = useState("");
   const [error, setError] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [selectionOpen, setSelectionOpen] = useState(false);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const gallery = (Array.isArray(props.value) ? props.value : []) as GalleryImage[];
+
+  function toggleSelection(key: string) {
+    setSelectedKeys((current) =>
+      current.includes(key)
+        ? current.filter((selectedKey) => selectedKey !== key)
+        : [...current, key],
+    );
+  }
+
+  function removeSelectedImages() {
+    if (!selectedKeys.length) return;
+
+    props.onChange(set(gallery.filter((image) => !selectedKeys.includes(image._key))));
+    setSelectedKeys([]);
+    setSelectionOpen(false);
+  }
 
   async function uploadFiles(files: FileList | null) {
     if (!files?.length || uploading) return;
@@ -69,10 +90,89 @@ export function GalleryBulkInput(props: InputProps) {
           disabled={uploading}
           onClick={() => inputRef.current?.click()}
         />
+        <Button
+          text={selectionOpen ? "Cancelar seleção" : "Selecionar imagens para remover"}
+          mode="ghost"
+          disabled={uploading || gallery.length === 0}
+          onClick={() => {
+            setSelectionOpen((open) => !open);
+            setSelectedKeys([]);
+          }}
+        />
         <Text size={1} muted>
           Ou arraste várias imagens para a galeria abaixo.
         </Text>
       </Flex>
+      {selectionOpen && (
+        <div style={{ marginBottom: 16 }}>
+          <Text size={1} muted>
+            Selecione as imagens que deseja remover desta galeria.
+          </Text>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+              gap: 12,
+              marginBlock: 12,
+            }}
+          >
+            {gallery.map((image, index) => {
+              const key = image._key || `gallery-image-${index}`;
+              const imageUrl = image.asset?._ref
+                ? urlFor({
+                    _type: "image",
+                    asset: { _type: "reference", _ref: image.asset._ref },
+                  })
+                    .width(320)
+                    .height(240)
+                    .fit("crop")
+                    .url()
+                : "";
+
+              return (
+                <label
+                  key={key}
+                  style={{
+                    display: "grid",
+                    gap: 8,
+                    padding: 8,
+                    border: "1px solid var(--card-border-color)",
+                    borderRadius: 4,
+                    cursor: "pointer",
+                  }}
+                >
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      aspectRatio: "4 / 3",
+                      backgroundColor: "var(--card-bg-color)",
+                      backgroundImage: imageUrl ? `url("${imageUrl}")` : undefined,
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                    }}
+                  />
+                  <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <input
+                      type="checkbox"
+                      checked={selectedKeys.includes(key)}
+                      onChange={() => toggleSelection(key)}
+                    />
+                    <Text size={1}>Imagem {index + 1}</Text>
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+          <Button
+            text={`Remover selecionadas (${selectedKeys.length})`}
+            tone="critical"
+            disabled={selectedKeys.length === 0}
+            onClick={removeSelectedImages}
+          />
+        </div>
+      )}
       {progress && (
         <Text size={1} aria-live="polite">
           {progress}
