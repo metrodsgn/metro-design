@@ -242,7 +242,7 @@
 
 @media (min-width: 640px) and (max-width: 1439px) {
   .hero-section .hero-text-exit {
-    padding-inline: clamp(2rem, 4vw, 3.5rem);
+    padding-inline: clamp(3rem, 5.5vw, 5rem);
   }
 
   .hero-section #hero-title {
