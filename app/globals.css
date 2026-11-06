@@ -2458,7 +2458,7 @@
   aspect-ratio: auto;
   margin: 0;
   padding: 0;
-  border-bottom: 1px solid #333;
+  border-bottom: 0;
   background: transparent;
   color: inherit;
 }
