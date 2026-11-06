@@ -37,7 +37,9 @@ export function Clientes() {
     <section id="clientes" className="py-section-md md:py-section-lg">
       <Container>
         <Reveal>
-          <h2 className="type-h2 text-foreground max-w-2xl">{CLIENTS.title}</h2>
+          <h2 className="clients-section__title type-h2 text-foreground">
+            {CLIENTS.titleLines.map((line) => <span key={line}>{line}</span>)}
+          </h2>
         </Reveal>
       </Container>
 

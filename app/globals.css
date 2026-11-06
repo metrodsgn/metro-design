@@ -2148,6 +2148,15 @@
 }
 
 .about-gsap-scope { display: block; width: 100%; min-width: 0; }
+.clients-section__title {
+  display: grid;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
+  font-size: clamp(1.5rem, 6.2vw, 4.75rem);
+  text-align: center;
+}
+.clients-section__title span { white-space: nowrap; }
 .about-hero__content { max-width: 100rem; margin-inline: auto; }
 .about-hero__wordmark-center {
   position: absolute;
