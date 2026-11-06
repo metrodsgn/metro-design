@@ -599,8 +599,8 @@ function ContactMapWidget({
   open: boolean;
   onToggle: () => void;
 }) {
-  const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.address)}`;
-  const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(CONTACT.address)}&output=embed`;
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(CONTACT.coordinates)}`;
+  const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(CONTACT.coordinates)}&z=17&output=embed`;
   const [addressBeforeCity, addressAfterCity] = CONTACT.address.split("Fortaleza – CE");
 
   return (
