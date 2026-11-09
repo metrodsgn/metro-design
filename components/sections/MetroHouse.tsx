@@ -1,7 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { MetroHouseCarousel, type MetroHouseSlide } from "@/components/ui/MetroHouseCarousel";
 
-const photos: MetroHouseSlide[] = [
+const defaultPhotos: MetroHouseSlide[] = [
   { id: "dsc03245", src: "/fotos/DSC03245.JPG", alt: "Integrante da equipe conversando no escritório da Metro", caption: "", description: "" },
   { id: "dsc03248", src: "/fotos/DSC03248.JPG", alt: "Integrante da equipe conversando ao lado do computador", caption: "", description: "" },
   { id: "dsc03252", src: "/fotos/DSC03252.JPG", alt: "Integrante da equipe trabalhando no escritório da Metro", caption: "", description: "" },
@@ -10,14 +10,15 @@ const photos: MetroHouseSlide[] = [
   { id: "dsc03247", src: "/fotos/DSC03247.JPG", alt: "Integrante da equipe em um momento de trabalho", caption: "", description: "" },
 ];
 
-export function MetroHouse() {
+export function MetroHouse({ photos }: { photos?: MetroHouseSlide[] }) {
+  const carouselPhotos = photos?.length ? photos : defaultPhotos;
   return (
     <section
       id="metro-house"
       aria-labelledby="metro-house-title"
       className="metro-house-section relative z-10 bg-background py-20 md:py-32"
     >
-      <MetroHouseCarousel photos={photos} />
+      <MetroHouseCarousel photos={carouselPhotos} />
       <Container>
         <div className="metro-house-section__body">
           <div className="metro-house-section__heading">

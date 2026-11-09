@@ -212,6 +212,7 @@ export function Header() {
             <BrandWordmark
               className="header-logo-ink"
               data-header-ink
+              data-home={pathname === "/"}
               data-over-text={overText && !menuOpen}
             />
           </Link>

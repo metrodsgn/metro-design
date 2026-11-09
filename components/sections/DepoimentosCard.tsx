@@ -163,6 +163,9 @@ export function DepoimentosCard({
 }
 
 function TestimonialContent({ testimonial }: { testimonial: Testimonial }) {
+  const [expanded, setExpanded] = useState(false);
+  const canExpand = testimonial.quote.length > 280;
+
   return (
     <>
       <div
@@ -183,9 +186,19 @@ function TestimonialContent({ testimonial }: { testimonial: Testimonial }) {
           testimonial.initial || testimonial.name.slice(0, 1)
         )}
       </div>
-      <blockquote className="type-quote text-foreground max-w-full break-words">
+      <blockquote className={`type-body text-foreground max-w-full break-words text-sm sm:text-base ${canExpand && !expanded ? "line-clamp-7" : ""}`}>
         “{testimonial.quote}”
       </blockquote>
+      {canExpand && (
+        <button
+          type="button"
+          onClick={() => setExpanded((value) => !value)}
+          className="type-small text-muted mt-2 transition-colors hover:text-accent focus-visible:text-accent focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-none"
+          aria-expanded={expanded}
+        >
+          {expanded ? "Ver menos" : "Ver mais"}
+        </button>
+      )}
       <div className="mt-auto pt-6">
         <p className="type-label text-foreground max-w-full font-semibold break-words">{testimonial.name}</p>
         <p className="type-small text-muted mt-1 max-w-full break-words">

@@ -59,9 +59,9 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
     >
       <div className={GRID_PATTERN} aria-hidden="true" />
 
-      <h1 className="type-h1 px-6 text-center text-accent">
+      <h2 className="type-h1 px-6 text-center text-accent">
         Projetos
-      </h1>
+      </h2>
     </motion.section>
   );
 };

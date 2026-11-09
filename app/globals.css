@@ -295,6 +295,10 @@
   filter: brightness(0) invert(1);
 }
 
+.header-logo-ink[data-home="true"] .header-logo-image {
+  filter: none;
+}
+
 @layer components {
   /* Botões — sistema unificado */
   .ui-button {

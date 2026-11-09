@@ -34,7 +34,7 @@ export const testimonialType = defineType({
       name: "quote",
       title: "Depoimento",
       type: "text",
-      validation: (rule) => rule.required().max(280),
+      validation: (rule) => rule.required().max(2000),
     }),
     defineField({
       name: "initial",
