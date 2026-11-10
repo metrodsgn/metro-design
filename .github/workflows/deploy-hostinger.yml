@@ -64,6 +64,16 @@ jobs:
             bash -s -- "$DEPLOY_PATH" "$DEPLOY_BRANCH" <<'REMOTE_SCRIPT'
           set -Eeuo pipefail
 
+          export PATH="/home/metrodesign-novo/.nvm/versions/node/v24.22.2/bin:$PATH"
+          NODE_VERSION="$(node -v)"
+          echo "$NODE_VERSION"
+          if [[ "$NODE_VERSION" != v24.* ]]; then
+            echo "Expected Node.js 24, found $NODE_VERSION" >&2
+            exit 1
+          fi
+          npm -v
+          command -v pm2
+
           DEPLOY_DIR="$1"
           DEPLOY_BRANCH="$2"
           EXPECTED_DIR="/home/metrodesign-novo/htdocs/novo.metrodesign.com.br"
