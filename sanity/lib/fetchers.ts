@@ -4,7 +4,6 @@ import {
   featuredCasesQuery,
   caseBySlugQuery,
   allTestimonialsQuery,
-  allClientsQuery,
   metroHousePhotosQuery,
   serviceFrontPhotosQuery,
   aboutStoryPhotoQuery,
@@ -53,26 +52,14 @@ export type Testimonial = {
   quote: string;
   avatarUrl?: string;
   initial: string;
-  time: string;
-};
-
-export type ClientLogo = {
-  _id: string;
-  name: string;
-  logo: {
-    asset: { _ref: string; _type: string };
-    hotspot?: { x: number; y: number };
-  };
 };
 
 export type MetroHouseImage = {
   _key: string;
   asset: { _ref: string; _type: string };
-  hotspot?: { x: number; y: number };
   alt?: string;
   caption?: string;
   description?: string;
-  dimensions?: { width: number; height: number; aspectRatio: number };
   lqip?: string;
 };
 
@@ -81,7 +68,6 @@ export type ServiceFrontPhoto = {
   alt?: string;
   crop?: { top: number; bottom: number; left: number; right: number };
   hotspot?: { x: number; y: number; width?: number; height?: number };
-  lqip?: string;
 };
 
 export type ServiceFrontPhotos = {
@@ -144,10 +130,6 @@ export async function getCaseBySlug(slug: string): Promise<CaseFull | null> {
 
 export async function getAllTestimonials(): Promise<Testimonial[]> {
   return client.fetch(allTestimonialsQuery);
-}
-
-export async function getAllClients(): Promise<ClientLogo[]> {
-  return client.fetch(allClientsQuery);
 }
 
 export async function getMetroHousePhotos(): Promise<MetroHouseImage[]> {

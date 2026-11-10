@@ -43,12 +43,6 @@ export const testimonialType = defineType({
       validation: (rule) => rule.required().max(1),
     }),
     defineField({
-      name: "time",
-      title: "Tempo (ex: 'agora', '2 min', 'ontem')",
-      type: "string",
-      initialValue: "agora",
-    }),
-    defineField({
       name: "order",
       title: "Ordem (menor aparece primeiro)",
       type: "number",

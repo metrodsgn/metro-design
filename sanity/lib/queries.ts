@@ -55,16 +55,7 @@ export const allTestimonialsQuery = groq`
     role,
     quote,
     "avatarUrl": avatar.asset->url + "?w=160&h=160&fit=crop&auto=format",
-    initial,
-    time
-  }
-`;
-
-export const allClientsQuery = groq`
-  *[_type == "client" && defined(logo.asset._ref)] | order(order asc, name asc) {
-    _id,
-    name,
-    logo
+    initial
   }
 `;
 
@@ -72,21 +63,19 @@ export const metroHousePhotosQuery = groq`
   *[_type == "metroHouse" && _id == "metroHouse"][0].photos[defined(asset._ref)]{
     _key,
     asset,
-    hotspot,
     alt,
     caption,
     description,
-    "dimensions": asset->metadata.dimensions,
     "lqip": asset->metadata.lqip
   }
 `;
 
 export const serviceFrontPhotosQuery = groq`
   *[_type == "serviceFrontPhotos" && _id == "serviceFrontPhotos"][0]{
-    brandingDesign{asset, alt, crop, hotspot, "lqip": asset->metadata.lqip},
-    communicationContent{asset, alt, crop, hotspot, "lqip": asset->metadata.lqip},
-    audiovisualCreativeDirection{asset, alt, crop, hotspot, "lqip": asset->metadata.lqip},
-    digitalProductsTechnology{asset, alt, crop, hotspot, "lqip": asset->metadata.lqip}
+    brandingDesign{asset, alt, crop, hotspot},
+    communicationContent{asset, alt, crop, hotspot},
+    audiovisualCreativeDirection{asset, alt, crop, hotspot},
+    digitalProductsTechnology{asset, alt, crop, hotspot}
   }
 `;
 

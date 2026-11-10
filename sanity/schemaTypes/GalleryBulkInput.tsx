@@ -33,7 +33,13 @@ export function GalleryBulkInput(props: InputProps) {
   function removeSelectedImages() {
     if (!selectedKeys.length) return;
 
-    props.onChange(set(gallery.filter((image) => !selectedKeys.includes(image._key))));
+    props.onChange(
+      set(
+        gallery.filter(
+          (image, index) => !selectedKeys.includes(image._key || `gallery-image-${index}`),
+        ),
+      ),
+    );
     setSelectedKeys([]);
     setSelectionOpen(false);
   }
@@ -118,6 +124,7 @@ export function GalleryBulkInput(props: InputProps) {
           >
             {gallery.map((image, index) => {
               const key = image._key || `gallery-image-${index}`;
+              const selected = selectedKeys.includes(key);
               const imageUrl = image.asset?._ref
                 ? urlFor({
                     _type: "image",
@@ -133,13 +140,16 @@ export function GalleryBulkInput(props: InputProps) {
                 <label
                   key={key}
                   style={{
+                    position: "relative",
                     display: "grid",
                     gap: 8,
                     padding: 8,
-                    border: "1px solid var(--card-border-color)",
+                    border: `2px solid ${selected ? "#ff3333" : "var(--card-border-color)"}`,
+                    backgroundColor: selected ? "rgba(255, 51, 51, 0.12)" : "transparent",
                     borderRadius: 4,
                     cursor: "pointer",
                   }}
+                  data-selected={selected ? "true" : "false"}
                 >
                   <span
                     aria-hidden="true"
@@ -147,6 +157,8 @@ export function GalleryBulkInput(props: InputProps) {
                       display: "block",
                       width: "100%",
                       aspectRatio: "4 / 3",
+                      outline: selected ? "2px solid #ff3333" : undefined,
+                      outlineOffset: selected ? -2 : undefined,
                       backgroundColor: "var(--card-bg-color)",
                       backgroundImage: imageUrl ? `url("${imageUrl}")` : undefined,
                       backgroundPosition: "center",
@@ -157,10 +169,38 @@ export function GalleryBulkInput(props: InputProps) {
                     <input
                       type="checkbox"
                       checked={selectedKeys.includes(key)}
+                      aria-label={`Selecionar imagem ${index + 1} para remoção`}
                       onChange={() => toggleSelection(key)}
+                      style={{
+                        width: 18,
+                        height: 18,
+                        flex: "none",
+                        accentColor: "#ff3333",
+                      }}
                     />
                     <Text size={1}>Imagem {index + 1}</Text>
                   </span>
+                  {selected && (
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        position: "absolute",
+                        top: 12,
+                        right: 12,
+                        display: "grid",
+                        width: 26,
+                        height: 26,
+                        placeItems: "center",
+                        borderRadius: "50%",
+                        backgroundColor: "#ff3333",
+                        color: "white",
+                        fontWeight: 700,
+                        boxShadow: "0 1px 6px rgba(0, 0, 0, 0.5)",
+                      }}
+                    >
+                      ✓
+                    </span>
+                  )}
                 </label>
               );
             })}
