@@ -98,19 +98,23 @@ function correctProjectNames<T extends CaseListItem>(project: T): T {
 }
 
 export async function getAllCases(): Promise<CaseListItem[]> {
-  const projects = await client.fetch<CaseListItem[]>(allCasesQuery);
+  const projects = await client.fetch<CaseListItem[]>(allCasesQuery, {}, {
+    next: { revalidate: 60 },
+  });
   return projects.map(correctProjectNames);
 }
 
 export async function getFeaturedCases(): Promise<CaseListItem[]> {
-  const projects = await client.fetch<CaseListItem[]>(featuredCasesQuery);
+  const projects = await client.fetch<CaseListItem[]>(featuredCasesQuery, {}, {
+    next: { revalidate: 60 },
+  });
   return projects.map(correctProjectNames);
 }
 
 export async function getCaseBySlug(slug: string): Promise<CaseFull | null> {
   const project = await client.fetch<CaseFull | null>(caseBySlugQuery, {
     slug,
-  });
+  }, { next: { revalidate: 60 } });
   if (!project) return null;
 
   const correctedProject = correctProjectNames(project);

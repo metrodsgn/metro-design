@@ -9,15 +9,14 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-// A lista de projetos também é montada no build. Gerar os detalhes nesse mesmo
-// momento evita buscar o case novamente durante a navegação do cliente.
+// Pré-renderiza as cases existentes; novas cases podem ser geradas sob demanda.
 export async function generateStaticParams() {
   const projects = await getAllCases();
   return projects.map((project) => ({ slug: project.slug }));
 }
 
-// Os links da galeria só apontam para cases retornados por getAllCases.
-export const dynamicParams = false;
+export const dynamicParams = true;
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,

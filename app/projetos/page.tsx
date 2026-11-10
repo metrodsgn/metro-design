@@ -11,6 +11,8 @@ export const metadata: Metadata = createSiteMetadata({
   path: "/projetos",
 });
 
+export const revalidate = 60;
+
 export default async function ProjetosPage() {
   const cases = await getAllCases();
 

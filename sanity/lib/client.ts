@@ -6,5 +6,6 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
+  // ISR deve buscar a versão atualizada da API após a revalidação do Next.js.
+  useCdn: false,
 })
