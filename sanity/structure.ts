@@ -6,8 +6,6 @@ export const structure: StructureResolver = (S) =>
     .title("Metro Design")
     .items([
       S.documentTypeListItem("case").title("Cases"),
-      S.documentTypeListItem("beforeAfter").title("Antes e Depois"),
-      S.documentTypeListItem("client").title("Clientes"),
       S.documentTypeListItem("testimonial").title("Depoimentos"),
       S.listItem()
         .title("metro hause")
@@ -15,4 +13,7 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title("Fotos das frentes")
         .child(S.document().schemaType("serviceFrontPhotos").documentId("serviceFrontPhotos")),
+      S.listItem()
+        .title("Foto da página Sobre")
+        .child(S.document().schemaType("aboutStoryPhoto").documentId("aboutStoryPhoto")),
     ]);

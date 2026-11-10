@@ -2,9 +2,9 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { AboutGsapMotion } from "@/components/ui/AboutGsapMotion";
 import { ABOUT } from "@/lib/constants";
-import { SOBRE_STORY_PHOTO } from "@/data/sobre-fotos";
+import { SOBRE_STORY_PHOTO, type SobrePhoto } from "@/data/sobre-fotos";
 
-export function Somos() {
+export function Somos({ photo = SOBRE_STORY_PHOTO }: { photo?: SobrePhoto }) {
   const paragraphs = ABOUT.paragraphs;
 
   return (
@@ -34,12 +34,12 @@ export function Somos() {
             <p className="label-mono mt-4">{ABOUT.signature}</p>
           </div>
 
-          {SOBRE_STORY_PHOTO.src ? (
+          {photo.src ? (
             <figure className="about-somos__photo">
               <div className="about-somos__photo-frame" data-photo-frame>
                 <Image
-                  src={SOBRE_STORY_PHOTO.src}
-                  alt={SOBRE_STORY_PHOTO.alt}
+                  src={photo.src}
+                  alt={photo.alt}
                   fill
                   sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) 88vw, 64rem"
                   className="about-somos__photo-image object-cover"

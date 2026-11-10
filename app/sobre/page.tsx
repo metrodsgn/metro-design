@@ -8,8 +8,9 @@ import { SelectedProjects } from "@/components/sections/SelectedProjects";
 import { Faq } from "@/components/sections/Faq";
 import { ABOUT_HERO } from "@/lib/constants";
 import { createSiteMetadata } from "@/lib/metadata";
-import { getAllCases, getMetroHousePhotos } from "@/sanity/lib/fetchers";
+import { getAboutStoryPhoto, getAllCases, getMetroHousePhotos } from "@/sanity/lib/fetchers";
 import { urlFor } from "@/sanity/lib/image";
+import { SOBRE_STORY_PHOTO, type SobrePhoto } from "@/data/sobre-fotos";
 
 export const metadata: Metadata = createSiteMetadata({
   title: "Sobre — Metro Design",
@@ -43,10 +44,35 @@ async function loadMetroHousePhotos() {
   }
 }
 
+async function loadAboutStoryPhoto(): Promise<SobrePhoto> {
+  try {
+    const photo = await getAboutStoryPhoto();
+    if (!photo?.asset) return SOBRE_STORY_PHOTO;
+
+    return {
+      src: urlFor({
+        _type: "image",
+        asset: photo.asset,
+        crop: photo.crop,
+        hotspot: photo.hotspot,
+      })
+        .width(1600)
+        .height(900)
+        .fit("crop")
+        .auto("format")
+        .url(),
+      alt: "Foto institucional da equipe Metro Design",
+    };
+  } catch {
+    return SOBRE_STORY_PHOTO;
+  }
+}
+
 export default async function SobrePage() {
-  const [projects, metroHousePhotos] = await Promise.all([
+  const [projects, metroHousePhotos, storyPhoto] = await Promise.all([
     loadProjects(),
     loadMetroHousePhotos(),
+    loadAboutStoryPhoto(),
   ]);
 
   return (
@@ -58,7 +84,7 @@ export default async function SobrePage() {
         titleAriaLabel={ABOUT_HERO.accessibleTitle}
       />
 
-      <Somos />
+      <Somos photo={storyPhoto} />
       <MetroHouse photos={metroHousePhotos} />
       <Clientes />
       <SelectedProjects projects={projects} />

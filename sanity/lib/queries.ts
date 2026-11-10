@@ -89,3 +89,11 @@ export const serviceFrontPhotosQuery = groq`
     digitalProductsTechnology{asset, alt, crop, hotspot, "lqip": asset->metadata.lqip}
   }
 `;
+
+export const aboutStoryPhotoQuery = groq`
+  *[_type == "aboutStoryPhoto" && _id == "aboutStoryPhoto"][0].photo{
+    asset,
+    crop,
+    hotspot
+  }
+`;
