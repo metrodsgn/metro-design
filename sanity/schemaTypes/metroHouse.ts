@@ -16,26 +16,6 @@ export const metroHouseType = defineType({
         {
           type: "image",
           options: { hotspot: true },
-          fields: [
-            defineField({
-              name: "alt",
-              title: "Descrição da foto",
-              type: "string",
-              description: "Descreva o que aparece na foto para leitores de tela.",
-              validation: (Rule) => Rule.required().error("Informe uma descrição para a foto antes de publicar."),
-            }),
-            defineField({
-              name: "caption",
-              title: "Legenda",
-              type: "string",
-            }),
-            defineField({
-              name: "description",
-              title: "Descrição complementar",
-              type: "text",
-              rows: 3,
-            }),
-          ],
         },
       ],
     }),
