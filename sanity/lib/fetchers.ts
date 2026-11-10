@@ -6,6 +6,7 @@ import {
   allTestimonialsQuery,
   allClientsQuery,
   metroHousePhotosQuery,
+  serviceFrontPhotosQuery,
 } from "./queries";
 
 export type CaseListItem = {
@@ -74,6 +75,21 @@ export type MetroHouseImage = {
   lqip?: string;
 };
 
+export type ServiceFrontPhoto = {
+  asset: { _ref: string; _type: string };
+  alt?: string;
+  crop?: { top: number; bottom: number; left: number; right: number };
+  hotspot?: { x: number; y: number; width?: number; height?: number };
+  lqip?: string;
+};
+
+export type ServiceFrontPhotos = {
+  brandingDesign?: ServiceFrontPhoto;
+  communicationContent?: ServiceFrontPhoto;
+  audiovisualCreativeDirection?: ServiceFrontPhoto;
+  digitalProductsTechnology?: ServiceFrontPhoto;
+};
+
 function correctProjectAccent(value: string | undefined): string | undefined {
   return value?.replace(/\bfl[aàá]vio\b/gi, (name) =>
     name === name.toUpperCase() ? "FLÁVIO" : "Flávio",
@@ -129,4 +145,8 @@ export async function getAllClients(): Promise<ClientLogo[]> {
 
 export async function getMetroHousePhotos(): Promise<MetroHouseImage[]> {
   return (await client.fetch<MetroHouseImage[]>(metroHousePhotosQuery, {}, { next: { revalidate: 60 } })) ?? [];
+}
+
+export async function getServiceFrontPhotos(): Promise<ServiceFrontPhotos | null> {
+  return (await client.fetch<ServiceFrontPhotos | null>(serviceFrontPhotosQuery, {}, { next: { revalidate: 60 } })) ?? null;
 }

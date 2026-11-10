@@ -80,3 +80,12 @@ export const metroHousePhotosQuery = groq`
     "lqip": asset->metadata.lqip
   }
 `;
+
+export const serviceFrontPhotosQuery = groq`
+  *[_type == "serviceFrontPhotos" && _id == "serviceFrontPhotos"][0]{
+    brandingDesign{asset, alt, crop, hotspot, "lqip": asset->metadata.lqip},
+    communicationContent{asset, alt, crop, hotspot, "lqip": asset->metadata.lqip},
+    audiovisualCreativeDirection{asset, alt, crop, hotspot, "lqip": asset->metadata.lqip},
+    digitalProductsTechnology{asset, alt, crop, hotspot, "lqip": asset->metadata.lqip}
+  }
+`;

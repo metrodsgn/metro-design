@@ -4,7 +4,8 @@ import { testimonialType } from "./testimonial";
 import { clientType } from "./client";
 import { beforeAfterType } from "./beforeAfter";
 import { metroHouseType } from "./metroHouse";
+import { serviceFrontPhotosType } from "./serviceFrontPhotos";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [caseType, testimonialType, clientType, beforeAfterType, metroHouseType],
+  types: [caseType, testimonialType, clientType, beforeAfterType, metroHouseType, serviceFrontPhotosType],
 };

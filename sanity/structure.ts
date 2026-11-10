@@ -12,4 +12,7 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title("metro hause")
         .child(S.document().schemaType("metroHouse").documentId("metroHouse")),
+      S.listItem()
+        .title("Fotos das frentes")
+        .child(S.document().schemaType("serviceFrontPhotos").documentId("serviceFrontPhotos")),
     ]);
