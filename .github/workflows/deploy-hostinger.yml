@@ -1,0 +1,149 @@
+name: Deploy Hostinger Preview
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hostinger-preview-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Hostinger preview
+    runs-on: ubuntu-latest
+    environment: hostinger-preview
+    timeout-minutes: 20
+
+    steps:
+      - name: Require the deployment branch
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          if [[ "$GITHUB_REF" != "refs/heads/fix/dependency-security" ]]; then
+            echo "::error::Run this workflow from the fix/dependency-security branch."
+            exit 1
+          fi
+
+      - name: Deploy over verified SSH
+        shell: bash
+        env:
+          HOSTINGER_SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          HOSTINGER_HOST: ${{ vars.HOSTINGER_HOST }}
+          HOSTINGER_USER: ${{ vars.HOSTINGER_USER }}
+          HOSTINGER_KNOWN_HOSTS: ${{ vars.HOSTINGER_KNOWN_HOSTS }}
+          DEPLOY_PATH: /home/metrodesign-novo/htdocs/novo.metrodesign.com.br
+          DEPLOY_BRANCH: fix/dependency-security
+        run: |
+          set -Eeuo pipefail
+
+          if [[ -z "$HOSTINGER_SSH_KEY" || -z "$HOSTINGER_HOST" || -z "$HOSTINGER_USER" || -z "$HOSTINGER_KNOWN_HOSTS" ]]; then
+            echo "::error::Hostinger SSH key, host, user, and known hosts must all be configured."
+            exit 1
+          fi
+
+          if [[ "$HOSTINGER_USER" != "metrodesign-novo" ]]; then
+            echo "::error::HOSTINGER_USER must be exactly metrodesign-novo."
+            exit 1
+          fi
+
+          install -m 700 -d "$HOME/.ssh"
+          printf '%s\n' "$HOSTINGER_SSH_KEY" > "$HOME/.ssh/hostinger_preview_key"
+          printf '%s\n' "$HOSTINGER_KNOWN_HOSTS" > "$HOME/.ssh/hostinger_preview_known_hosts"
+          chmod 600 "$HOME/.ssh/hostinger_preview_key" "$HOME/.ssh/hostinger_preview_known_hosts"
+
+          ssh \
+            -i "$HOME/.ssh/hostinger_preview_key" \
+            -o BatchMode=yes \
+            -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile="$HOME/.ssh/hostinger_preview_known_hosts" \
+            "$HOSTINGER_USER@$HOSTINGER_HOST" \
+            bash -s -- "$DEPLOY_PATH" "$DEPLOY_BRANCH" <<'REMOTE_SCRIPT'
+          set -Eeuo pipefail
+
+          DEPLOY_DIR="$1"
+          DEPLOY_BRANCH="$2"
+          EXPECTED_DIR="/home/metrodesign-novo/htdocs/novo.metrodesign.com.br"
+
+          if [[ "$DEPLOY_DIR" != "$EXPECTED_DIR" ]]; then
+            echo "Refusing unexpected deployment directory: $DEPLOY_DIR" >&2
+            exit 1
+          fi
+
+          cd -- "$DEPLOY_DIR"
+          ACTUAL_DIR="$(pwd -P)"
+          if [[ "$ACTUAL_DIR" != "$EXPECTED_DIR" ]]; then
+            echo "Resolved deployment directory does not match the approved path: $ACTUAL_DIR" >&2
+            exit 1
+          fi
+
+          GIT_ROOT="$(git rev-parse --show-toplevel)"
+          if [[ "$GIT_ROOT" != "$EXPECTED_DIR" ]]; then
+            echo "Git root does not match the approved site directory: $GIT_ROOT" >&2
+            exit 1
+          fi
+
+          ORIGIN_URL="$(git remote get-url origin)"
+          case "$ORIGIN_URL" in
+            https://github.com/metrodsgn/metro-design|https://github.com/metrodsgn/metro-design.git|git@github.com:metrodsgn/metro-design|git@github.com:metrodsgn/metro-design.git)
+              ;;
+            *)
+              echo "Unexpected origin remote; refusing to deploy: $ORIGIN_URL" >&2
+              exit 1
+              ;;
+          esac
+
+          CURRENT_BRANCH="$(git branch --show-current)"
+          if [[ "$CURRENT_BRANCH" != "$DEPLOY_BRANCH" ]]; then
+            echo "Expected branch $DEPLOY_BRANCH, found $CURRENT_BRANCH" >&2
+            exit 1
+          fi
+
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "Refusing to deploy over a dirty worktree:" >&2
+            git status --short >&2
+            exit 1
+          fi
+
+          BEFORE_HEAD="$(git rev-parse HEAD)"
+          git fetch origin "refs/heads/${DEPLOY_BRANCH}:refs/remotes/origin/${DEPLOY_BRANCH}"
+
+          if ! git merge-base --is-ancestor "$BEFORE_HEAD" "origin/$DEPLOY_BRANCH"; then
+            echo "Server branch has commits or divergence not present on origin; refusing to overwrite it." >&2
+            exit 1
+          fi
+
+          NEED_NPM_CI=0
+          if ! git diff --quiet "$BEFORE_HEAD" "origin/$DEPLOY_BRANCH" -- package.json package-lock.json; then
+            NEED_NPM_CI=1
+          fi
+
+          git merge --ff-only "origin/$DEPLOY_BRANCH"
+
+          if [[ "$NEED_NPM_CI" -eq 1 || ! -d node_modules ]]; then
+            npm ci
+          else
+            echo "Dependency manifests are unchanged; skipping npm ci."
+          fi
+
+          npm run build
+
+          pm2 describe metrodesign-next >/dev/null
+          pm2 restart metrodesign-next --update-env
+
+          for attempt in {1..10}; do
+            if curl --fail --silent --show-error --max-time 10 -o /dev/null http://127.0.0.1:3001/; then
+              echo "HTTP health check succeeded on port 3001."
+              exit 0
+            fi
+            if [[ "$attempt" -lt 10 ]]; then
+              sleep 3
+            fi
+          done
+
+          echo "HTTP health check failed on port 3001." >&2
+          exit 1
+          REMOTE_SCRIPT
