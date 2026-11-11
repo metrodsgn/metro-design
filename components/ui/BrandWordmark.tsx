@@ -13,8 +13,8 @@ export function BrandWordmark({
       <Image
         src="/brand/metro-wordmark.png"
         alt=""
-        width={856}
-        height={225}
+        width={2000}
+        height={506}
         priority
         className="header-logo-image h-auto w-36 sm:w-40"
       />
