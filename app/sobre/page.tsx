@@ -79,7 +79,7 @@ export default async function SobrePage() {
     <>
       <ParallaxHero
         title={ABOUT_HERO.wordmark}
-        backgroundSrc="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2400&q=80"
+        backgroundSrc="/fundosobre/fundo.png"
         backgroundAlt={ABOUT_HERO.backgroundAlt}
         titleAriaLabel={ABOUT_HERO.accessibleTitle}
       />
