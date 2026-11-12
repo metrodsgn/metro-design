@@ -50,7 +50,7 @@ export function Somos({ photo = SOBRE_STORY_PHOTO }: { photo?: SobrePhoto }) {
                   alt={photo.alt}
                   fill
                   sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) 88vw, 64rem"
-                  className="about-somos__photo-image object-cover"
+                  className="about-somos__photo-image object-contain"
                   data-photo-image
                 />
               </div>

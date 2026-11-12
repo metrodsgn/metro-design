@@ -44,7 +44,7 @@ export function AboutGsapMotion({ children }: { children: ReactNode }) {
 
       gsap.fromTo(
         "[data-photo-image]",
-        { scale: 1.5 },
+        { scale: 1.08 },
         {
           scale: 1,
           ease: "none",
