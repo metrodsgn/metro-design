@@ -53,15 +53,14 @@ async function loadAboutStoryPhoto(): Promise<SobrePhoto> {
       src: urlFor({
         _type: "image",
         asset: photo.asset,
-        crop: photo.crop,
-        hotspot: photo.hotspot,
       })
         .width(1600)
-        .height(900)
-        .fit("crop")
+        .fit("max")
         .auto("format")
         .url(),
       alt: "Foto institucional da equipe Metro Design",
+      width: photo.dimensions?.width,
+      height: photo.dimensions?.height,
     };
   } catch {
     return SOBRE_STORY_PHOTO;

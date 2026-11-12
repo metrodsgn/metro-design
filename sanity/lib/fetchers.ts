@@ -79,8 +79,7 @@ export type ServiceFrontPhotos = {
 
 export type AboutStoryPhoto = {
   asset: { _ref: string; _type: string };
-  crop?: { top: number; bottom: number; left: number; right: number };
-  hotspot?: { x: number; y: number; width?: number; height?: number };
+  dimensions?: { width: number; height: number; aspectRatio: number };
 };
 
 function correctProjectAccent(value: string | undefined): string | undefined {

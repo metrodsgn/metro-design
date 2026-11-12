@@ -82,7 +82,6 @@ export const serviceFrontPhotosQuery = groq`
 export const aboutStoryPhotoQuery = groq`
   *[_type == "aboutStoryPhoto" && _id == "aboutStoryPhoto"][0].photo{
     asset,
-    crop,
-    hotspot
+    "dimensions": asset->metadata.dimensions
   }
 `;

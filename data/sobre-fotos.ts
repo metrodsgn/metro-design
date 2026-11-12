@@ -11,9 +11,13 @@ const image = (
 export type SobrePhoto = {
   src: string;
   alt: string;
+  width?: number;
+  height?: number;
 };
 
 export const SOBRE_STORY_PHOTO: SobrePhoto = {
   src: image("photo-1521737711867-e3b97375f902", 800, 1000, true),
   alt: "Equipe reunida em volta de uma mesa durante uma reunião de projeto",
+  width: 800,
+  height: 1000,
 };
