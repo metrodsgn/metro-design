@@ -18,7 +18,6 @@ export function MetroHouse({ photos }: { photos?: MetroHouseSlide[] }) {
       aria-labelledby="metro-house-title"
       className="metro-house-section relative z-10 bg-background py-20 md:py-32"
     >
-      <MetroHouseCarousel photos={carouselPhotos} />
       <Container>
         <div className="metro-house-section__body">
           <div className="metro-house-section__heading">
@@ -26,6 +25,11 @@ export function MetroHouse({ photos }: { photos?: MetroHouseSlide[] }) {
               Onde as marcas ganham forma.
             </h2>
           </div>
+        </div>
+      </Container>
+      <MetroHouseCarousel photos={carouselPhotos} />
+      <Container>
+        <div className="metro-house-section__body">
           <div className="metro-house-section__intro">
             <p>Nosso escritório em Fortaleza é onde estratégia, design, estúdio e tecnologia trabalham lado a lado, todos os dias.</p>
           </div>
