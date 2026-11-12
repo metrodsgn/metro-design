@@ -19,7 +19,6 @@ export function CtaFinal() {
           </div>
           <div className="about-cta__footer">
             <p>{ABOUT_CTA.supportStart}<span>{ABOUT_CTA.supportEmphasis}</span></p>
-            <p className="label-mono mt-4">{ABOUT_CTA.signature}</p>
           </div>
         </Reveal>
       </Container>

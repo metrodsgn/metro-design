@@ -1,4 +1,4 @@
-import { SITE, CONTACT, SOCIAL, FOOTER_LINKS } from "@/lib/constants";
+import { SITE, CONTACT, SOCIAL, FOOTER_LINKS, ABOUT_CTA } from "@/lib/constants";
 import { Container } from "@/components/ui/Container";
 import { InteractiveMarquee } from "@/components/ui/InteractiveMarquee";
 import Link from "next/link";
@@ -108,6 +108,7 @@ export function Footer() {
             <p className="text-muted text-sm">
               © {currentYear} {SITE.name}. Todos os direitos reservados.
             </p>
+            <p className="label-mono m-0">{ABOUT_CTA.signature}</p>
             <Link
               href="/privacidade"
               className="footer-link text-muted hover:text-foreground text-sm"
