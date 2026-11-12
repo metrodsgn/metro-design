@@ -11,8 +11,9 @@
 .frontContent { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; }
 .front h2 { max-width: min(14ch, 100%); margin-bottom: 1.5rem; font-size: var(--type-h2); overflow-wrap: anywhere; }
 .frontContent > p, .reasons p, .audiences article p, .timeline p { font-size: var(--type-body); line-height: var(--leading-body); color: #aaa; }
-.front ul { width: 100%; padding: 1.5rem 0 2rem; list-style: none; }
-.front li { padding: 0.6rem 0; border-bottom: 1px solid #303030; color: #ddd; font-size: var(--type-small); line-height: var(--leading-small); }
+.front ul { display: flex; width: 100%; flex-wrap: wrap; align-items: center; gap: 0.65rem 0; padding: 1.5rem 0 2rem; list-style: none; }
+.front li { display: inline-flex; align-items: center; color: #ddd; font-size: var(--type-small); line-height: var(--leading-small); }
+.front li + li::before { width: 0.35rem; height: 0.35rem; flex: none; margin-inline: 0.7rem; border-radius: 50%; background: var(--color-accent); content: ""; }
 .frontContent a { margin-top: 0.5rem; }
 .frontPhoto { position: relative; width: 100%; aspect-ratio: 4 / 5; margin: 0; overflow: hidden; background: #141414; }
 .frontImage { object-fit: cover; object-position: center; }
