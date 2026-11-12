@@ -718,7 +718,7 @@
   justify-content: center;
   padding-top: clamp(1rem, 2vw, 2rem);
 }
-.metro-house-section__heading { min-width: 0; }
+.metro-house-section__heading { min-width: 0; padding-bottom: clamp(1.5rem, 3vw, 3rem); }
 .metro-house-section__title {
   max-width: none;
   margin: 0;
