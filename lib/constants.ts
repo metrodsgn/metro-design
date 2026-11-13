@@ -47,13 +47,14 @@ export const ABOUT = {
   label: "Somos",
   title: "Somos a Metro Design.",
   subtitle:
-    "Há quase uma década transformando marcas em negócios mais fortes. Do conceito à execução, sob medida.",
+    "Desde 2017, unindo estratégia, criatividade e inovação para construir marcas mais fortes e negócios com mais valor.",
   paragraphs: [
-    "Fundada em Fortaleza em 2017, a Metro é uma agência de design, comunicação e tecnologia com uma missão clara: impulsionar negócios por meio de estratégias criativas e eficientes.",
-    "Atuamos em todas as etapas da vida de uma marca, do conceito à execução, unindo design autoral, comunicação estratégica, produtos digitais e visão de resultado.",
-    "Para nós, fazer branding é criar conexões duradouras entre marcas e pessoas.",
+    "Nascemos em Fortaleza com uma ideia que continua guiando nosso trabalho: design e comunicação precisam ir além de uma boa estética. Precisam fazer sentido para as pessoas e gerar resultados para os negócios.",
+    "Somos uma agência de design, comunicação e tecnologia. Gostamos de entender o que está por trás de cada negócio, identificar oportunidades e transformar ideias em soluções criativas, bem pensadas e orientadas a resultados.",
+    "Da construção de uma marca ao seu posicionamento no mercado, combinamos pensamento estratégico, criatividade e inovação com algo que valorizamos muito: proximidade. Afinal, os melhores projetos nascem de boas conversas, confiança e trabalho em conjunto.",
+    "Para nós, construir marcas é muito mais do que torná-las conhecidas. É criar valor, conquistar relevância e fazer com que sejam lembradas, escolhidas e valorizadas.",
   ],
-  facts: "Desde 2017 · Time multidisciplinar · Sede em Fortaleza, atendimento nacional",
+  facts: "Desde 2017 · Estratégia, design e tecnologia · De Fortaleza para todo o Brasil",
   signature: "Building brands. Every day.",
 } as const;
 
@@ -67,23 +68,53 @@ export const SERVICES = {
   label: "O que fazemos",
   title: "Quatro frentes, um pensamento integrado.",
   description:
-    "Branding, conteúdo, audiovisual e tecnologia sob o mesmo time. Assim, a marca chega inteira a cada ponto de contato, do feed ao sistema que seu cliente usa.",
+    "Branding, conteúdo, audiovisual e tecnologia. Diferentes especialidades que se complementam, porque acreditamos que uma marca precisa fazer sentido em tudo o que diz, mostra e entrega.",
   areas: [
     {
       title: "Branding & Design",
-      items: ["Criamos marcas do zero ou evoluímos as que já existem."],
+      items: [
+        "Estratégia e posicionamento de marca",
+        "Naming e criação de marcas",
+        "Identidade visual",
+        "Brand book e diretrizes de marca",
+        "Redesign e evolução de marcas",
+        "Sinalização e design de materiais gráficos",
+      ],
     },
     {
       title: "Comunicação & Conteúdo",
-      items: ["Planejamento, redes sociais e campanhas com objetivo claro."],
+      items: [
+        "Planejamento de comunicação",
+        "Gestão de redes sociais",
+        "Produção de conteúdo",
+        "Campanhas publicitárias",
+        "Gestão de tráfego pago",
+        "Treinamento de equipes em branding",
+      ],
     },
     {
       title: "Audiovisual & Direção Criativa",
-      items: ["Foto, vídeo e direção de arte com estrutura própria."],
+      items: [
+        "Fotografia publicitária",
+        "Produção audiovisual",
+        "Vídeos institucionais e comerciais",
+        "Conteúdo para redes sociais",
+        "Direção criativa e de arte",
+        "Cobertura de eventos",
+      ],
     },
     {
-      title: "Produtos Digitais",
-      items: ["Sites, e-commerces, plataformas e sistemas com cara de marca."],
+      title: "Produtos Digitais & Tecnologia",
+      items: [
+        "Sites institucionais e landing pages",
+        "E-commerces",
+        "Portais e plataformas digitais",
+        "Plataformas SaaS",
+        "Sistemas web e aplicações internas",
+        "MVPs e produtos sob demanda",
+        "UX/UI Design",
+        "Integrações e automações",
+      ],
     },
   ],
 } as const;
@@ -140,8 +171,10 @@ export const CONTACT_FAQ = {
 
 export const ABOUT_CTA = {
   titleLines: ["Vamos transformar", "sua marca juntos?"],
-  supportStart: "Conta o que você precisa. A gente desenha um caminho — ",
-  supportEmphasis: "do diagnóstico à entrega — sob medida para o momento da sua marca.",
+  supportStart:
+    "Toda marca tem um ponto de partida, uma história para contar e um lugar onde quer chegar. ",
+  supportEmphasis:
+    "Com estratégia, inovação e criatividade, a gente ajuda você a construir o novo ou fortalecer o que já existe.",
   signature: "Building brands. Every day.",
 } as const;
 

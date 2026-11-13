@@ -15,7 +15,7 @@ import { SOBRE_STORY_PHOTO, type SobrePhoto } from "@/data/sobre-fotos";
 export const metadata: Metadata = createSiteMetadata({
   title: "Sobre — Metro Design",
   description:
-    "Agência de branding e comunicação em Fortaleza. Falamos alto com tipografia, movemos para dizer algo e levamos a sério o trabalho.",
+    "Desde 2017, a Metro une estratégia, criatividade, design, comunicação e tecnologia para construir marcas mais fortes e negócios com mais valor.",
   path: "/sobre",
 });
 

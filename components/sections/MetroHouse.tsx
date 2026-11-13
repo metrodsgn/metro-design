@@ -31,7 +31,7 @@ export function MetroHouse({ photos }: { photos?: MetroHouseSlide[] }) {
       <Container>
         <div className="metro-house-section__body">
           <div className="metro-house-section__intro">
-            <p>Nosso escritório em Fortaleza é onde estratégia, design, estúdio e tecnologia trabalham lado a lado, todos os dias.</p>
+            <p>A Metro Haus, em Fortaleza, é um ponto de encontro de pessoas, diferentes olhares e boas conversas. Um espaço com a nossa cara, onde o trabalho acontece, as ideias circulam e a gente recebe quem faz parte da nossa história.</p>
           </div>
         </div>
       </Container>

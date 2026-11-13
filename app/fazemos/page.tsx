@@ -8,28 +8,29 @@ import styles from "./page.module.css";
 import { getServiceFrontPhotos, type ServiceFrontPhotos } from "@/sanity/lib/fetchers";
 import { urlFor } from "@/sanity/lib/image";
 
-export const metadata = createSiteMetadata({ title: "Fazemos — Metro Design", description: "Branding, conteúdo, audiovisual e tecnologia em uma operação única, para que a marca chegue inteira a cada ponto de contato.", path: "/fazemos" });
+export const metadata = createSiteMetadata({ title: "Fazemos — Metro Design", description: "Branding, conteúdo, audiovisual e tecnologia para marcas que querem se posicionar, se comunicar e crescer com consistência.", path: "/fazemos" });
 
 const fronts = [
-  { title: "Branding & Design", intro: "O ponto de partida para quem quer se posicionar de forma consistente e memorável. Criamos marcas do zero ou evoluímos as que já existem, traduzindo propósito em sistema visual.", items: ["Naming e criação de marcas", "Identidade visual", "Brand book", "Redesign de marcas"], image: "/fotos/DSC03252.JPG", imageAlt: "Profissional da Metro trabalhando em um computador no estúdio", imageField: "brandingDesign" },
-  { title: "Comunicação & Conteúdo", intro: "A comunicação é o elo entre a marca e o mercado. Planejamos, produzimos e gerimos a presença digital com um objetivo claro: engajamento real e resultado consistente.", items: ["Planejamento estratégico", "Gestão de redes sociais", "Campanhas e tráfego pago", "Treinamento de equipes em branding"], image: "/fotos/DSC03249.JPG", imageAlt: "Integrante da equipe Metro conversando no estúdio", imageField: "communicationContent" },
-  { title: "Audiovisual & Direção Criativa", intro: "Conteúdo visual constrói marca. Com estrutura própria, produzimos fotos e vídeos exclusivos que humanizam a marca e funcionam em campanhas, ações e materiais institucionais.", items: ["Fotografia publicitária", "Vídeos curtos e institucionais", "Direção de arte para campanhas", "Sinalização e materiais gráficos"], image: "/fotos/DSC03248.JPG", imageAlt: "Profissional da Metro em conversa criativa no estúdio", imageField: "audiovisualCreativeDirection" },
-  { title: "Produtos Digitais & Tecnologia", intro: "Sites, plataformas e sistemas que nascem com a identidade da marca e resolvem problemas reais do negócio, do primeiro protótipo ao produto no ar. Quem desenhou a sua marca desenha a sua interface, e nada se perde entre agência e desenvolvedor.", items: ["Sites institucionais e landing pages", "E-commerces e canais de venda", "Portais e plataformas", "Sistemas web e aplicações internas", "MVPs e produtos sob demanda", "UX/UI", "Integrações e automações"], image: "/fotos/DSC03245.JPG", imageAlt: "Integrante da equipe Metro ao lado de uma estação de trabalho", imageField: "digitalProductsTechnology" },
+  { title: "Branding & Design", intro: "Toda marca precisa de uma identidade que faça sentido para o negócio e para as pessoas. Criamos marcas do zero ou damos novos caminhos às que já existem, unindo posicionamento, personalidade e design para construir identidades que se destacam e permanecem relevantes.", items: ["Estratégia e posicionamento de marca", "Naming e criação de marcas", "Identidade visual", "Brand book e diretrizes de marca", "Redesign e evolução de marcas", "Sinalização e design de materiais gráficos"], image: "/fotos/DSC03252.JPG", imageAlt: "Profissional da Metro trabalhando em um computador no estúdio", imageField: "brandingDesign" },
+  { title: "Comunicação & Conteúdo", intro: "Uma boa comunicação vai além de estar presente. É sobre construir relacionamentos, fortalecer a presença da marca e criar conexões que fazem sentido para o público e para o negócio. Na Metro, planejamos, produzimos e gerenciamos conteúdos e campanhas com consistência, personalidade e foco em resultados.", items: ["Planejamento de comunicação", "Gestão de redes sociais", "Produção de conteúdo", "Campanhas publicitárias", "Gestão de tráfego pago", "Treinamento de equipes em branding"], image: "/fotos/DSC03249.JPG", imageAlt: "Integrante da equipe Metro conversando no estúdio", imageField: "communicationContent" },
+  { title: "Audiovisual & Direção Criativa", intro: "Da concepção à produção, criamos conteúdos visuais que comunicam com personalidade e propósito. Com estrutura própria, direção criativa e atenção aos detalhes, produzimos fotografias, vídeos e campanhas que traduzem a identidade de cada marca em imagens que fazem sentido.", items: ["Fotografia publicitária", "Produção audiovisual", "Vídeos institucionais e comerciais", "Conteúdo para redes sociais", "Direção criativa e de arte", "Cobertura de eventos"], image: "/fotos/DSC03248.JPG", imageAlt: "Profissional da Metro em conversa criativa no estúdio", imageField: "audiovisualCreativeDirection" },
+  { title: "Produtos Digitais & Tecnologia", intro: "Tecnologia boa é aquela que simplifica, conecta e resolve. Desenvolvemos sites, plataformas e soluções digitais que unem experiência, funcionalidade e identidade de marca. Do primeiro protótipo ao produto no ar, pensamos cada detalhe para que design e tecnologia trabalhem juntos, sem perder de vista o que o negócio realmente precisa.", items: ["Sites institucionais e landing pages", "E-commerces", "Portais e plataformas digitais", "Plataformas SaaS", "Sistemas web e aplicações internas", "MVPs e produtos sob demanda", "UX/UI Design", "Integrações e automações"], image: "/fotos/DSC03245.JPG", imageAlt: "Integrante da equipe Metro ao lado de uma estação de trabalho", imageField: "digitalProductsTechnology" },
 ] as const;
 const reasons: (readonly [string, string])[] = [
-  ["Estratégia como ponto de partida.", "Investigamos antes de criar. Negócio, público e objetivo definem a entrega, não o contrário."],
-  ["Operação multidisciplinar.", "Branding, conteúdo, audiovisual e tecnologia com o mesmo time. Coerência sem ruído."],
-  ["Capacidade de entrega complexa.", "Da marca à campanha, do feed ao site, do on-line ao off-line, com o mesmo padrão estético e conceitual."],
-  ["Processo claro do início ao fim.", "Etapas, prazos e aprovações definidos. Você sempre sabe em que ponto está o seu projeto."],
-  ["Parceria de longo prazo.", "Mais do que executar projetos, construímos marcas lado a lado, com visão de futuro."],
+  ["Primeiro, a gente entende. Depois, cria.", "Antes de propor qualquer solução, buscamos entender o negócio, o público e os desafios de cada cliente. Porque boas decisões começam com as perguntas certas."],
+  ["Tudo conversa. Tudo faz sentido.", "Integramos branding, estratégia, design, comunicação, audiovisual e tecnologia, com decisões orientadas por dados. Assim, cada entrega mantém a coerência com a identidade da marca e contribui para os objetivos do negócio."],
+  ["Do planejamento à execução.", "Uma boa ideia precisa funcionar na prática. Por isso, combinamos capacidade criativa, conhecimento técnico e acompanhamento para tirar projetos do papel com qualidade e coerência."],
+  ["Organização que você acompanha.", "Projetos bem conduzidos precisam de clareza. Por isso, trabalhamos com etapas definidas, acompanhamento das entregas e ferramentas próprias que facilitam a comunicação, as aprovações e o dia a dia com nossos clientes."],
+  ["Parceria de longo prazo.", "Acreditamos em parcerias construídas com confiança, diálogo e comprometimento. Queremos conhecer seu negócio, acompanhar sua evolução e estar por perto nos próximos desafios."],
 ];
 const audiences = [
-  ["Quem está começando um negócio.", "Naming, identidade visual e um site para chegar ao mercado do jeito certo."],
-  ["Empresas que cresceram e a marca ficou para trás.", "Redesign, brand book e um site à altura do que a empresa é hoje."],
-  ["Times de marketing que precisam de constância.", "Planejamento, redes sociais, campanhas e conteúdo com métrica."],
-  ["Marcas que precisam de imagem própria.", "Fotos e vídeos exclusivos no lugar de banco de imagens."],
-  ["Negócios que querem vender on-line.", "E-commerce e canais de venda com a cara da marca."],
-  ["Operações que vivem em planilhas e fundadores com uma ideia para validar.", "Sistemas sob medida, automações e MVPs."],
+  ["Para quem está começando.", "Da escolha do nome à construção da identidade e da presença digital. Tudo para sua marca chegar ao mercado com personalidade e consistência."],
+  ["Para quem cresceu e precisa evoluir.", "Seu negócio mudou, mas a marca não acompanhou? Repensamos posicionamento, identidade e experiências para refletir o momento atual da empresa."],
+  ["Para quem precisa de uma comunicação mais presente.", "Planejamento, conteúdo, redes sociais e campanhas para manter sua marca ativa, relevante e próxima do público, com acompanhamento de resultados."],
+  ["Para quem quer mostrar sua marca de verdade.", "Fotografia, vídeo e direção criativa para produzir conteúdos originais que valorizam a identidade, a personalidade e os diferenciais do seu negócio."],
+  ["Para quem quer vender também no digital.", "E-commerces e canais de venda que combinam experiência de compra, funcionalidade e identidade de marca."],
+  ["Para quem precisa simplificar processos.", "Sistemas personalizados, integrações e automações para organizar operações, reduzir tarefas manuais e tornar o dia a dia mais eficiente."],
+  ["Para quem tem uma ideia e quer tirá-la do papel.", "Da concepção ao MVP, ajudamos a estruturar, desenhar e desenvolver produtos digitais para testar soluções e dar os primeiros passos no mercado."],
 ];
 export default async function FazemosPage() {
   let serviceFrontPhotos: ServiceFrontPhotos | null = null;
@@ -43,7 +44,7 @@ export default async function FazemosPage() {
     <Container>
       <header className={styles.hero}>
         <h1>Quatro frentes,<br />um pensamento integrado.</h1>
-        <p className={styles.lead}>Branding, conteúdo, audiovisual e tecnologia em uma operação única, para que a marca chegue inteira a cada ponto de contato.</p>
+        <p className={styles.lead}>Branding, conteúdo, audiovisual e tecnologia. Diferentes especialidades que se complementam, porque acreditamos que uma marca precisa fazer sentido em tudo o que diz, mostra e entrega.</p>
       </header>
       <section aria-label="Frentes de atuação" className={styles.fronts}>
         {fronts.map((front) => {
@@ -99,7 +100,7 @@ export default async function FazemosPage() {
         <ServicesProcess />
       </section>
       <section className={styles.audiences}>
-        <h2>Pra quem é</h2><p className={styles.lead}>Negócios de todos os portes, em momentos diferentes.</p>
+        <h2>O próximo passo tem muitas formas. E a gente ajuda a dar forma ao seu.</h2><p className={styles.lead}>Cada negócio tem seu momento. E cada momento traz novos desafios.</p>
         <div>{audiences.map(([title, text]) => <article key={title}><h3>{title}</h3><p>{text}</p></article>)}</div>
       </section>
     </Container>
