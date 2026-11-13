@@ -21,10 +21,10 @@ export function Fazemos() {
           </div>
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden xl:block">
           <ServicesDesktopCards areas={SERVICES.areas} />
         </div>
-        <div className="md:hidden">
+        <div className="xl:hidden">
           <ServicesAccordion areas={SERVICES.areas} />
         </div>
       </Container>

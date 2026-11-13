@@ -2350,6 +2350,15 @@
   .about-faq__card { min-height: 22rem; }
   .about-faq__card button { min-height: 17rem; }
 }
+@media (min-width: 768px) and (max-width: 1279px) {
+  .about-services__intro {
+    max-width: 56rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    margin-inline: auto;
+    margin-bottom: 2.5rem;
+  }
+}
 @media (max-width: 767px) {
   .about-hero__wordmark { font-size: clamp(5rem, 26vw, 9rem); letter-spacing: var(--tracking-heading); }
   .about-hero__lower { gap: 1rem; }

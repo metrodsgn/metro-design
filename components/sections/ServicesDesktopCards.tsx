@@ -14,7 +14,7 @@ export function ServicesDesktopCards({ areas }: { areas: readonly ServiceArea[] 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const media = gsap.matchMedia();
-    media.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+    media.add("(min-width: 1280px) and (prefers-reduced-motion: no-preference)", () => {
       const context = gsap.context(() => {
         gsap.utils.toArray<HTMLElement>("[data-service-card]").forEach((card, index) => {
           const distance = [10, -14, 6][index % 3];
