@@ -1449,7 +1449,7 @@
   font-size: var(--type-h1);
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1280px) {
     .contact-grid {
       grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
       align-items: center;
@@ -1530,7 +1530,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .contact-form {
     grid-template-columns: minmax(0, 1fr);
     max-width: 42rem;
@@ -2487,7 +2487,7 @@
 .contact-page .contact-intro p {
   margin-inline: auto;
 }
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .contact-page .contact-intro {
     align-self: start;
   }
@@ -2573,7 +2573,7 @@
 @media (max-width: 639px) {
   .contact-faq .about-faq__grid { grid-template-columns: minmax(0, 1fr); }
 }
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .contact-page .contact-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     gap: clamp(2rem, 4vw, 4rem);
@@ -2581,7 +2581,7 @@
 }
 
 /* Keep the full contact form compact without hiding any fields. */
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .contact-page {
     padding-top: clamp(9rem, 15vh, 10rem);
   }
@@ -2634,7 +2634,7 @@
 }
 
 /* Start the location section after the initial desktop contact view. */
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .contact-page .contact-grid {
     min-height: calc(100svh - clamp(9rem, 15vh, 10rem) - 1rem);
   }

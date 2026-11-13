@@ -32,7 +32,7 @@ export function SiteShell({
       {header}
       <main>{children}</main>
       {footer}
-      {floatingAction}
+      {!isContactPage && floatingAction}
       {!isContactPage && <ExitIntentModal />}
       <CursorArrow />
     </MotionConfig>
