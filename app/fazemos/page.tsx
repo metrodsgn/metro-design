@@ -25,7 +25,6 @@ const reasons: (readonly [string, string])[] = [
 ];
 const audiences = [
   ["Para quem está começando.", "Da escolha do nome à construção da identidade e da presença digital. Tudo para sua marca chegar ao mercado com personalidade e consistência."],
-  ["Para quem cresceu e precisa evoluir.", "Seu negócio mudou, mas a marca não acompanhou? Repensamos posicionamento, identidade e experiências para refletir o momento atual da empresa."],
   ["Para quem precisa de uma comunicação mais presente.", "Planejamento, conteúdo, redes sociais e campanhas para manter sua marca ativa, relevante e próxima do público, com acompanhamento de resultados."],
   ["Para quem quer mostrar sua marca de verdade.", "Fotografia, vídeo e direção criativa para produzir conteúdos originais que valorizam a identidade, a personalidade e os diferenciais do seu negócio."],
   ["Para quem quer vender também no digital.", "E-commerces e canais de venda que combinam experiência de compra, funcionalidade e identidade de marca."],
