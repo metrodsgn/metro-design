@@ -18,7 +18,7 @@ export function Somos({ photo = SOBRE_STORY_PHOTO }: { photo?: SobrePhoto }) {
           <h2 id="somos-title" className="about-somos__title type-h2">
             {ABOUT.title}
           </h2>
-          <p className="type-h4 font-sans text-muted mx-auto mt-5 max-w-4xl text-center">{ABOUT.subtitle}</p>
+          <p className="about-somos__subtitle type-h4 font-sans text-muted mx-auto mt-5">{ABOUT.subtitle}</p>
 
           <div className="about-somos__stories">
             {paragraphs.map((paragraph, index) => (
