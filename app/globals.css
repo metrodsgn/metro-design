@@ -155,6 +155,29 @@
   --text-display: var(--type-h1);
 }
 
+/* Margens laterais fluidas compartilhadas pelos conteúdos do site. */
+.site-container:not(.site-container--bleed) {
+  padding-inline: clamp(1.25rem, 5vw, 2rem);
+}
+
+@media (min-width: 640px) {
+  .site-container:not(.site-container--bleed) {
+    padding-inline: clamp(1.5rem, 4vw, 2.5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-container:not(.site-container--bleed) {
+    padding-inline: clamp(3rem, 5vw, 5rem);
+  }
+}
+
+@media (min-width: 1440px) {
+  .site-container:not(.site-container--bleed) {
+    padding-inline: clamp(4rem, 6vw, 6rem);
+  }
+}
+
 @layer base {
   :where(a, button, input, textarea, select, [tabindex]):focus-visible {
     outline: 2px solid var(--color-foreground);
@@ -2397,6 +2420,49 @@
   .about-methodology__step .about-methodology__node, .about-methodology__node--end { background: var(--color-accent); box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-accent) 18%, transparent); }
   .clients-marquee .animate-marquee, .clients-marquee .animate-marquee-reverse { animation: none; transform: none; will-change: auto; }
 }
+}
+
+@media (min-width: 768px) {
+  .about-page-layout .site-container:not(.site-container--bleed) {
+    padding-inline: clamp(2.5rem, 6vw, 6rem);
+  }
+
+  .about-page-layout .about-somos .max-w-content,
+  .about-page-layout .metro-house-section,
+  .about-page-layout #clientes,
+  .about-page-layout .about-services,
+  .about-page-layout .about-projects,
+  .about-page-layout .about-faq,
+  .about-page-layout .about-cta,
+  .about-page-layout .about-methodology {
+    padding-block: clamp(9rem, 9vw, 10rem);
+  }
+
+  .about-page-layout .metro-house-carousel,
+  .about-page-layout .clients-marquee {
+    padding-inline: clamp(2.5rem, 6vw, 6rem);
+  }
+
+  .about-page-layout .about-methodology__stage {
+    width: min(calc(100% - 2 * clamp(2.5rem, 6vw, 6rem)), 75rem);
+  }
+
+  .about-page-layout .about-somos__stories {
+    gap: clamp(2rem, 3vw, 3rem);
+  }
+
+  .about-page-layout .about-services__intro {
+    margin-bottom: clamp(3rem, 3vw, 4rem);
+  }
+
+  .about-page-layout .about-projects__heading,
+  .about-page-layout .about-faq__title {
+    margin-bottom: clamp(2.5rem, 4vw, 4rem);
+  }
+
+  .about-page-layout .about-faq__grid {
+    gap: clamp(1.25rem, 2vw, 2rem);
+  }
 }
 
 /* Contact introduction and FAQ. */

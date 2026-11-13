@@ -75,7 +75,7 @@ export default async function SobrePage() {
   ]);
 
   return (
-    <>
+    <div className="about-page-layout">
       <ParallaxHero
         title={ABOUT_HERO.wordmark}
         backgroundSrc="/fundosobre/fundo.png"
@@ -89,6 +89,6 @@ export default async function SobrePage() {
       <SelectedProjects projects={projects} />
       <Faq />
       <CtaFinal />
-    </>
+    </div>
   );
 }

@@ -200,7 +200,7 @@ export function Header() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 z-0 h-36 bg-linear-to-b from-black/85 via-black/45 to-transparent"
       />
-      <div className="relative z-10 mx-auto flex h-20 max-w-none items-center justify-between px-5 sm:px-6 md:h-24 md:px-10 lg:px-12">
+      <div className="site-container relative z-10 mx-auto flex h-20 max-w-none items-center justify-between md:h-24">
         {/* Logo Metro */}
         <div className="inline-flex items-center">
           <Link
