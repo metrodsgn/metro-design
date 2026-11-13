@@ -2247,8 +2247,8 @@
 }
 .about-somos__copy { max-width: 48rem; margin: 0 auto; color: var(--color-foreground-soft); font-size: var(--type-body); line-height: var(--leading-body); text-align: center; }
 .about-somos__rule { position: absolute; top: -1.5rem; left: 0; width: 100%; height: 1px; background: var(--color-border); transform-origin: left; }
-.about-somos__photo { position: relative; display: flex; width: min(100%, 64rem); justify-content: center; margin: 3.5rem auto 0; }
-.about-somos__photo-frame { position: relative; width: auto; max-width: 100%; height: min(78svh, 56rem); aspect-ratio: 16 / 9; overflow: hidden; background: var(--color-surface); }
+.about-somos__photo { position: relative; width: min(100%, 64rem); margin: 3.5rem auto 0; }
+.about-somos__photo-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: var(--color-surface); }
 
 @media (max-width: 767px) {
   .about-somos__photo-frame { height: min(70svh, 38rem); aspect-ratio: 4 / 3; }

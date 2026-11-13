@@ -36,21 +36,13 @@ export function Somos({ photo = SOBRE_STORY_PHOTO }: { photo?: SobrePhoto }) {
 
           {photo.src ? (
             <figure className="about-somos__photo">
-              <div
-                className="about-somos__photo-frame"
-                data-photo-frame
-                style={
-                  photo.width && photo.height
-                    ? { aspectRatio: `${photo.width} / ${photo.height}` }
-                    : undefined
-                }
-              >
+              <div className="about-somos__photo-frame" data-photo-frame>
                 <Image
                   src={photo.src}
                   alt={photo.alt}
                   fill
                   sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) 88vw, 64rem"
-                  className="about-somos__photo-image object-contain"
+                  className="about-somos__photo-image object-cover"
                   data-photo-image
                 />
               </div>
