@@ -17,6 +17,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/projetos/nbastore",
+        destination: "/projetos/nba-store",
+        statusCode: 301,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
