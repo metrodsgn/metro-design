@@ -57,7 +57,7 @@ export function ParallaxHero({
           fill
           preload
           sizes="100vw"
-          className="object-contain opacity-30"
+          className="object-cover opacity-30"
         />
         <div className="absolute inset-0 bg-background/60" aria-hidden="true" />
 
