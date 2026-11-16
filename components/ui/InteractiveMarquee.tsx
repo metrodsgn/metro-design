@@ -204,6 +204,24 @@ export function InteractiveMarquee({
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
+
+    // A faixa editorial não precisa de interação por letra. Deixamos o browser
+    // animar o track via CSS, evitando um loop JavaScript por frame nessa área.
+    if (variant === "ribbon") {
+      const group = groupRefs.current[0];
+      if (!group) return;
+      const setDuration = () => {
+        const speed = window.innerWidth < 768 ? AUTO_SPEED_MOBILE : AUTO_SPEED_DESKTOP;
+        const width = group.getBoundingClientRect().width;
+        if (width > 0) root.style.setProperty("--ribbon-duration", `${width / speed}s`);
+      };
+      const resizeObserver = new ResizeObserver(setDuration);
+      resizeObserver.observe(root);
+      resizeObserver.observe(group);
+      setDuration();
+      return () => resizeObserver.disconnect();
+    }
+
     runFrameRef.current = runFrame;
 
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -243,12 +261,13 @@ export function InteractiveMarquee({
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
       runFrameRef.current = () => {};
     };
-  }, [measureLetters, requestFrame, runFrame]);
+  }, [measureLetters, requestFrame, runFrame, variant]);
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
     if (event.pointerType === "touch") {
       pointerRef.current = null;
+      clearActiveLetters();
     } else {
       pointerRef.current = { x: event.clientX - rect.left, y: event.clientY - rect.top };
     }
@@ -300,6 +319,7 @@ export function InteractiveMarquee({
   const handlePointerLeave = (event: React.PointerEvent<HTMLDivElement>) => {
     if (event.pointerType !== "touch" && !draggingRef.current) {
       pointerRef.current = null;
+      clearActiveLetters();
       requestFrame();
     }
   };
@@ -333,11 +353,11 @@ export function InteractiveMarquee({
       ref={rootRef}
       className={`footer-wordmark ${variant === "ribbon" ? "footer-wordmark--ribbon" : ""}`}
       aria-label={accessibleText}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
-      onPointerLeave={handlePointerLeave}
+      onPointerDown={variant === "footer" ? handlePointerDown : undefined}
+      onPointerMove={variant === "footer" ? handlePointerMove : undefined}
+      onPointerUp={variant === "footer" ? handlePointerUp : undefined}
+      onPointerCancel={variant === "footer" ? handlePointerUp : undefined}
+      onPointerLeave={variant === "footer" ? handlePointerLeave : undefined}
     >
       <span className="sr-only">{accessibleText}</span>
       <div ref={trackRef} className="footer-wordmark__track" role="presentation">

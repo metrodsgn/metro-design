@@ -594,6 +594,16 @@
   will-change: transform;
 }
 
+.footer-wordmark--ribbon .footer-wordmark__track {
+  animation: ribbon-marquee var(--ribbon-duration, 120s) linear infinite;
+}
+
+@keyframes ribbon-marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 .footer-wordmark__group,
 .footer-wordmark__word {
   display: inline-flex;
@@ -667,6 +677,11 @@
 
   .footer-wordmark__letter {
     transition: none;
+  }
+
+  .footer-wordmark--ribbon .footer-wordmark__track {
+    animation: none;
+    transform: none;
   }
 
 }
