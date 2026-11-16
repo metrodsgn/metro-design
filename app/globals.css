@@ -1046,7 +1046,7 @@
 
 .projects-gallery__grid .projects-card__frame {
   aspect-ratio: 4 / 3;
-  overflow: visible;
+  overflow: hidden;
   border: 0;
   background: transparent;
 }
@@ -1146,49 +1146,6 @@
   .projects-gallery__grid .projects-card:hover .projects-card__image,
   .projects-gallery__grid .projects-card:focus-visible .projects-card__image {
     transform: scale(1.04);
-  }
-}
-
-@supports (animation-timeline: view()) {
-  .projects-gallery__grid .projects-card:nth-child(odd) .projects-card__media {
-    /* O movimento acompanha a rolagem sem esconder o conteúdo ao entrar. */
-    animation: project-image-odd linear both;
-    animation-timeline: view();
-    animation-range: entry 0% exit 100%;
-    transform-origin: center bottom;
-    backface-visibility: hidden;
-  }
-
-  .projects-gallery__grid .projects-card:nth-child(even) .projects-card__media {
-    animation: project-image-even linear both;
-    animation-timeline: view();
-    animation-range: entry 0% exit 100%;
-    transform-origin: center bottom;
-    backface-visibility: hidden;
-  }
-
-  @keyframes project-image-odd {
-    0% {
-      transform: translateY(20px) scale(0.99);
-    }
-    30%, 70% {
-      transform: none;
-    }
-    100% {
-      transform: translateY(-12px) scale(0.995);
-    }
-  }
-
-  @keyframes project-image-even {
-    0% {
-      transform: translateY(16px) scale(0.992);
-    }
-    30%, 70% {
-      transform: none;
-    }
-    100% {
-      transform: translateY(-10px) scale(0.996);
-    }
   }
 }
 
