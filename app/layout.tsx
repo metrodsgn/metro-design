@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import localFont from "next/font/local";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -68,6 +69,14 @@ export default function RootLayout({
       className={`${halyardMicro.variable} ${halyardDisplay.variable} ${ivyPrestoHeadlineItalic.variable}`}
     >
       <body className="antialiased">
+        <Script id="google-tag-manager-init" strategy="beforeInteractive">
+          {`window.dataLayer = window.dataLayer || []; function gtag(){window.dataLayer.push(arguments);} gtag('js', new Date());`}
+        </Script>
+        <Script
+          id="google-tag-manager"
+          src="https://www.googletagmanager.com/gtm.js?id=GTM-MZQ898NK"
+          strategy="afterInteractive"
+        />
         <SiteShell
           header={<Header />}
           footer={<Footer />}
